@@ -15,7 +15,7 @@ public class User {
 
     private String email;
 
-    private String tel;
+    private String phone;
 
     public Long getId() {
         return id;
@@ -49,11 +49,11 @@ public class User {
         this.email = email;
     }
 
-    public String getTel() {
-        return tel;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setTel(String tel) {
-        this.tel = tel;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 }
