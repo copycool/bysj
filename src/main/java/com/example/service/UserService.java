@@ -20,4 +20,12 @@ public class UserService {
         }
         return res;
     }
+
+    public User add(User user) {
+        return userDao.save(user);
+    }
+
+    public User findByUsername(String username) {
+        return userDao.findByUsername(username);
+    }
 }
