@@ -4,14 +4,12 @@ import com.example.common.Result;
 import com.example.entity.User;
 import com.example.exception.CustomException;
 import com.example.service.UserService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.data.domain.Page;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @RestController
 @RequestMapping("/user")
@@ -48,5 +46,31 @@ public class UserController {
         User res = userService.add(user);
         request.getSession().setAttribute("user", res);
         return Result.success(res);
+    }
+
+    @PostMapping
+    public Result<User> save(@RequestBody User user) {
+        return Result.success(userService.save(user));
+    }
+
+    @PutMapping
+    public Result<?> update(@RequestBody User user) {
+        return Result.success(userService.save(user));
+    }
+
+    @GetMapping("/{id}")
+    public Result<User> findById(@PathVariable Long id) {
+        return Result.success(userService.findById(id));
+    }
+
+    @GetMapping
+    public Result<List<User>> findAll() {
+        return Result.success(userService.findAll());
+    }
+
+    @GetMapping("/page")
+    public Result<Page<User>> findPage(@RequestParam(required = false, defaultValue = "1") Integer pageNum,
+                                       @RequestParam(required = false, defaultValue = "10") Integer pageSize) {
+        return Result.success(userService.findPage(pageNum, pageSize));
     }
 }

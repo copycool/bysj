@@ -1,28 +1,51 @@
 package com.example.entity;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
-@Table(name = "user")
+@Table(name = "t_user")
 public class User {
+    /**
+     * 主键
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    /**
+     * 用户名 
+     */
+    @Column(name = "username")
     private String username;
 
+    /**
+     * 密码 
+     */
+    @Column(name = "password")
     private String password;
 
+    /**
+     * 邮箱 
+     */
+    @Column(name = "email")
     private String email;
 
-    private String phone;
+    /**
+     * 电话 
+     */
+    @Column(name = "tel")
+    private String tel;
+
+    @Column(name = "create_time")
+    private Date createTime;
 
     public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
-        this.id = id;
+         this.id = id;
     }
 
     public String getUsername() {
@@ -30,7 +53,7 @@ public class User {
     }
 
     public void setUsername(String username) {
-        this.username = username;
+         this.username = username;
     }
 
     public String getPassword() {
@@ -38,7 +61,7 @@ public class User {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+         this.password = password;
     }
 
     public String getEmail() {
@@ -46,14 +69,23 @@ public class User {
     }
 
     public void setEmail(String email) {
-        this.email = email;
+         this.email = email;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getTel() {
+        return tel;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setTel(String tel) {
+         this.tel = tel;
     }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+         this.createTime = createTime;
+    }
+
 }
