@@ -58,6 +58,12 @@ public class UserController {
         return Result.success(userService.save(user));
     }
 
+    @DeleteMapping("/{id}")
+    public Result<?> delete(@PathVariable Long id) {
+        userService.delete(id);
+        return Result.success();
+    }
+
     @GetMapping("/{id}")
     public Result<User> findById(@PathVariable Long id) {
         return Result.success(userService.findById(id));
