@@ -14,13 +14,14 @@ public class CodeGenerator {
     private static final DruidDataSource ds = new DruidDataSource();
 
     static {
+        // 必填
         ds.setUrl("jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false&serverTimezone=GMT%2b8");
         ds.setUsername("root");
         ds.setPassword("123456");
     }
 
-    private static final String schemaName = "test";
-    private static final String[][] tables = {{"t_project", "Project"}};
+    private static final String schemaName = "test";   // 必填
+    private static final String[][] tables = {{"t_user", "User"}};   // 必填
 
     private static final String BaseFilePath = System.getProperty("user.dir") + "/src/main/java/com/example/";
     private static final String basePackageName = "com.example";
@@ -140,7 +141,7 @@ public class CodeGenerator {
                 .append("import org.springframework.data.jpa.repository.JpaRepository;\n")
                 .append("import org.springframework.stereotype.Repository;\n\n")
                 .append("@Repository\n")
-                .append("public interface ").append(entityName).append("Dao extends JpaRepository<").append(entityName).append(", Long> {\n\n")
+                .append("public interface ").append(entityName).append("Dao extends JpaRepository<").append(entityName).append(", Long>, JpaSpecificationExecutor<").append(entityName).append("> {\n\n")
                 .append("}");
         FileUtil.writeString(build.toString(), BaseFilePath + "/dao/" + entityName + "Dao" + ".java", "UTF-8");
         System.out.println(entityName + "Dao生成成功！");
@@ -214,6 +215,11 @@ public class CodeGenerator {
                 .append(space4).append("@PutMapping\n")
                 .append(space4).append("public Result<?> update(@RequestBody ").append(entityName).append(" ").append(lowerName).append(") {\n")
                 .append(space4).append(space4).append("return Result.success(").append(serviceLowerName).append(".save(").append(lowerName).append("));\n")
+                .append(space4).append("}\n\n")
+                .append(space4).append("@DeleteMapping(\"/{id}\")\n")
+                .append(space4).append("public Result<?> delete(@PathVariable Long id) {\n")
+                .append(space4).append(space4).append(serviceLowerName).append(".delete(id);\n")
+                .append(space4).append(space4).append("return Result.success();\n")
                 .append(space4).append("}\n\n")
                 .append(space4).append("@GetMapping(\"/{id}\")\n")
                 .append(space4).append("public Result<").append(entityName).append("> findById(@PathVariable Long id) {\n")
