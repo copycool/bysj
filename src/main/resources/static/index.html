@@ -6,10 +6,10 @@
     <link rel="stylesheet" href="/css/base.css">
     <link rel="stylesheet" href="/css/element.css">
 </head>
-<body style="background-color: rgb(14, 116, 175)">
+<body style="background-color: #ddd">
     <div id="wrapper">
 <!--        头部-->
-        <el-row style="height: 50px; background-color: royalblue; line-height: 50px; color: white;">
+        <el-row style="height: 50px; background-color: black; line-height: 50px; color: white;">
             <el-col :span="22"><div style="font-size: 30px; margin-left: 20px;"><a href="/index.html">LOGO</a></div></el-col>
             <el-col :span="2" style="text-align: right">
                 <el-dropdown>
@@ -26,9 +26,10 @@
 <!--        表格-->
         <el-row style="margin-top: 10px">
             <el-col :span="16" :offset="4">
-                <div style="color: white; font-size: 20px; margin: 10px 0">用户管理</div>
+                <div style="color: black; font-size: 20px; margin: 10px 0">用户管理</div>
                 <div style="height: 1px; background-color: white"></div>
                 <el-button @click="add" type="primary" size="mini" style="margin: 10px 0">新增</el-button>
+                <el-button @click="exp" type="primary" size="mini" style="margin: 10px 0">导出</el-button>
                 <el-table
                         :data="tableData"
                         border
@@ -70,7 +71,7 @@
                             :page-sizes="[5, 10, 20, 40]"
                             :page-size="pageSize"
                             layout="total, sizes, prev, pager, next, jumper"
-                            :total="tableData.length">
+                            :total="total">
                     </el-pagination>
                 </div>
 
@@ -110,6 +111,7 @@
                 tableData: [],
                 pageNum: 1,
                 pageSize: 10,
+                total: 0,
                 dialogFormVisible: false,
                 entity: {}
             },
@@ -123,15 +125,21 @@
                     location.href = "/login.html";
                 },
                 loadTable() {
-                    $.get(urlBase + "/page").then(res => {
+                    $.get(urlBase + "/page?pageNum=" + this.pageNum + "&pageSize=" + this.pageSize).then(res => {
                         this.tableData = res.data.content;
+                        this.total = res.data.totalElements;
                     })
+                },
+                exp() {
+                    window.open(urlBase + "/export");
                 },
                 handleSizeChange(pageSize) {
                     this.pageSize = pageSize;
+                    this.loadTable();
                 },
                 handleCurrentChange (pageNum) {
                     this.pageNum = pageNum;
+                    this.loadTable();
                 },
                 add() {
                     this.entity = {};
@@ -167,7 +175,7 @@
                 del(id) {
                     $.ajax({
                         url: urlBase + id,
-                        type: "del"
+                        type: "delete"
                     }).then(res => {
                         if (res.code === '0') {
                             this.$message({

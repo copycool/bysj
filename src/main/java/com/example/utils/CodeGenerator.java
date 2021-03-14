@@ -20,8 +20,8 @@ public class CodeGenerator {
         ds.setPassword("123456");
     }
 
-    private static final String schemaName = "test";   // 必填
-    private static final String[][] tables = {{"t_user", "User"}};   // 必填
+    private static final String schemaName = "test";   // 数据库名称，必填
+    private static final String[][] tables = {{"t_product", "Product"}};   // 必填
 
     private static final String BaseFilePath = System.getProperty("user.dir") + "/src/main/java/com/example/";
     private static final String basePackageName = "com.example";

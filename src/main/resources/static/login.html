@@ -55,7 +55,8 @@
                             this.$message({
                                 message: "登陆成功",
                                 type: "success"
-                            })
+                            });
+                            localStorage.setItem("user", JSON.stringify(res.data));
                             setTimeout(() => {
                                 location.href= "/index.html"
                             }, 1000)
