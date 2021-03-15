@@ -139,6 +139,7 @@ public class CodeGenerator {
         StringBuilder build = StrUtil.builder().append("package com.example.dao;\n\n")
                 .append("import com.example.entity.").append(entityName).append(";\n")
                 .append("import org.springframework.data.jpa.repository.JpaRepository;\n")
+                .append("import org.springframework.data.jpa.repository.JpaSpecificationExecutor;\n")
                 .append("import org.springframework.stereotype.Repository;\n\n")
                 .append("@Repository\n")
                 .append("public interface ").append(entityName).append("Dao extends JpaRepository<").append(entityName).append(", Long>, JpaSpecificationExecutor<").append(entityName).append("> {\n\n")
