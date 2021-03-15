@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>导航菜单</title>
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/css/element.css">
+</head>
+<body style="background-color: #ddd">
+<div id="wrapper">
+    <el-container>
+        <el-aside style="width: 200px; background-color: white">
+            <div style="background-color: white; height: 60px; line-height: 60px; text-align: center;
+                color: black; font-size: 24px; border-bottom: 1px solid #ccc">
+                X-Admin
+            </div>
+            <el-menu :default-openeds="['1']">
+                <el-submenu index="1">
+                    <template slot="title"><i class="el-icon-message"></i>导航一</template>
+                    <el-menu-item index="1-1">选项1</el-menu-item>
+                    <el-menu-item index="1-2">选项2</el-menu-item>
+                    <el-menu-item-group title="分组2">
+                        <el-menu-item index="1-3">选项3</el-menu-item>
+                    </el-menu-item-group>
+                    <el-submenu index="1-4">
+                        <template slot="title">选项4</template>
+                        <el-menu-item index="1-4-1">选项4-1</el-menu-item>
+                    </el-submenu>
+                </el-submenu>
+                <el-submenu index="2">
+                    <template slot="title"><i class="el-icon-menu"></i>导航二</template>
+                    <el-menu-item-group>
+                        <template slot="title">分组一</template>
+                        <el-menu-item index="2-1">选项1</el-menu-item>
+                        <el-menu-item index="2-2">选项2</el-menu-item>
+                    </el-menu-item-group>
+                    <el-menu-item-group title="分组2">
+                        <el-menu-item index="2-3">选项3</el-menu-item>
+                    </el-menu-item-group>
+                    <el-submenu index="2-4">
+                        <template slot="title">选项4</template>
+                        <el-menu-item index="2-4-1">选项4-1</el-menu-item>
+                    </el-submenu>
+                </el-submenu>
+                <el-submenu index="3">
+                    <template slot="title"><i class="el-icon-setting"></i>导航三</template>
+                    <el-menu-item-group>
+                        <template slot="title">分组一</template>
+                        <el-menu-item index="3-1">选项1</el-menu-item>
+                        <el-menu-item index="3-2">选项2</el-menu-item>
+                    </el-menu-item-group>
+                    <el-menu-item-group title="分组2">
+                        <el-menu-item index="3-3">选项3</el-menu-item>
+                    </el-menu-item-group>
+                    <el-submenu index="3-4">
+                        <template slot="title">选项4</template>
+                        <el-menu-item index="3-4-1">选项4-1</el-menu-item>
+                    </el-submenu>
+                </el-submenu>
+            </el-menu>
+        </el-aside>
+        <el-container>
+            <el-header style="background-color: black; color: white; line-height: 60px">
+                <el-col :span="1" :offset="23">
+                    <el-dropdown>
+                        <el-button style="margin-right: 10px">{{user.username}}</el-button>
+                        <el-dropdown-menu slot="dropdown">
+                            <a href="/person.html" style="display:inline-block; padding: 5px 0; width: 100px; text-align: center; color: black">个人信息</a>
+                            <a @click="logout" href="#" style="display:block; width: 100px;  text-align: center; color: black">退出</a>
+                        </el-dropdown-menu>
+                    </el-dropdown>
+                </el-col>
+            </el-header>
+            <el-main>Main</el-main>
+        </el-container>
+    </el-container>
+</div>
+
+<script src="/js/jquery.min.js"></script>
+<script src="/js/vue.min.js"></script>
+<script src="/js/element.js"></script>
+<script>
+    $(function (){
+        let mainHeight = $(window).height();
+        mainHeight = Math.max(mainHeight, parseInt($('.el-main').css('height').replace("px", "")));
+        $('.el-aside').height(mainHeight);
+    })
+    new Vue({
+        el: "#wrapper",
+        data: {
+            user: {}
+        },
+        created() {
+            this.user = JSON.parse(localStorage.getItem("user"));
+        },
+        methods: {
+            logout() {
+                localStorage.removeItem("user");
+                location.href = "/login.html";
+            },
+        }
+    })
+</script>
+</body>
+</html>
