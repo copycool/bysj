@@ -37,9 +37,6 @@ public class User {
     @Column(name = "tel")
     private String tel;
 
-    @Column(name = "create_time")
-    private Date createTime;
-
     public Long getId() {
         return id;
     }
@@ -78,14 +75,6 @@ public class User {
 
     public void setTel(String tel) {
          this.tel = tel;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-         this.createTime = createTime;
     }
 
 }
