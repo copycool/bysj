@@ -33,3 +33,11 @@ button {
     outline: none;
     cursor: pointer;
 }
+
+/*elementUI样式调整*/
+[v-cloak] {
+    display: none;
+}
+.el-aside,.el-menu {
+    overflow-x: hidden;
+}
