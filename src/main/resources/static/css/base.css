@@ -38,6 +38,12 @@ button {
 [v-cloak] {
     display: none;
 }
+.el-menu--collapse  .el-submenu__title span{
+    display: none;
+}
+.el-header {
+    padding-left: 0;
+}
 .el-aside,.el-menu {
     overflow-x: hidden;
 }

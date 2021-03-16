@@ -3,13 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>导航菜单</title>
-    <link rel="stylesheet" href="css/base.css">
     <link rel="stylesheet" href="css/element.css">
-    <style>
-        .fade-enter-active, .fade-leave-active {
-            transition: opacity .5s;
-        }
-    </style>
+    <link rel="stylesheet" href="css/base.css">
 </head>
 <body style="background-color: #ddd">
 <div id="wrapper" v-cloak>
@@ -56,7 +51,7 @@
         <el-container>
             <el-header style="background-color: black; color: white; line-height: 60px">
                 <el-col :span="1">
-                    <el-button size="small" @click="handleCollapse">展开/收缩</el-button>
+<!--                    <i style="font-size: 22px; cursor: pointer" class="el-icon-s-fold" @click="handleCollapse"></i>-->
                 </el-col>
                 <el-col :span="1" :offset="22">
                     <el-dropdown>
@@ -147,7 +142,7 @@
         },
         methods: {
             handleCollapse() {
-               this.isCollapse = !this.isCollapse;
+                this.isCollapse = !this.isCollapse;
             },
             handleOpen(key, keyPath) {
                 console.log(key, keyPath);
