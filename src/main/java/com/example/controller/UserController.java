@@ -105,7 +105,7 @@ public class UserController {
             Map<String, Object> row1 = new LinkedHashMap<>();
             row1.put("用户名", user.getUsername());
             row1.put("邮箱", user.getEmail());
-            row1.put("电话", user.getTel());
+            row1.put("电话", user.getPhone());
             list.add(row1);
         }
 

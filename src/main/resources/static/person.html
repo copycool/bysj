@@ -12,8 +12,9 @@
     <el-row style="height: 50px; background-color: black; line-height: 50px; color: white;">
         <el-col :span="22"><div style="font-size: 30px; margin-left: 20px;"><a href="/index.html">LOGO</a></div></el-col>
         <el-col :span="2" style="text-align: right">
+            <span style="color: white">{{user.username}}</span>
             <el-dropdown>
-                <el-button type="primary" style="margin-right: 10px">{{user.username}}</el-button>
+                <img src="/files/avatar" style="width: 40px; height: 40px; margin-right: 10px; border-radius: 50%">
                 <el-dropdown-menu slot="dropdown">
                     <a href="/person.html" style="display:inline-block; padding: 5px 0; width: 100px; text-align: center; color: black">个人信息</a>
                     <a @click="logout" href="#" style="display:block; width: 100px;  text-align: center; color: black">退出</a>
@@ -23,19 +24,29 @@
         </el-col>
     </el-row>
     <el-row style="margin-top: 50px">
-        <el-col :span="8" :offset="8">
-            <el-card style="width: 100%">
-                <div slot="header" class="clearfix">
+        <el-col :span="6" :offset="9">
+            <el-card style="width: 100%; padding-bottom: 100px">
+                <div slot="header" class="clearfix" style="text-align: center">
                     <span style="font-size: 24px">个人信息</span>
                 </div>
-                <div style="font-size: 18px">
-                    <div style="width: 100px; margin: 0 auto; position: relative">
+                <div style="font-size: 18px;">
+                    <div style="width: 100px; margin: 0 auto; position: relative; padding-bottom: 20px">
                         <img style="width: 100px; height: 100px; border-radius: 50%; " :src=`/files/avatar?t=${timestamp}` alt="">
                         <input @change="upload" type="file" id="avatar" style="width: 100px; height: 100px; opacity: 0; position: absolute; top: 0; left: 0">
                     </div>
-                    <div style="text-align: center; padding: 10px 0">姓名：{{user.username}}</div>
-                    <div style="text-align: center; padding: 10px 0">邮箱：{{user.email}}</div>
-                    <div style="text-align: center; padding: 10px 0">电话：{{user.tel}}</div>
+                    <el-row style="padding: 10px 0">
+                        <el-col :span="12" style="text-align: right">姓名：</el-col>
+                        <el-col :span="12">{{user.username}}</el-col>
+                    </el-row>
+                    <el-row style="padding: 10px 0">
+                        <el-col :span="12" style="text-align: right">邮箱：</el-col>
+                        <el-col :span="12">{{user.email}}</el-col>
+                    </el-row>
+                    <el-row style="padding: 10px 0">
+                        <el-col :span="12" style="text-align: right">电话：</el-col>
+                        <el-col :span="12">{{user.phone}}</el-col>
+                    </el-row>
+
                 </div>
             </el-card>
 

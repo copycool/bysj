@@ -34,8 +34,8 @@ public class User {
     /**
      * 电话 
      */
-    @Column(name = "tel")
-    private String tel;
+    @Column(name = "phone")
+    private String phone;
 
     public Long getId() {
         return id;
@@ -69,12 +69,12 @@ public class User {
          this.email = email;
     }
 
-    public String getTel() {
-        return tel;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setTel(String tel) {
-         this.tel = tel;
+    public void setPhone(String phone) {
+         this.phone = phone;
     }
 
 }
