@@ -12,9 +12,12 @@
         <el-aside :width="isCollapse ? '64px' : '200px'" style="background-color: black; transition:width .5s">
             <div style="background-color: black; height: 60px; line-height: 60px; text-align: center;
                 color: white; font-size: 20px;">
-                <span name="fade" v-show="!isCollapse">X-Admin</span>
+                <transition name="el-fade-in-linear">
+                    <span name="fade" v-show="!isCollapse">X-Admin</span>
+                </transition>
             </div>
-            <el-menu style="border: none" background-color="black" text-color="#fff" active-text-color="#ffd04b" default-active="1-4-1"
+            <el-menu style="border: none;" background-color="black" text-color="#fff" active-text-color="#ffd04b"
+                     default-active="1-4-1"
                      class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose" :collapse="isCollapse">
                 <el-submenu index="1">
                     <template slot="title">
@@ -51,14 +54,17 @@
         <el-container>
             <el-header style="background-color: black; color: white; line-height: 60px">
                 <el-col :span="1">
-<!--                    <i style="font-size: 22px; cursor: pointer" class="el-icon-s-fold" @click="handleCollapse"></i>-->
+                    <i style="font-size: 22px; cursor: pointer"
+                       :class="[isCollapse ? 'el-icon-s-unfold' : 'el-icon-s-fold']" @click="handleCollapse"></i>
                 </el-col>
                 <el-col :span="1" :offset="22">
                     <el-dropdown>
                         <el-button style="margin-right: 10px">{{user.username}}</el-button>
                         <el-dropdown-menu slot="dropdown">
-                            <a href="/person.html" style="display:inline-block; padding: 5px 0; width: 100px; text-align: center; color: black">个人信息</a>
-                            <a @click="logout" href="#" style="display:block; width: 100px;  text-align: center; color: black">退出</a>
+                            <a href="/person.html"
+                               style="display:inline-block; padding: 5px 0; width: 100px; text-align: center; color: black">个人信息</a>
+                            <a @click="logout" href="#"
+                               style="display:block; width: 100px;  text-align: center; color: black">退出</a>
                         </el-dropdown-menu>
                     </el-dropdown>
                 </el-col>
@@ -161,7 +167,7 @@
                 this.pageSize = pageSize;
                 this.loadTable();
             },
-            handleCurrentChange (pageNum) {
+            handleCurrentChange(pageNum) {
                 this.pageNum = pageNum;
                 this.loadTable();
             },
@@ -170,7 +176,7 @@
                 this.dialogFormVisible = true;
             },
             save() {
-                let type = this.entity.id ? "PUT": "POST";
+                let type = this.entity.id ? "PUT" : "POST";
                 $.ajax({
                     url: urlBase,
                     type: type,
