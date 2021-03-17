@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>个人信息</title>
-    <link rel="stylesheet" href="/css/base.css">
-    <link rel="stylesheet" href="/css/element.css">
+    <link rel="stylesheet" href="css/element.css">
+    <link rel="stylesheet" href="css/base.css">
 </head>
 <body style="background-color: #ddd">
-<div id="wrapper">
+<div id="wrapper" v-cloak>
     <!--        头部-->
     <el-row style="height: 50px; background-color: black; line-height: 50px; color: white;">
         <el-col :span="22"><div style="font-size: 30px; margin-left: 20px;"><a href="/index.html">LOGO</a></div></el-col>
@@ -22,16 +22,20 @@
 
         </el-col>
     </el-row>
-    <el-row style="margin-top: 100px">
+    <el-row style="margin-top: 50px">
         <el-col :span="8" :offset="8">
             <el-card style="width: 100%">
                 <div slot="header" class="clearfix">
                     <span style="font-size: 24px">个人信息</span>
                 </div>
                 <div style="font-size: 18px">
-                    <div style="padding: 10px 50px">姓名：{{user.username}}</div>
-                    <div style="padding: 10px 50px">邮箱：{{user.email}}</div>
-                    <div style="padding: 10px 50px">电话：{{user.tel}}</div>
+                    <div style="width: 100px; margin: 0 auto; position: relative">
+                        <img style="width: 100px; height: 100px; border-radius: 50%; " :src="avatarPath" alt="">
+                        <input @change="upload" type="file" id="avatar" style="width: 100px; height: 100px; opacity: 0; position: absolute; top: 0; left: 0">
+                    </div>
+                    <div style="text-align: center; padding: 10px 0">姓名：{{user.username}}</div>
+                    <div style="text-align: center; padding: 10px 0">邮箱：{{user.email}}</div>
+                    <div style="text-align: center; padding: 10px 0">电话：{{user.tel}}</div>
                 </div>
             </el-card>
 
@@ -39,23 +43,51 @@
     </el-row>
 </div>
 
-<script src="/js/jquery.min.js"></script>
-<script src="/js/vue.min.js"></script>
-<script src="/js/element.js"></script>
+<script src="js/jquery.min.js"></script>
+<script src="js/vue.min.js"></script>
+<script src="js/element.js"></script>
 <script>
     new Vue({
         el: "#wrapper",
         data: {
-            user: {}
+            user: {},
+            avatarPath: ''
         },
         created() {
             this.user = JSON.parse(localStorage.getItem("user"));
+            this.loadAvatar();
         },
         methods: {
             logout() {
                 localStorage.removeItem("user");
                 location.href = "/login.html";
             },
+            loadAvatar() {
+                $.get("/files/avatar").then(res => {
+                    this.avatarPath = res.data;
+                })
+            },
+            upload() {
+                let formData = new FormData();
+                formData.append("file", $("#avatar")[0].files[0])
+                $.ajax({
+                    url: '/files/avatar',
+                    processData: false,
+                    contentType: false,
+                    type: 'POST',
+                    data: formData
+                }).then(res => {
+                    if(res.code === '0') {
+                        this.$message({
+                            type: "success",
+                            message: "上传成功"
+                        })
+                        setTimeout(() => {
+                            this.loadAvatar();
+                        }, 3000);
+                    }
+                })
+            }
         }
     })
 </script>

@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>首页</title>
-    <link rel="stylesheet" href="/css/base.css">
-    <link rel="stylesheet" href="/css/element.css">
+    <link rel="stylesheet" href="css/element.css">
+    <link rel="stylesheet" href="css/base.css">
 </head>
 <body style="background-color: #ddd">
-    <div id="wrapper">
+    <div id="wrapper" v-cloak>
 <!--        头部-->
         <el-row style="height: 50px; background-color: black; line-height: 50px; color: white;">
             <el-col :span="22"><div style="font-size: 30px; margin-left: 20px;"><a href="/index.html">LOGO</a></div></el-col>
@@ -98,9 +98,9 @@
 
     </div>
 
-    <script src="/js/jquery.min.js"></script>
-    <script src="/js/vue.min.js"></script>
-    <script src="/js/element.js"></script>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/vue.min.js"></script>
+    <script src="js/element.js"></script>
 
     <script>
         let urlBase = "/user/";
