@@ -64,3 +64,9 @@ input[type='file'] {
 .horizontal-collapse-transition {
     transition: 0s;
 }
+.el-menu a {
+    color: white;
+}
+.el-menu .is-active a {
+    color: #ffd04b;
+}
