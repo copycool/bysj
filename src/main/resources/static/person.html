@@ -30,7 +30,7 @@
                 </div>
                 <div style="font-size: 18px">
                     <div style="width: 100px; margin: 0 auto; position: relative">
-                        <img style="width: 100px; height: 100px; border-radius: 50%; " :src="avatarPath" alt="">
+                        <img style="width: 100px; height: 100px; border-radius: 50%; " :src=`/files/avatar?t=${timestamp}` alt="">
                         <input @change="upload" type="file" id="avatar" style="width: 100px; height: 100px; opacity: 0; position: absolute; top: 0; left: 0">
                     </div>
                     <div style="text-align: center; padding: 10px 0">姓名：{{user.username}}</div>
@@ -51,21 +51,15 @@
         el: "#wrapper",
         data: {
             user: {},
-            avatarPath: ''
+            timestamp: 0
         },
         created() {
             this.user = JSON.parse(localStorage.getItem("user"));
-            this.loadAvatar();
         },
         methods: {
             logout() {
                 localStorage.removeItem("user");
                 location.href = "/login.html";
-            },
-            loadAvatar() {
-                $.get("/files/avatar").then(res => {
-                    this.avatarPath = res.data;
-                })
             },
             upload() {
                 let formData = new FormData();
@@ -81,10 +75,8 @@
                         this.$message({
                             type: "success",
                             message: "上传成功"
-                        })
-                        setTimeout(() => {
-                            this.loadAvatar();
-                        }, 3000);
+                        });
+                        setTimeout(() => this.timestamp = new Date().getTime(), 1000);
                     }
                 })
             }
