@@ -1,4 +1,4 @@
-package com.example.utils;
+package com.example.utils.generator;
 
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.StrUtil;
