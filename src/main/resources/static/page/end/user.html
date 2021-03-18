@@ -194,7 +194,7 @@
             },
             logout() {
                 localStorage.removeItem("user");
-                location.href = "/login.html";
+                location.href = "/page/end/login.html";
             },
             loadTable() {
                 $.get(urlBase + "/page?pageNum=" + this.pageNum + "&pageSize=" + this.pageSize).then(res => {
