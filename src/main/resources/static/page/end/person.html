@@ -65,7 +65,7 @@
             timestamp: 0
         },
         created() {
-            this.user = JSON.parse(localStorage.getItem("user"));
+            this.user = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {};
         },
         methods: {
             logout() {

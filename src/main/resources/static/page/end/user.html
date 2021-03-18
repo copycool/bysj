@@ -159,7 +159,7 @@
             isCollapse: false
         },
         created() {
-            this.user = JSON.parse(localStorage.getItem("user"));
+            this.user = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {};
             this.loadTable();
         },
         methods: {

@@ -291,7 +291,7 @@
             isCollapse: false
         },
         mounted() {
-            this.user = JSON.parse(localStorage.getItem("user"));
+            this.user = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {};
             this.loadEcharts();
         },
         methods: {
