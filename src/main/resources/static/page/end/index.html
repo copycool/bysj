@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>首页</title>
-    <link rel="stylesheet" href="../css/element.css">
-    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../../css/element.css">
+    <link rel="stylesheet" href="../../css/base.css">
     <style>
         .el-divider__text {
             background: #eee;
@@ -21,10 +21,11 @@
                     <span name="fade" v-show="!isCollapse"><a href="/index.html">X-Admin</a></span>
                 </transition>
             </div>
+            <!-- 菜单 -->
             <el-menu style="border: none;" background-color="black" text-color="#fff" active-text-color="#ffd04b"
                      default-active="0"
                      class="el-menu-vertical-demo" :collapse="isCollapse">
-                <a href="/index.html">
+                <a href="/page/end/index.html">
                     <el-menu-item index="0">
                         <i class="el-icon-data-line"></i>
                         <span slot="title">首页</span>
@@ -35,7 +36,7 @@
                         <i class="el-icon-menu"></i>
                         <span slot="title">信息管理</span>
                     </template>
-                    <a href="/user.html">
+                    <a href="/page/end/user.html">
                         <el-menu-item index="1-1">
                             <i class="el-icon-s-data"></i>
                             <span slot="title">用户管理</span>
@@ -73,7 +74,7 @@
                     <el-col :span="6">
                         <el-card style="padding: 10px">
                             <div style="display: inline-block; padding-right: 20px; vertical-align: middle;">
-                                <img src="../file/home/home-01.png" style="width: 60px">
+                                <img src="../../file/home/home-01.png" style="width: 60px">
                             </div>
                             <div style="display: inline-block; padding-left: 40px; vertical-align: middle;">
                                 <div style="color: #455a64; font-size: 24px; padding-bottom: 5px">1988</div>
@@ -84,7 +85,7 @@
                     <el-col :span="6">
                         <el-card style="padding: 10px">
                             <div style="display: inline-block; padding-right: 20px; vertical-align: middle;">
-                                <img src="../file/home/home-02.png" style="width: 60px">
+                                <img src="../../file/home/home-02.png" style="width: 60px">
                             </div>
                             <div style="display: inline-block; padding-left: 40px; vertical-align: middle;">
                                 <div style="color: #455a64; font-size: 24px; padding-bottom: 5px">1988</div>
@@ -95,7 +96,7 @@
                     <el-col :span="6">
                         <el-card style="padding: 10px">
                             <div style="display: inline-block; padding-right: 20px; vertical-align: middle;">
-                                <img src="../file/home/home-03.png" style="width: 60px">
+                                <img src="../../file/home/home-03.png" style="width: 60px">
                             </div>
                             <div style="display: inline-block; padding-left: 40px; vertical-align: middle;">
                                 <div style="color: #455a64; font-size: 24px; padding-bottom: 5px">1988</div>
@@ -106,7 +107,7 @@
                     <el-col :span="6">
                         <el-card style="padding: 10px">
                             <div style="display: inline-block; padding-right: 20px; vertical-align: middle;">
-                                <img src="../file/home/home-04.png" style="width: 60px">
+                                <img src="../../file/home/home-04.png" style="width: 60px">
                             </div>
                             <div style="display: inline-block; padding-left: 40px; vertical-align: middle;">
                                 <div style="color: #455a64; font-size: 24px; padding-bottom: 5px">1988</div>
@@ -135,12 +136,12 @@
     </el-container>
 </div>
 
-<script src="../js/echarts.min.js"></script>
-<script src="../js/china.js"></script>
-<script src="../js/jquery.min.js"></script>
-<script src="../js/vue.min.js"></script>
-<script src="../js/element.js"></script>
-<script src="../js/base.js"></script>
+<script src="../../js/echarts.min.js"></script>
+<script src="../../js/china.js"></script>
+<script src="../../js/jquery.min.js"></script>
+<script src="../../js/vue.min.js"></script>
+<script src="../../js/element.js"></script>
+<script src="../../js/base.js"></script>
 
 
 <script>

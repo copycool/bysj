@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>用户管理</title>
-    <link rel="stylesheet" href="../css/element.css">
-    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../../css/element.css">
+    <link rel="stylesheet" href="../../css/base.css">
 </head>
 <body>
 <div id="wrapper" v-cloak>
@@ -19,7 +19,7 @@
             <el-menu style="border: none;" background-color="black" text-color="#fff" active-text-color="#ffd04b"
                      default-active="1-1"
                      class="el-menu-vertical-demo" :collapse="isCollapse">
-                <a href="/index.html">
+                <a href="/page/end/index.html">
                     <el-menu-item index="0">
                         <i class="el-icon-data-line"></i>
                         <span slot="title">首页</span>
@@ -30,7 +30,7 @@
                         <i class="el-icon-menu"></i>
                         <span slot="title">信息管理</span>
                     </template>
-                    <a href="/user.html">
+                    <a href="/page/end/user.html">
                         <el-menu-item index="1-1">
                             <i class="el-icon-s-data"></i>
                             <span slot="title">用户管理</span>
@@ -121,10 +121,10 @@
     </el-container>
 </div>
 
-<script src="../js/jquery.min.js"></script>
-<script src="../js/base.js"></script>
-<script src="../js/vue.min.js"></script>
-<script src="../js/element.js"></script>
+<script src="../../js/jquery.min.js"></script>
+<script src="../../js/base.js"></script>
+<script src="../../js/vue.min.js"></script>
+<script src="../../js/element.js"></script>
 <script>
     let urlBase = "/user/"
     new Vue({
