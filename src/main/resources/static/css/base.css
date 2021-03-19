@@ -51,6 +51,41 @@ input[type='file'] {
     left: 0;
     top: 0;
 }
+.tip {
+    position: relative;
+    margin: 10px auto;
+    height: 50px;
+    line-height: 50px;
+    color: white;
+    text-align: center;
+    border-radius: 10px;
+    font-family: sans-serif;
+}
+.tip:after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 0;
+    border: 8px solid;
+}
+.right {
+    background-color: deepskyblue;
+}
+.left {
+    background-color: forestgreen;
+}
+.left:after {
+    border-right-color: forestgreen;
+    top: 50%;
+    right: 100%;
+    margin-top: -9px;
+}
+.right:after {
+    border-left-color: deepskyblue;
+    left: 100%;
+    top: 50%;
+    margin-top: -7px;
+}
 /*elementUI样式调整*/
 [v-cloak] {
     display: none;

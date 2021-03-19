@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>聊天室</title>
+    <link rel="stylesheet" href="../../css/element.css">
+    <link rel="stylesheet" href="../../css/base.css">
+</head>
+<body>
+<div id="wrapper" v-cloak>
+    <el-container>
+        <el-aside :width="isCollapse ? '64px' : '200px'" style="background-color: black; transition:width .5s">
+            <div style="background-color: black; height: 60px; line-height: 60px; text-align: center;
+                color: white; font-size: 20px;">
+                <transition name="el-fade-in-linear">
+                    <span name="fade" v-show="!isCollapse"><a href="/index.html">X-Admin</a></span>
+                </transition>
+            </div>
+            <el-menu style="border: none;" background-color="black" text-color="#fff" active-text-color="#ffd04b"
+                     default-active="1-2"
+                     class="el-menu-vertical-demo" :collapse="isCollapse">
+                <a href="/page/end/index.html">
+                    <el-menu-item index="0">
+                        <i class="el-icon-data-line"></i>
+                        <span slot="title">首页</span>
+                    </el-menu-item>
+                </a>
+                <el-submenu index="1">
+                    <template slot="title">
+                        <i class="el-icon-menu"></i>
+                        <span slot="title">信息管理</span>
+                    </template>
+                    <a href="/page/end/user.html">
+                        <el-menu-item index="1-1">
+                            <i class="el-icon-s-data"></i>
+                            <span slot="title">用户管理</span>
+                        </el-menu-item>
+                    </a>
+                    <a href="/page/end/plugins.html">
+                        <el-menu-item index="1-2">
+                            <i class="el-icon-s-data"></i>
+                            <span slot="title">插件管理</span>
+                        </el-menu-item>
+                    </a>
+                </el-submenu>
+            </el-menu>
+        </el-aside>
+        <el-container>
+            <el-header style="background-color: black; line-height: 60px; color: white;">
+                <el-row>
+                    <el-col :span="1">
+                        <i style="font-size: 22px; cursor: pointer"
+                           :class="[isCollapse ? 'el-icon-s-unfold' : 'el-icon-s-fold']" @click="handleCollapse"></i>
+                    </el-col>
+                    <el-col :span="2" :offset="21" style="text-align: right">
+                        <span style="color: white; margin-right: 10px">{{user.username}}</span>
+                        <el-dropdown>
+                            <img src="/files/avatar"
+                                 style="width: 40px; height: 40px; margin-right: 10px; border-radius: 50%">
+                            <el-dropdown-menu slot="dropdown">
+                                <a href="/person.html"
+                                   style="display:inline-block; padding: 5px 0; width: 100px; text-align: center; color: black">个人信息</a>
+                                <a @click="logout" href="#"
+                                   style="display:block; width: 100px;  text-align: center; color: black">退出</a>
+                            </el-dropdown-menu>
+                        </el-dropdown>
+                    </el-col>
+                </el-row>
+            </el-header>
+            <!-- 主体区域 -->
+            <el-main>
+                <div style="width: 800px; height: 750px; margin: 10px auto; border: 1px solid #aaa; background-color: white;
+                    border-radius: 5px; box-shadow: 0 0 10px #ccc">
+                    <div style="text-align: center; font-size: 18px; line-height: 50px; border-bottom: 1px solid #ccc">Web聊天室</div>
+                    <div style="height: 500px; border-bottom: 1px solid #aaa; overflow:auto">
+                        <el-row>
+                            <el-col :span="15" :offset="6">
+                                <div class="tip right">这个是一句废话</div>
+                            </el-col>
+                            <el-col :span="3" style="padding: 10px; line-height: 50px; text-align: center">
+                                <img style="width: 40px; height: 40px; border-radius: 50%" src="/file/avatar-1615969390812.jpeg" alt="">
+                            </el-col>
+                        </el-row>
+
+                        <el-row>
+                            <el-col :span="3" style="padding: 10px; line-height: 50px; text-align: center">
+                                <img style="width: 40px; height: 40px; border-radius: 50%" src="/file/avatar-1615969390812.jpeg" alt="">
+                            </el-col>
+                            <el-col :span="15">
+                                <div class="tip left">这个是一句废话</div>
+                            </el-col>
+                        </el-row>
+
+                        <el-row>
+                            <el-col :span="3" style="padding: 10px; line-height: 50px; text-align: center">
+                                <img style="width: 40px; height: 40px; border-radius: 50%" src="/file/avatar-1615969390812.jpeg" alt="">
+                            </el-col>
+                            <el-col :span="15">
+                                <div class="tip left">这个是一句废话</div>
+                            </el-col>
+                        </el-row>
+                        <el-row>
+                            <el-col :span="3" style="padding: 10px; line-height: 50px; text-align: center">
+                                <img style="width: 40px; height: 40px; border-radius: 50%" src="/file/avatar-1615969390812.jpeg" alt="">
+                            </el-col>
+                            <el-col :span="15">
+                                <div class="tip left">这个是一句废话</div>
+                            </el-col>
+                        </el-row>
+                        <el-row>
+                            <el-col :span="3" style="padding: 10px; line-height: 50px; text-align: center">
+                                <img style="width: 40px; height: 40px; border-radius: 50%" src="/file/avatar-1615969390812.jpeg" alt="">
+                            </el-col>
+                            <el-col :span="15">
+                                <div class="tip left">这个是一句废话</div>
+                            </el-col>
+                        </el-row>
+                        <el-row>
+                            <el-col :span="3" style="padding: 10px; line-height: 50px; text-align: center">
+                                <img style="width: 40px; height: 40px; border-radius: 50%" src="/file/avatar-1615969390812.jpeg" alt="">
+                            </el-col>
+                            <el-col :span="15">
+                                <div class="tip left">这个是一句废话</div>
+                            </el-col>
+                        </el-row>
+                        <el-row>
+                            <el-col :span="3" style="padding: 10px; line-height: 50px; text-align: center">
+                                <img style="width: 40px; height: 40px; border-radius: 50%" src="/file/avatar-1615969390812.jpeg" alt="">
+                            </el-col>
+                            <el-col :span="15">
+                                <div class="tip left">这个是一句废话</div>
+                            </el-col>
+                        </el-row>
+                        <el-row>
+                            <el-col :span="3" style="padding: 10px; line-height: 50px; text-align: center">
+                                <img style="width: 40px; height: 40px; border-radius: 50%" src="/file/avatar-1615969390812.jpeg" alt="">
+                            </el-col>
+                            <el-col :span="15">
+                                <div class="tip left">这个是一句废话</div>
+                            </el-col>
+                        </el-row>
+                        <el-row>
+                            <el-col :span="3" style="padding: 10px; line-height: 50px; text-align: center">
+                                <img style="width: 40px; height: 40px; border-radius: 50%" src="/file/avatar-1615969390812.jpeg" alt="">
+                            </el-col>
+                            <el-col :span="15">
+                                <div class="tip left">这个是一句废话</div>
+                            </el-col>
+                        </el-row>
+
+                    </div>
+                    <div style="height: 200px">
+                        <textarea style="height: 160px; width: 100%; padding: 20px; border-bottom: 1px solid #ccc"></textarea>
+                        <div style="text-align: right; padding-right: 10px">
+                            <el-button type="primary" size="mini">发送</el-button>
+                        </div>
+                    </div>
+                </div>
+
+            </el-main>
+        </el-container>
+    </el-container>
+</div>
+
+<script src="../../js/jquery.min.js"></script>
+<script src="../../js/vue.min.js"></script>
+<script src="../../js/element.js"></script>
+<script src="../../js/base.js"></script>
+
+<script>
+    let socket;
+
+    $(function () {
+        openSocket();
+    })
+
+    function openSocket() {
+        let currUserId = JSON.parse(localStorage.getItem("user")).id;
+        if (typeof (WebSocket) == "undefined") {
+            console.log("您的浏览器不支持WebSocket");
+        } else {
+            console.log("您的浏览器支持WebSocket");
+            let socketUrl = "ws://localhost:9999/imserver/" + currUserId;
+            if (socket != null) {
+                socket.close();
+                socket = null;
+            }
+            socket = new WebSocket(socketUrl);
+            //打开事件
+            socket.onopen = function () {
+                console.log("websocket已打开");
+                //socket.send("这是来自客户端的消息" + location.href + new Date());
+            };
+            //获得消息事件
+            socket.onmessage = function (msg) {
+                let data = JSON.parse(msg.data)
+                //发现消息进入    开始处理前端触发逻辑
+                console.log('收到用户id：' + data.fromUserId + "发送的消息：" + data.text);
+            };
+            //关闭事件
+            socket.onclose = function () {
+                console.log("websocket已关闭");
+            };
+            //发生了错误事件
+            socket.onerror = function () {
+                console.log("websocket发生了错误");
+            }
+        }
+    }
+
+    function sendMessage() {
+        let toUserId = $("#toUserId").val();
+        if (typeof (WebSocket) == "undefined") {
+            console.log("您的浏览器不支持WebSocket");
+        } else {
+            console.log("您的浏览器支持WebSocket");
+            let message = {toUserId: toUserId + "", text: '测试消息'}
+            socket.send(JSON.stringify(message));
+        }
+    }
+
+    new Vue({
+        el: "#wrapper",
+        data: {
+            user: {},
+            isCollapse: false,
+        },
+        created() {
+            this.user = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {};
+        },
+        methods: {
+            handleCollapse() {
+                this.isCollapse = !this.isCollapse;
+            },
+            logout() {
+                localStorage.removeItem("user");
+                location.href = "/page/end/login.html";
+            }
+        }
+    })
+</script>
+</body>
+</html>

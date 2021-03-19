@@ -74,6 +74,9 @@
                 <div class="upload-box">
                     上传<input style="cursor: pointer" type="file" @change="upload" id="file">
                 </div>
+                <div style="margin: 10px 0">
+                    <img :src=`/files/${uploadFile}` style="width: 100px" alt="">
+                </div>
 
                 <el-card style="margin-top: 20px">
                     <textarea id="mytextarea" cols="30" rows="20"></textarea>
@@ -153,17 +156,11 @@
         el: "#wrapper",
         data: {
             user: {},
-            tableData: [],
-            pageNum: 1,
-            pageSize: 10,
-            total: 0,
-            dialogFormVisible: false,
-            entity: {},
-            isCollapse: false
+            isCollapse: false,
+            uploadFile: ''
         },
         created() {
             this.user = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {};
-            this.loadTable();
 
             tinymce.init({
                 selector: '#mytextarea',
@@ -209,6 +206,7 @@
                             type: "success",
                             message: "上传成功"
                         });
+                        this.uploadFile = res.data
                         // 清除已上传的文件
                         let file = $("#file");
                         file.val("")
@@ -221,73 +219,6 @@
             logout() {
                 localStorage.removeItem("user");
                 location.href = "/page/end/login.html";
-            },
-            loadTable() {
-                $.get(urlBase + "/page?pageNum=" + this.pageNum + "&pageSize=" + this.pageSize).then(res => {
-                    this.tableData = res.data.content;
-                    this.total = res.data.totalElements;
-                })
-            },
-            exp() {
-                window.open(urlBase + "/export");
-            },
-            handleSizeChange(pageSize) {
-                this.pageSize = pageSize;
-                this.loadTable();
-            },
-            handleCurrentChange(pageNum) {
-                this.pageNum = pageNum;
-                this.loadTable();
-            },
-            add() {
-                this.entity = {};
-                this.dialogFormVisible = true;
-            },
-            save() {
-                let type = this.entity.id ? "PUT" : "POST";
-                $.ajax({
-                    url: urlBase,
-                    type: type,
-                    contentType: "application/json",
-                    data: JSON.stringify(this.entity)
-                }).then(res => {
-                    if (res.code === '0') {
-                        this.$message({
-                            message: "保存成功",
-                            type: "success"
-                        });
-                        this.loadTable();
-                    } else {
-                        this.$message({
-                            message: res.msg,
-                            type: "error"
-                        })
-                    }
-                    this.dialogFormVisible = false;
-                })
-            },
-            edit(obj) {
-                this.entity = obj;
-                this.dialogFormVisible = true;
-            },
-            del(id) {
-                $.ajax({
-                    url: urlBase + id,
-                    type: "delete"
-                }).then(res => {
-                    if (res.code === '0') {
-                        this.$message({
-                            message: "删除成功",
-                            type: "success"
-                        })
-                        this.loadTable();
-                    } else {
-                        this.$message({
-                            message: res.msg,
-                            type: "error"
-                        })
-                    }
-                })
             }
         }
     })
