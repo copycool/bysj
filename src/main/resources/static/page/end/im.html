@@ -69,93 +69,59 @@
             </el-header>
             <!-- 主体区域 -->
             <el-main>
-                <div style="width: 800px; height: 750px; margin: 10px auto; border: 1px solid #aaa; background-color: white;
+                <el-col :span="4">
+                    <el-card style="width: 300px; height: 300px; margin-top: 10px;">
+                        <div slot="header" class="clearfix">
+                            <span>在线用户</span>
+                        </div>
+                        <div style="margin-bottom: 15px">
+                            <span>张三</span>
+                            <i class="el-icon-chat-dot-round" style="margin-left: 10px; font-size: 16px; cursor: pointer" @click="chat"></i>
+                        </div>
+                    </el-card>
+                </el-col>
+
+                <el-col :span="20">
+                    <div style="width: 800px; height: 750px; margin: 10px auto; border: 1px solid #aaa; background-color: white;
                     border-radius: 5px; box-shadow: 0 0 10px #ccc">
-                    <div style="text-align: center; font-size: 18px; line-height: 50px; border-bottom: 1px solid #ccc">Web聊天室</div>
-                    <div style="height: 500px; border-bottom: 1px solid #aaa; overflow:auto">
-                        <el-row>
-                            <el-col :span="15" :offset="6">
-                                <div class="tip right">这个是一句废话</div>
-                            </el-col>
-                            <el-col :span="3" style="padding: 10px; line-height: 50px; text-align: center">
-                                <img style="width: 40px; height: 40px; border-radius: 50%" src="/file/avatar-1615969390812.jpeg" alt="">
-                            </el-col>
-                        </el-row>
+                        <div style="text-align: center; font-size: 18px; line-height: 50px; border-bottom: 1px solid #ccc">
+                            Web聊天室（{{chatUser}}）
+                        </div>
+                        <div style="height: 500px; border-bottom: 1px solid #aaa; overflow:auto" id="im-box">
+                            <el-row>
+                                <el-col :span="15" :offset="6">
+                                    <div class="tip right">这个是一句废话</div>
+                                </el-col>
+                                <el-col :span="3" style="">
+                                    <div style="padding: 10px; line-height: 50px; text-align: center">
+                                        <img style="width: 40px; height: 40px; border-radius: 50%"
+                                             src="/file/avatar-1615969390812.jpeg" alt="">
+                                    </div>
+                                </el-col>
+                            </el-row>
 
-                        <el-row>
-                            <el-col :span="3" style="padding: 10px; line-height: 50px; text-align: center">
-                                <img style="width: 40px; height: 40px; border-radius: 50%" src="/file/avatar-1615969390812.jpeg" alt="">
-                            </el-col>
-                            <el-col :span="15">
-                                <div class="tip left">这个是一句废话</div>
-                            </el-col>
-                        </el-row>
+                            <el-row>
+                                <el-col :span="3" style="padding: 10px; line-height: 50px; text-align: center">
+                                    <img style="width: 40px; height: 40px; border-radius: 50%"
+                                         src="/file/avatar-1615969390812.jpeg" alt="">
+                                </el-col>
+                                <el-col :span="15">
+                                    <div class="tip left">这个是一句废话</div>
+                                </el-col>
+                            </el-row>
 
-                        <el-row>
-                            <el-col :span="3" style="padding: 10px; line-height: 50px; text-align: center">
-                                <img style="width: 40px; height: 40px; border-radius: 50%" src="/file/avatar-1615969390812.jpeg" alt="">
-                            </el-col>
-                            <el-col :span="15">
-                                <div class="tip left">这个是一句废话</div>
-                            </el-col>
-                        </el-row>
-                        <el-row>
-                            <el-col :span="3" style="padding: 10px; line-height: 50px; text-align: center">
-                                <img style="width: 40px; height: 40px; border-radius: 50%" src="/file/avatar-1615969390812.jpeg" alt="">
-                            </el-col>
-                            <el-col :span="15">
-                                <div class="tip left">这个是一句废话</div>
-                            </el-col>
-                        </el-row>
-                        <el-row>
-                            <el-col :span="3" style="padding: 10px; line-height: 50px; text-align: center">
-                                <img style="width: 40px; height: 40px; border-radius: 50%" src="/file/avatar-1615969390812.jpeg" alt="">
-                            </el-col>
-                            <el-col :span="15">
-                                <div class="tip left">这个是一句废话</div>
-                            </el-col>
-                        </el-row>
-                        <el-row>
-                            <el-col :span="3" style="padding: 10px; line-height: 50px; text-align: center">
-                                <img style="width: 40px; height: 40px; border-radius: 50%" src="/file/avatar-1615969390812.jpeg" alt="">
-                            </el-col>
-                            <el-col :span="15">
-                                <div class="tip left">这个是一句废话</div>
-                            </el-col>
-                        </el-row>
-                        <el-row>
-                            <el-col :span="3" style="padding: 10px; line-height: 50px; text-align: center">
-                                <img style="width: 40px; height: 40px; border-radius: 50%" src="/file/avatar-1615969390812.jpeg" alt="">
-                            </el-col>
-                            <el-col :span="15">
-                                <div class="tip left">这个是一句废话</div>
-                            </el-col>
-                        </el-row>
-                        <el-row>
-                            <el-col :span="3" style="padding: 10px; line-height: 50px; text-align: center">
-                                <img style="width: 40px; height: 40px; border-radius: 50%" src="/file/avatar-1615969390812.jpeg" alt="">
-                            </el-col>
-                            <el-col :span="15">
-                                <div class="tip left">这个是一句废话</div>
-                            </el-col>
-                        </el-row>
-                        <el-row>
-                            <el-col :span="3" style="padding: 10px; line-height: 50px; text-align: center">
-                                <img style="width: 40px; height: 40px; border-radius: 50%" src="/file/avatar-1615969390812.jpeg" alt="">
-                            </el-col>
-                            <el-col :span="15">
-                                <div class="tip left">这个是一句废话</div>
-                            </el-col>
-                        </el-row>
-
-                    </div>
-                    <div style="height: 200px">
-                        <textarea style="height: 160px; width: 100%; padding: 20px; border-bottom: 1px solid #ccc"></textarea>
-                        <div style="text-align: right; padding-right: 10px">
-                            <el-button type="primary" size="mini">发送</el-button>
+                        </div>
+                        <div style="height: 200px">
+                        <textarea v-model="text"
+                                  style="height: 160px; width: 100%; padding: 20px; border-bottom: 1px solid #ccc"></textarea>
+                            <div style="text-align: right; padding-right: 10px">
+                                <el-button type="primary" size="mini" @click="send">发送</el-button>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </el-col>
+
+
 
             </el-main>
         </el-container>
@@ -224,17 +190,44 @@
         data: {
             user: {},
             isCollapse: false,
+            chatUser: '',
+            text: ""
         },
         created() {
             this.user = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {};
         },
         methods: {
+            chat() {
+
+            },
             handleCollapse() {
                 this.isCollapse = !this.isCollapse;
             },
             logout() {
                 localStorage.removeItem("user");
                 location.href = "/page/end/login.html";
+            },
+            send() {
+                let box = $("#im-box");
+                if (!this.text) {
+                    this.$message({
+                        type: 'warning',
+                        message: "请输入内容"
+                    })
+                } else {
+                    box.append($("<div class='el-row'>\n" +
+                        "                            <div class='el-col el-col-15 el-col-offset-6'>\n" +
+                        "                                <div class=\"tip right\">" +  this.text + "</div>\n" +
+                        "                            </div>\n" +
+                        "                            <div class='el-col el-col-3'>\n" +
+                        "                               <div style='padding: 10px; line-height: 50px; text-align: center;'>" +
+                        "                                <img style=\"width: 40px; height: 40px; border-radius: 50%\" src=\"/files/avatar\">\n" +
+                        "                               </div>\n" +
+                        "                            </div>\n" +
+                        "                        </div>"))
+                    this.text = '';
+                }
+
             }
         }
     })
