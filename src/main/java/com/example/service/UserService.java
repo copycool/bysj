@@ -5,6 +5,7 @@ import com.example.entity.User;
 import com.example.exception.CustomException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -32,8 +33,9 @@ public class UserService {
         return userDao.findAll();
     }
 
-    public Page<User> findPage(int pageNum, int pageSize) {
-        return userDao.findAll(PageRequest.of(pageNum - 1, pageSize));
+    public Page<User> findPage(String name, int pageNum, int pageSize) {
+        Specification<User> specification = (root, criteriaQuery, cb) -> cb.like(root.get("username"), "%" + name + "%");
+        return userDao.findAll(specification, PageRequest.of(pageNum - 1, pageSize));
     }
 
     public User login(User user) {

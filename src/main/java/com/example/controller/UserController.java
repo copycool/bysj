@@ -90,9 +90,10 @@ public class UserController {
     }
 
     @GetMapping("/page")
-    public Result<Page<User>> findPage(@RequestParam(required = false, defaultValue = "1") Integer pageNum,
+    public Result<Page<User>> findPage(@RequestParam(required = false, defaultValue = "") String name,
+                                       @RequestParam(required = false, defaultValue = "1") Integer pageNum,
                                        @RequestParam(required = false, defaultValue = "10") Integer pageSize) {
-        return Result.success(userService.findPage(pageNum, pageSize));
+        return Result.success(userService.findPage(name, pageNum, pageSize));
     }
 
     @GetMapping("/export")

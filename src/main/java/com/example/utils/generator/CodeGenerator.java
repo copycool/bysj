@@ -13,15 +13,15 @@ import java.util.List;
 public class CodeGenerator {
     private static final DruidDataSource ds = new DruidDataSource();
 
+    private static final String schemaName = "test";   // 数据库名称，必填
+    private static final String[][] tables = {{"t_category", "Category"}};   // 必填
+
     static {
         // 必填
-        ds.setUrl("jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false&serverTimezone=GMT%2b8");
+        ds.setUrl("jdbc:mysql://localhost:3306/" + schemaName + "?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false&serverTimezone=GMT%2b8");
         ds.setUsername("root");
         ds.setPassword("123456");
     }
-
-    private static final String schemaName = "test";   // 数据库名称，必填
-    private static final String[][] tables = {{"t_product", "Product"}};   // 必填
 
     private static final String BaseFilePath = System.getProperty("user.dir") + "/src/main/java/com/example/";
     private static final String basePackageName = "com.example";
@@ -149,16 +149,16 @@ public class CodeGenerator {
     }
 
     /**
-     *
      * 生成service
      */
     static void createService(String entityName) {
-        String lowerName = entityName.substring(0 ,1).toLowerCase() + entityName.substring(1);
+        String lowerName = entityName.substring(0, 1).toLowerCase() + entityName.substring(1);
         String daoUpperName = entityName + "Dao";
         String daoLowerName = lowerName + "Dao";
         StringBuilder build = StrUtil.builder().append("package com.example.service;\n\n")
                 .append("import org.springframework.data.domain.Page;\n")
                 .append("import org.springframework.data.domain.PageRequest;\n")
+                .append("import org.springframework.data.jpa.domain.Specification;\n")
                 .append("import java.util.List;\n")
                 .append("import com.example.dao.").append(daoUpperName).append(";\n")
                 .append("import com.example.entity.").append(entityName).append(";\n")
@@ -180,8 +180,9 @@ public class CodeGenerator {
                 .append(space4).append("public List<").append(entityName).append("> findAll() {\n")
                 .append(space4).append(space4).append("return ").append(daoLowerName).append(".findAll();\n")
                 .append(space4).append("}\n\n")
-                .append(space4).append("public Page<").append(entityName).append("> findPage(int pageNum, int pageSize) {\n")
-                .append(space4).append(space4).append("return ").append(daoLowerName).append(".findAll(PageRequest.of(pageNum - 1, pageSize));\n")
+                .append(space4).append("public Page<").append(entityName).append("> findPage(String name, int pageNum, int pageSize) {\n")
+                .append(space4).append(space4).append("Specification<").append(entityName).append("> specification = (root, criteriaQuery, cb) -> cb.like(root.get(\"name\"), \"%\" + name + \"%\");\n")
+                .append(space4).append(space4).append("return ").append(daoLowerName).append(".findAll(specification, PageRequest.of(pageNum - 1, pageSize));\n")
                 .append(space4).append("}\n\n")
                 .append("}");
         FileUtil.writeString(build.toString(), BaseFilePath + "/service/" + entityName + "Service" + ".java", "UTF-8");
@@ -190,10 +191,11 @@ public class CodeGenerator {
 
     /**
      * 生成controller
+     *
      * @param entityName
      */
-    static void createController (String entityName) {
-        String lowerName = entityName.substring(0 ,1).toLowerCase() + entityName.substring(1);
+    static void createController(String entityName) {
+        String lowerName = entityName.substring(0, 1).toLowerCase() + entityName.substring(1);
         String serviceUpperName = entityName + "Service";
         String serviceLowerName = lowerName + "Service";
         StringBuilder build = StrUtil.builder().append("package com.example.controller;\n\n")
@@ -231,8 +233,10 @@ public class CodeGenerator {
                 .append(space4).append(space4).append("return Result.success(").append(serviceLowerName).append(".findAll());\n")
                 .append(space4).append("}\n\n")
                 .append(space4).append("@GetMapping(\"/page\")\n")
-                .append(space4).append("public Result<Page<").append(entityName).append(">> findPage(@RequestParam(required = false, defaultValue = \"1\") Integer pageNum, @RequestParam(required = false, defaultValue = \"10\") Integer pageSize) {\n")
-                .append(space4).append(space4).append("return Result.success(").append(serviceLowerName).append(".findPage(pageNum, pageSize));\n")
+                .append(space4).append("public Result<Page<").append(entityName).append(">> findPage(@RequestParam(required = false, defaultValue = \"\") String name,\n")
+                .append("                                           ").append("@RequestParam(required = false, defaultValue = \"1\") Integer pageNum,\n")
+                .append("                                           ").append("@RequestParam(required = false, defaultValue = \"10\") Integer pageSize) {\n")
+                .append(space4).append(space4).append("return Result.success(").append(serviceLowerName).append(".findPage(name, pageNum, pageSize));\n")
                 .append(space4).append("}\n\n")
                 .append("}");
 

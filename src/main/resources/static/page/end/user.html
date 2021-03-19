@@ -135,16 +135,25 @@
 <!--                    上传<input style="cursor: pointer" type="file" @change="upload" id="file">-->
 <!--                </div>-->
 
+                <el-card style="margin-top: 20px">
+                    <textarea id="mytextarea" cols="30" rows="20"></textarea>
+                </el-card>
+
+                <el-button @click="print">打印富文本</el-button>
+
             </el-main>
         </el-container>
     </el-container>
 </div>
 
 <script src="../../js/jquery.min.js"></script>
-<script src="../../js/base.js"></script>
 <script src="../../js/vue.min.js"></script>
 <script src="../../js/element.js"></script>
+<script src="../../js/tinymce/tinymce.min.js"></script>
+<script src="../../js/base.js"></script>
+
 <script>
+
     let urlBase = "/user/"
     new Vue({
         el: "#wrapper",
@@ -156,13 +165,23 @@
             total: 0,
             dialogFormVisible: false,
             entity: {},
-            isCollapse: false
+            isCollapse: false,
+            richText: ''
         },
         created() {
             this.user = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {};
             this.loadTable();
+
+            tinymce.init({
+                selector: '#mytextarea',
+                language:'zh_CN',
+                plugins: [ 'quickbars','link','table','image' ], //选择需加载的插件
+            });
         },
         methods: {
+            print() {
+              console.log(tinymce.activeEditor.getContent())
+            },
             upload() {
                 // let files = $("#file")[0].files;
                 // let formData = new FormData();
