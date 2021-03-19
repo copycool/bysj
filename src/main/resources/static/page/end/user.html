@@ -36,6 +36,12 @@
                             <span slot="title">用户管理</span>
                         </el-menu-item>
                     </a>
+                    <a href="/page/end/plugins.html">
+                        <el-menu-item index="1-2">
+                            <i class="el-icon-s-data"></i>
+                            <span slot="title">插件管理</span>
+                        </el-menu-item>
+                    </a>
                 </el-submenu>
             </el-menu>
         </el-aside>
@@ -131,15 +137,6 @@
                         <el-button type="primary" @click="save">确 定</el-button>
                     </div>
                 </el-dialog>
-<!--                <div class="upload-box">-->
-<!--                    上传<input style="cursor: pointer" type="file" @change="upload" id="file">-->
-<!--                </div>-->
-
-                <el-card style="margin-top: 20px">
-                    <textarea id="mytextarea" cols="30" rows="20"></textarea>
-                </el-card>
-
-                <el-button @click="print">打印富文本</el-button>
 
             </el-main>
         </el-container>
@@ -166,48 +163,14 @@
             dialogFormVisible: false,
             entity: {},
             isCollapse: false,
-            richText: ''
         },
         created() {
             this.user = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {};
             this.loadTable();
 
-            tinymce.init({
-                selector: '#mytextarea',
-                language:'zh_CN',
-                plugins: [ 'quickbars','link','table','image' ], //选择需加载的插件
-            });
+
         },
         methods: {
-            print() {
-              console.log(tinymce.activeEditor.getContent())
-            },
-            upload() {
-                // let files = $("#file")[0].files;
-                // let formData = new FormData();
-                // for (let i = 0; i < files.length; i++) {
-                //     formData.append("files", files[i]);
-                // }
-                let formData = new FormData();
-                formData.append("file", $("#file")[0].files[0])
-                $.ajax({
-                    url: '/files/upload',
-                    processData: false,
-                    contentType: false,
-                    type: 'POST',
-                    data: formData
-                }).then(res => {
-                    if (res.code === '0') {
-                        this.$message({
-                            type: "success",
-                            message: "上传成功"
-                        });
-                        // 清除已上传的文件
-                        let file = $("#file");
-                        file.val("")
-                    }
-                })
-            },
             handleCollapse() {
                 this.isCollapse = !this.isCollapse;
             },
