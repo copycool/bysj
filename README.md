@@ -4,34 +4,33 @@
 毕设脚手架工程，拿来即用，简单便捷
 
 #### 软件架构
-软件架构说明
+Java后台：SpringBoot 2.1.0 + SpringData Jpa + hutool工具包 + Apache poi
+
+前台页面：Vue2.0 + ElementUI + Jquery + tinymce（富文本插件）
+
+数据库：Mysql
+
+前后端分离，页面可单独部署，默认放在项目的static文件夹，随后端工程一起访问。
 
 
 #### 安装教程
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+1. 使用git下载本项目，`git clone https://gitee.com/xqnode/graduation-scaffold.git`
+2. 使用idea打开graduation-scaffold文件夹导入工程
+2. 配置maven，下载项目依赖
+3. 数据库执行test.sql
+4. 项目依赖下载完成后，直接运行 Application 启动SpringBoot即可
 
 #### 使用说明
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+1. 登录页面请访问：http://localhost:9999/page/end/login.html
+2. 账号：tom ，密码：123456
 
-#### 参与贡献
+#### 问题交流
+扫描下方二维码，加我微信
 
-1.  Fork 本仓库
-2.  新建 Feat_xxx 分支
-3.  提交代码
-4.  新建 Pull Request
+![](https://img-blog.csdnimg.cn/20201030174103759.jpg#pic_center)
 
+#### 请作者喝杯咖啡
 
-#### 特技
-
-1.  使用 Readme\_XXX.md 来支持不同的语言，例如 Readme\_en.md, Readme\_zh.md
-2.  Gitee 官方博客 [blog.gitee.com](https://blog.gitee.com)
-3.  你可以 [https://gitee.com/explore](https://gitee.com/explore) 这个地址来了解 Gitee 上的优秀开源项目
-4.  [GVP](https://gitee.com/gvp) 全称是 Gitee 最有价值开源项目，是综合评定出的优秀开源项目
-5.  Gitee 官方提供的使用手册 [https://gitee.com/help](https://gitee.com/help)
-6.  Gitee 封面人物是一档用来展示 Gitee 会员风采的栏目 [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
+![](https://img-blog.csdnimg.cn/2021032107143511.jpg)
