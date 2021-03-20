@@ -17,7 +17,7 @@
                     <span name="fade" v-show="!isCollapse"><a href="/index.html">X-Admin</a></span>
                 </transition>
             </div>
-            <el-menu style="border: none;" background-color="black" text-color="#fff" active-text-color="#ffd04b"
+            <el-menu :default-openeds="['1']" style="border: none;" background-color="black" text-color="#fff" active-text-color="#ffd04b"
                      default-active="1-2"
                      class="el-menu-vertical-demo" :collapse="isCollapse">
                 <a href="/page/end/index.html">
@@ -41,6 +41,12 @@
                         <el-menu-item index="1-2">
                             <i class="el-icon-s-data"></i>
                             <span slot="title">插件管理</span>
+                        </el-menu-item>
+                    </a>
+                    <a href="/page/end/im.html">
+                        <el-menu-item index="1-3">
+                            <i class="el-icon-s-data"></i>
+                            <span slot="title">聊天室</span>
                         </el-menu-item>
                     </a>
                 </el-submenu>

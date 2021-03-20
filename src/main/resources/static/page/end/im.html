@@ -16,8 +16,8 @@
                     <span name="fade" v-show="!isCollapse"><a href="/index.html">X-Admin</a></span>
                 </transition>
             </div>
-            <el-menu style="border: none;" background-color="black" text-color="#fff" active-text-color="#ffd04b"
-                     default-active="1-2"
+            <el-menu :default-openeds="['1']" style="border: none;" background-color="black" text-color="#fff" active-text-color="#ffd04b"
+                     default-active="1-3"
                      class="el-menu-vertical-demo" :collapse="isCollapse">
                 <a href="/page/end/index.html">
                     <el-menu-item index="0">
@@ -42,6 +42,12 @@
                             <span slot="title">插件管理</span>
                         </el-menu-item>
                     </a>
+                    <a href="/page/end/im.html">
+                        <el-menu-item index="1-3">
+                            <i class="el-icon-s-data"></i>
+                            <span slot="title">聊天室</span>
+                        </el-menu-item>
+                    </a>
                 </el-submenu>
             </el-menu>
         </el-aside>
@@ -55,7 +61,7 @@
                     <el-col :span="2" :offset="21" style="text-align: right">
                         <span style="color: white; margin-right: 10px">{{user.username}}</span>
                         <el-dropdown>
-                            <img src="/files/avatar"
+                            <img :src=`/files/${user.avatar}`
                                  style="width: 40px; height: 40px; margin-right: 10px; border-radius: 50%">
                             <el-dropdown-menu slot="dropdown">
                                 <a href="/page/end/person.html"
