@@ -17,11 +17,11 @@ Java后台：SpringBoot 2.1.0 + SpringData Jpa + hutool工具包 + Apache poi
 
 1. 使用git下载本项目
 
-`git clone https://gitee.com/xqnode/graduation-scaffold.git`
+    `git clone https://gitee.com/xqnode/graduation-scaffold.git`
 
-或者直接下载zip解压
+    或者直接下载zip解压
 
-![下载zip](https://img-blog.csdnimg.cn/20210321072245227.png)
+    ![下载zip](https://img-blog.csdnimg.cn/20210321072245227.png)
 
 2. 使用idea打开graduation-scaffold文件夹导入工程
 2. 配置maven，下载项目依赖
