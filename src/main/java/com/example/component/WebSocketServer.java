@@ -1,5 +1,6 @@
 package com.example.component;
 
+import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import org.slf4j.Logger;
@@ -17,7 +18,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 /**
  * @author websocket服务
  */
-@ServerEndpoint(value = "/imserver/{userId}")
+@ServerEndpoint(value = "/imserver/{username}")
 @Component
 public class WebSocketServer {
 
@@ -27,29 +28,38 @@ public class WebSocketServer {
      * 记录当前在线连接数
      */
     private static final AtomicInteger onlineCount = new AtomicInteger(0);
-    private static final Map<String, Session> sessionMap = new ConcurrentHashMap<>();
+    public static final Map<String, Session> sessionMap = new ConcurrentHashMap<>();
 
     /**
      * 连接建立成功调用的方法
      */
     @OnOpen
-    public void onOpen(Session session, @PathParam("userId") String userId) {
-        Session userSession = sessionMap.get(userId);
+    public void onOpen(Session session, @PathParam("username") String username) {
+        Session userSession = sessionMap.get(username);
         if (userSession == null) {
             onlineCount.incrementAndGet(); // 在线数加1
         }
-        sessionMap.put(userId, session);
-        log.info("有新用户加入，userId={}, 当前在线人数为：{}", userId, onlineCount.get());
+        sessionMap.put(username, session);
+        log.info("有新用户加入，username={}, 当前在线人数为：{}", username, onlineCount.get());
+        JSONObject result = new JSONObject();
+        JSONArray array = new JSONArray();
+        result.set("users", array);
+        for (Object key : sessionMap.keySet()) {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.set("username", key);
+            array.add(jsonObject);
+        }
+        sendAllMessage(JSONUtil.toJsonStr(result));
     }
 
     /**
      * 连接关闭调用的方法
      */
     @OnClose
-    public void onClose(Session session, @PathParam("userId") String userId) {
+    public void onClose(Session session, @PathParam("username") String username) {
         onlineCount.decrementAndGet(); // 在线数减1
-        sessionMap.remove(userId);
-        log.info("有一连接关闭，移除userId={}的用户session, 当前在线人数为：{}", userId, onlineCount.get());
+        sessionMap.remove(username);
+        log.info("有一连接关闭，移除username={}的用户session, 当前在线人数为：{}", username, onlineCount.get());
     }
 
     /**
@@ -58,20 +68,20 @@ public class WebSocketServer {
      * @param message 客户端发送过来的消息
      */
     @OnMessage
-    public void onMessage(String message, Session session, @PathParam("userId") String userId) {
-        log.info("服务端收到用户userId={}的消息:{}", userId, message);
+    public void onMessage(String message, Session session, @PathParam("username") String username) {
+        log.info("服务端收到用户username={}的消息:{}", username, message);
         JSONObject obj = JSONUtil.parseObj(message);
-        String toUserId = obj.getStr("toUserId");
+        String toUsername = obj.getStr("to");
         String text = obj.getStr("text");
-        Session toSession = sessionMap.get(toUserId);
+        Session toSession = sessionMap.get(toUsername);
         if (toSession != null) {
             JSONObject jsonObject = new JSONObject();
-            jsonObject.set("fromUserId", userId);
+            jsonObject.set("from", username);
             jsonObject.set("text", text);
             this.sendMessage(jsonObject.toString(), toSession);
-            log.info("发送给用户id={}，消息：{}", toUserId, jsonObject.toString());
+            log.info("发送给用户username={}，消息：{}", toUsername, jsonObject.toString());
         } else {
-            log.info("发送失败，未找到用户id={}的session", toUserId);
+            log.info("发送失败，未找到用户username={}的session", toUsername);
         }
     }
 
@@ -88,6 +98,20 @@ public class WebSocketServer {
         try {
             log.info("服务端给客户端[{}]发送消息{}", toSession.getId(), message);
             toSession.getBasicRemote().sendText(message);
+        } catch (Exception e) {
+            log.error("服务端发送消息给客户端失败", e);
+        }
+    }
+
+    /**
+     * 服务端发送消息给所有客户端
+     */
+    private void sendAllMessage(String message) {
+        try {
+            for (Session session : sessionMap.values()) {
+                log.info("服务端给客户端[{}]发送消息{}", session.getId(), message);
+                session.getBasicRemote().sendText(message);
+            }
         } catch (Exception e) {
             log.error("服务端发送消息给客户端失败", e);
         }

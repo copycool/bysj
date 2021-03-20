@@ -14,28 +14,31 @@ public class User {
     private Long id;
 
     /**
-     * 用户名 
+     * 用户名
      */
     @Column(name = "username")
     private String username;
 
     /**
-     * 密码 
+     * 密码
      */
     @Column(name = "password")
     private String password;
 
     /**
-     * 邮箱 
+     * 邮箱
      */
     @Column(name = "email")
     private String email;
 
     /**
-     * 电话 
+     * 电话
      */
     @Column(name = "phone")
     private String phone;
+
+    @Column(name = "avatar")
+    private String avatar;
 
     public Long getId() {
         return id;
@@ -77,4 +80,11 @@ public class User {
          this.phone = phone;
     }
 
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
 }

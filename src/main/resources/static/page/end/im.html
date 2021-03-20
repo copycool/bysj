@@ -58,7 +58,7 @@
                             <img src="/files/avatar"
                                  style="width: 40px; height: 40px; margin-right: 10px; border-radius: 50%">
                             <el-dropdown-menu slot="dropdown">
-                                <a href="/person.html"
+                                <a href="/page/end/person.html"
                                    style="display:inline-block; padding: 5px 0; width: 100px; text-align: center; color: black">个人信息</a>
                                 <a @click="logout" href="#"
                                    style="display:block; width: 100px;  text-align: center; color: black">退出</a>
@@ -74,9 +74,12 @@
                         <div slot="header" class="clearfix">
                             <span>在线用户</span>
                         </div>
-                        <div style="margin-bottom: 15px">
-                            <span>张三</span>
-                            <i class="el-icon-chat-dot-round" style="margin-left: 10px; font-size: 16px; cursor: pointer" @click="chat"></i>
+                        <div style="margin-bottom: 15px" v-for="item in users" :key="item.username">
+                            <span>{{item.username}}</span>
+                            <i class="el-icon-chat-dot-round"
+                               style="margin-left: 10px; font-size: 16px; cursor: pointer"
+                               @click="chat(item.username)"></i>
+                            <span style="font-size: 12px;color: limegreen" v-if="item.username === chatUser.username">chatting...</span>
                         </div>
                     </el-card>
                 </el-col>
@@ -85,30 +88,9 @@
                     <div style="width: 800px; height: 750px; margin: 10px auto; border: 1px solid #aaa; background-color: white;
                     border-radius: 5px; box-shadow: 0 0 10px #ccc">
                         <div style="text-align: center; font-size: 18px; line-height: 50px; border-bottom: 1px solid #ccc">
-                            Web聊天室（{{chatUser}}）
+                            Web聊天室（{{chatUser.username}}）
                         </div>
                         <div style="height: 500px; border-bottom: 1px solid #aaa; overflow:auto" id="im-box">
-                            <el-row>
-                                <el-col :span="15" :offset="6">
-                                    <div class="tip right">这个是一句废话</div>
-                                </el-col>
-                                <el-col :span="3" style="">
-                                    <div style="padding: 10px; line-height: 50px; text-align: center">
-                                        <img style="width: 40px; height: 40px; border-radius: 50%"
-                                             src="/file/avatar-1615969390812.jpeg" alt="">
-                                    </div>
-                                </el-col>
-                            </el-row>
-
-                            <el-row>
-                                <el-col :span="3" style="padding: 10px; line-height: 50px; text-align: center">
-                                    <img style="width: 40px; height: 40px; border-radius: 50%"
-                                         src="/file/avatar-1615969390812.jpeg" alt="">
-                                </el-col>
-                                <el-col :span="15">
-                                    <div class="tip left">这个是一句废话</div>
-                                </el-col>
-                            </el-row>
 
                         </div>
                         <div style="height: 200px">
@@ -120,7 +102,6 @@
                         </div>
                     </div>
                 </el-col>
-
 
 
             </el-main>
@@ -136,17 +117,13 @@
 <script>
     let socket;
 
-    $(function () {
-        openSocket();
-    })
-
     function openSocket() {
-        let currUserId = JSON.parse(localStorage.getItem("user")).id;
+        let username = JSON.parse(localStorage.getItem("user")).username;
         if (typeof (WebSocket) == "undefined") {
             console.log("您的浏览器不支持WebSocket");
         } else {
             console.log("您的浏览器支持WebSocket");
-            let socketUrl = "ws://localhost:9999/imserver/" + currUserId;
+            let socketUrl = "ws://localhost:9999/imserver/" + username;
             if (socket != null) {
                 socket.close();
                 socket = null;
@@ -155,13 +132,20 @@
             //打开事件
             socket.onopen = function () {
                 console.log("websocket已打开");
-                //socket.send("这是来自客户端的消息" + location.href + new Date());
             };
             //获得消息事件
             socket.onmessage = function (msg) {
                 let data = JSON.parse(msg.data)
-                //发现消息进入    开始处理前端触发逻辑
-                console.log('收到用户id：' + data.fromUserId + "发送的消息：" + data.text);
+                if (data.users) {
+                    vm.$data.users = data.users ? data.users.filter(user => user.username !== username) : [];
+                } else {
+                    $("#im-box").append($("<div class=\"el-row\">" +
+                        "<div class=\"el-col el-col-3\" style=\"padding: 10px; line-height: 50px; text-align: center;\">" +
+                        "    <img src=\"/files/" + vm.$data.chatUser.avatar + "\" alt=\"\" style=\"width: 40px; height: 40px; border-radius: 50%;\">" +
+                        "</div> " +
+                        "<div class=\"el-col el-col-15\"><div class=\"tip left\">" + data.text + "</div></div>" +
+                        "</div>"))
+                }
             };
             //关闭事件
             socket.onclose = function () {
@@ -174,31 +158,38 @@
         }
     }
 
-    function sendMessage() {
-        let toUserId = $("#toUserId").val();
-        if (typeof (WebSocket) == "undefined") {
-            console.log("您的浏览器不支持WebSocket");
-        } else {
-            console.log("您的浏览器支持WebSocket");
-            let message = {toUserId: toUserId + "", text: '测试消息'}
-            socket.send(JSON.stringify(message));
+    function sendMessage(username, text) {
+        let userStr = localStorage.getItem("user");
+        if (userStr) {
+            let user = JSON.parse(userStr);
+            if (typeof (WebSocket) == "undefined") {
+                console.log("您的浏览器不支持WebSocket");
+            } else {
+                console.log("您的浏览器支持WebSocket");
+                let message = {from: user.username, to: username, text: text}
+                socket.send(JSON.stringify(message));
+            }
         }
     }
 
-    new Vue({
+    let vm = new Vue({
         el: "#wrapper",
         data: {
             user: {},
             isCollapse: false,
-            chatUser: '',
+            users: [],
+            chatUser: {},
             text: ""
         },
         created() {
             this.user = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {};
+            openSocket();
         },
         methods: {
-            chat() {
-
+            chat(username) {
+                $.get("/user/detail/" + username).then(res => {
+                    this.chatUser = res.data;
+                })
             },
             handleCollapse() {
                 this.isCollapse = !this.isCollapse;
@@ -209,6 +200,13 @@
             },
             send() {
                 let box = $("#im-box");
+                if (!this.chatUser.username) {
+                    this.$message({
+                        type: 'warning',
+                        message: "请选择聊天对象"
+                    })
+                    return;
+                }
                 if (!this.text) {
                     this.$message({
                         type: 'warning',
@@ -217,14 +215,15 @@
                 } else {
                     box.append($("<div class='el-row'>\n" +
                         "                            <div class='el-col el-col-15 el-col-offset-6'>\n" +
-                        "                                <div class=\"tip right\">" +  this.text + "</div>\n" +
+                        "                                <div class=\"tip right\">" + this.text + "</div>\n" +
                         "                            </div>\n" +
                         "                            <div class='el-col el-col-3'>\n" +
                         "                               <div style='padding: 10px; line-height: 50px; text-align: center;'>" +
-                        "                                <img style=\"width: 40px; height: 40px; border-radius: 50%\" src=\"/files/avatar\">\n" +
+                        "                                <img style=\"width: 40px; height: 40px; border-radius: 50%\" src=\"/files/" + this.user.avatar + "\">\n" +
                         "                               </div>\n" +
                         "                            </div>\n" +
                         "                        </div>"))
+                    sendMessage(this.chatUser.username, this.text);
                     this.text = '';
                 }
 
