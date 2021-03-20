@@ -15,7 +15,11 @@ Java后台：SpringBoot 2.1.0 + SpringData Jpa + hutool工具包 + Apache poi
 
 #### 安装教程
 
-1. 使用git下载本项目，`git clone https://gitee.com/xqnode/graduation-scaffold.git`，或者直接下载zip解压
+1. 使用git下载本项目
+
+`git clone https://gitee.com/xqnode/graduation-scaffold.git`
+
+或者直接下载zip解压
 
 ![下载zip](https://img-blog.csdnimg.cn/20210321072245227.png)
 
