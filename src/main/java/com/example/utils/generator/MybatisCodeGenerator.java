@@ -10,6 +10,10 @@ import org.assertj.core.util.Lists;
 import java.sql.SQLException;
 import java.util.List;
 
+/**
+ * mybatis代码生成器
+ * @date 2021-3-10
+ */
 public class MybatisCodeGenerator {
     private static final DruidDataSource ds = new DruidDataSource();
 
@@ -45,6 +49,7 @@ public class MybatisCodeGenerator {
             createMapper(entityName);
             createService(entityName);
             createController(entityName);
+            createXml(entityName);
         }
 
     }
@@ -219,12 +224,24 @@ public class MybatisCodeGenerator {
                 .append("                                           ").append("@RequestParam(required = false, defaultValue = \"1\") Integer pageNum,\n")
                 .append("                                           ").append("@RequestParam(required = false, defaultValue = \"10\") Integer pageSize) {\n")
                 .append(space4).append(space4).append("return Result.success(").append(serviceLowerName).append(".page(new Page<>(pageNum, pageSize), Wrappers.<")
-                    .append(entityName).append(">lambdaQuery().like(").append(entityName).append("::getName, ").append("name)));\n")
+                .append(entityName).append(">lambdaQuery().like(").append(entityName).append("::getName, ").append("name)));\n")
                 .append(space4).append("}\n\n")
                 .append("}");
 
         FileUtil.writeString(build.toString(), BaseFilePath + "/controller/" + entityName + "Controller" + ".java", "UTF-8");
         System.out.println(entityName + "Controller生成成功！");
+    }
+
+    /**
+     * 生成XML
+     */
+    static void createXml(String entityName) {
+        String str = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+                "<!DOCTYPE mapper PUBLIC \"-//mybatis.org//DTD Mapper 3.0//EN\" \"http://mybatis.org/dtd/mybatis-3-mapper.dtd\">\n" +
+                "<mapper namespace=\"com.example.mapper." + entityName + "Mapper\">\n\n" +
+                "</mapper>";
+        FileUtil.writeString(str, System.getProperty("user.dir") + "/src/main/resources/mapper/" + entityName + ".xml", "UTF-8");
+        System.out.println(entityName + ".xml生成成功！");
     }
 
     /**

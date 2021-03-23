@@ -10,11 +10,15 @@ import org.assertj.core.util.Lists;
 import java.sql.SQLException;
 import java.util.List;
 
-public class CodeGenerator {
+/**
+ * JPA代码生成器
+ * @date 2021-3-10
+ */
+public class JpaCodeGenerator {
     private static final DruidDataSource ds = new DruidDataSource();
 
     private static final String schemaName = "test";   // 数据库名称，必填
-    private static final String[][] tables = {{"t_category", "Category"}};   // 必填
+    private static final String[][] tables = {{"t_category", "Category"}};   // 必填，第一个是数据库表名，第二个是实体类的名字，也就是别名
 
     static {
         // 必填
