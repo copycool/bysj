@@ -63,6 +63,12 @@ public class UserController {
         return Result.success(res);
     }
 
+    @GetMapping("/logout")
+    public Result<?> logout(HttpServletRequest request) {
+        request.getSession().removeAttribute("user");
+        return Result.success();
+    }
+
     @PostMapping
     public Result<User> save(@RequestBody User user) {
         return Result.success(userService.save(user));

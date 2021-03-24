@@ -183,6 +183,7 @@
                 this.isCollapse = !this.isCollapse;
             },
             logout() {
+                $.get("/user/logout");
                 localStorage.removeItem("user");
                 location.href = "/page/end/login.html";
             },
