@@ -1,44 +1,49 @@
 package com.example.entity;
 
-import javax.persistence.*;
-import java.util.Date;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.extension.activerecord.Model;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;
 
-@Entity
-@Table(name = "t_user")
-public class User {
+import java.util.List;
+
+
+@TableName(value = "t_user", autoResultMap = true)
+public class User extends Model<User> {
     /**
-     * 主键
-     */
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+      * 主键
+      */
+    @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
-    /**
-     * 用户名
-     */
-    @Column(name = "username")
     private String username;
 
-    /**
-     * 密码
-     */
-    @Column(name = "password")
     private String password;
 
-    /**
-     * 邮箱
-     */
-    @Column(name = "email")
     private String email;
 
-    /**
-     * 电话
-     */
-    @Column(name = "phone")
     private String phone;
 
-    @Column(name = "avatar")
     private String avatar;
+
+    /**
+      * 权限
+      */
+    @TableField(typeHandler = JacksonTypeHandler.class)
+    private List<Role> role;
+
+    @TableField(exist = false)
+    private List<Permission> permission;
+
+    public List<Permission> getPermission() {
+        return permission;
+    }
+
+    public void setPermission(List<Permission> permission) {
+        this.permission = permission;
+    }
 
     public Long getId() {
         return id;
@@ -85,6 +90,14 @@ public class User {
     }
 
     public void setAvatar(String avatar) {
-        this.avatar = avatar;
+         this.avatar = avatar;
+    }
+
+    public List<Role> getRole() {
+        return role;
+    }
+
+    public void setRole(List<Role> role) {
+        this.role = role;
     }
 }

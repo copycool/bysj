@@ -17,35 +17,23 @@
                 </transition>
             </div>
             <el-menu :default-openeds="['1']" style="border: none;" background-color="black" text-color="#fff" active-text-color="#ffd04b"
-                     default-active="1-3"
+                     default-active="im"
                      class="el-menu-vertical-demo" :collapse="isCollapse">
                 <a href="/page/end/index.html">
-                    <el-menu-item index="0">
+                    <el-menu-item index="home">
                         <i class="el-icon-data-line"></i>
                         <span slot="title">首页</span>
                     </el-menu-item>
                 </a>
-                <el-submenu index="1">
+                <el-submenu index="1" v-if="user.permission && user.permission.length > 0">
                     <template slot="title">
                         <i class="el-icon-menu"></i>
                         <span slot="title">信息管理</span>
                     </template>
-                    <a href="/page/end/user.html">
-                        <el-menu-item index="1-1">
+                    <a :href=`${item.path}` v-for="item in user.permission" :key="item.id">
+                        <el-menu-item :index="item.flag">
                             <i class="el-icon-s-data"></i>
-                            <span slot="title">用户管理</span>
-                        </el-menu-item>
-                    </a>
-                    <a href="/page/end/plugins.html">
-                        <el-menu-item index="1-2">
-                            <i class="el-icon-s-data"></i>
-                            <span slot="title">插件管理</span>
-                        </el-menu-item>
-                    </a>
-                    <a href="/page/end/im.html">
-                        <el-menu-item index="1-3">
-                            <i class="el-icon-s-data"></i>
-                            <span slot="title">聊天室</span>
+                            <span slot="title">{{item.name}}</span>
                         </el-menu-item>
                     </a>
                 </el-submenu>
@@ -124,7 +112,7 @@
     let socket;
 
     function openSocket() {
-        let username = JSON.parse(localStorage.getItem("user")).username;
+        let username = JSON.parse(sessionStorage.getItem("user")).username;
         if (typeof (WebSocket) == "undefined") {
             console.log("您的浏览器不支持WebSocket");
         } else {
@@ -165,7 +153,7 @@
     }
 
     function sendMessage(username, text) {
-        let userStr = localStorage.getItem("user");
+        let userStr = sessionStorage.getItem("user");
         if (userStr) {
             let user = JSON.parse(userStr);
             if (typeof (WebSocket) == "undefined") {
@@ -188,7 +176,7 @@
             text: ""
         },
         created() {
-            this.user = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {};
+            this.user = sessionStorage.getItem("user") ? JSON.parse(sessionStorage.getItem("user")) : {};
             openSocket();
         },
         methods: {
@@ -202,7 +190,7 @@
             },
             logout() {
                 $.get("/user/logout");
-                localStorage.removeItem("user");
+                sessionStorage.removeItem("user");
                 location.href = "/page/end/login.html";
             },
             send() {

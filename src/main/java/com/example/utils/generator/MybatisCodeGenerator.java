@@ -278,6 +278,8 @@ public class MybatisCodeGenerator {
             case "datetime":
             case "timestamp":
                 return "Date";
+            case "decimal":
+                return "BigDecimal";
             default:
                 return "";
         }

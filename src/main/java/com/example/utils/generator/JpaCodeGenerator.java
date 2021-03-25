@@ -7,6 +7,7 @@ import cn.hutool.db.Entity;
 import com.alibaba.druid.pool.DruidDataSource;
 import org.assertj.core.util.Lists;
 
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -282,6 +283,8 @@ public class JpaCodeGenerator {
             case "datetime":
             case "timestamp":
                 return "Date";
+            case "decimal":
+                return "BigDecimal";
             default:
                 return "";
         }

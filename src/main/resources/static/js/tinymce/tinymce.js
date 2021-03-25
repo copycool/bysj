@@ -29759,8 +29759,8 @@
     try {
       var test = '__storage_test__';
       localStorage = window.localStorage;
-      localStorage.setItem(test, test);
-      localStorage.removeItem(test);
+      sessionStorage.setItem(test, test);
+      sessionStorage.removeItem(test);
     } catch (e) {
       localStorage = create$9();
     }

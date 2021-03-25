@@ -1,57 +1,64 @@
 package com.example.service;
 
-import com.example.dao.UserDao;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.example.entity.Permission;
+import com.example.entity.Role;
 import com.example.entity.User;
 import com.example.exception.CustomException;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.jpa.domain.Specification;
+import com.example.mapper.UserMapper;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 @Service
-public class UserService {
+public class UserService extends ServiceImpl<UserMapper, User> {
 
     @Resource
-    private UserDao userDao;
+    private UserMapper userMapper;
 
-    public User save(User user) {
-        return userDao.save(user);
-    }
-
-    public void delete(Long id) {
-        userDao.deleteById(id);
-    }
-
-    public User findById(Long id) {
-        return userDao.findById(id).orElse(null);
-    }
-
-    public List<User> findAll() {
-        return userDao.findAll();
-    }
-
-    public Page<User> findPage(String name, int pageNum, int pageSize) {
-        Specification<User> specification = (root, criteriaQuery, cb) -> cb.like(root.get("username"), "%" + name + "%");
-        return userDao.findAll(specification, PageRequest.of(pageNum - 1, pageSize));
-    }
+    @Resource
+    private RoleService roleService;
 
     public User login(User user) {
-        User res = userDao.findByUsernameAndPassword(user.getUsername(), user.getPassword());
-        if (res == null) {
+        User one = getOne(Wrappers.<User>lambdaQuery().eq(User::getUsername, user.getUsername()).eq(User::getPassword, user.getPassword()));
+        if (one == null) {
             throw new CustomException("-1", "账号或密码错误");
         }
-        return res;
+        setPermission(one);
+        return one;
     }
 
-    public User add(User user) {
-        return userDao.save(user);
+    public User register(User user) {
+        User one = getOne((Wrappers.<User>lambdaQuery().eq(User::getUsername, user.getUsername())));
+        if (one != null) {
+            throw new CustomException("-1", "用户已注册");
+        }
+        if (user.getPassword() == null) {
+            user.setPassword("123456");
+        }
+        save(user);
+        return getOne((Wrappers.<User>lambdaQuery().eq(User::getUsername, user.getUsername())));
     }
 
-    public User findByUsername(String username) {
-        return userDao.findByUsername(username);
+    private User setPermission(User user) {
+        List<Role> role = user.getRole();
+        if (role != null) {
+            List<Permission> permissions = new ArrayList<>();
+            for (Object r : role) {
+                LinkedHashMap map = (LinkedHashMap) r;
+                Role realRole = roleService.getById((int) map.get("id"));
+                permissions.addAll(realRole.getPermission());
+            }
+            user.setPermission(permissions);
+        }
+        return user;
     }
 
+    public User getbyUsername(String username) {
+        return getOne((Wrappers.<User>lambdaQuery().eq(User::getUsername, username)));
+    }
 }
