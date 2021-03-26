@@ -4,12 +4,16 @@ import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.db.Db;
 import cn.hutool.db.Entity;
+import cn.hutool.json.JSONArray;
+import cn.hutool.json.JSONObject;
 import com.alibaba.druid.pool.DruidDataSource;
 import org.assertj.core.util.Lists;
 
 import java.math.BigDecimal;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * JPA代码生成器
@@ -20,6 +24,7 @@ public class JpaCodeGenerator {
 
     private static final String schemaName = "test";   // 数据库名称，必填
     private static final String[][] tables = {{"t_category", "Category"}};   // 必填，第一个是数据库表名，第二个是实体类的名字，也就是别名
+    private static final String modelName = "权限";
 
     static {
         // 必填
@@ -49,6 +54,8 @@ public class JpaCodeGenerator {
             createDao(entityName);
             createService(entityName);
             createController(entityName);
+            // html
+            createVueHtml(entityName, table[0]);
         }
 
     }
@@ -247,6 +254,30 @@ public class JpaCodeGenerator {
 
         FileUtil.writeString(build.toString(), BaseFilePath + "/controller/" + entityName + "Controller" + ".java", "UTF-8");
         System.out.println(entityName + "Controller生成成功！");
+    }
+
+    /**
+     * 生成页面
+     */
+    static void createVueHtml(String entityName, String tableName) throws SQLException {
+        String lowerEntityName = entityName.substring(0, 1).toLowerCase() + entityName.substring(1);
+        Map<String, String> map = new HashMap<>();
+        map.put("modelName", modelName);
+        map.put("entityName", lowerEntityName);
+        List<TableColumn> tableColumns = getTableColumns(tableName);
+        JSONArray array = new JSONArray();
+        for (TableColumn tableColumn : tableColumns) {
+            JSONObject jsonObject = new JSONObject();
+            array.add(jsonObject);
+            String label = tableColumn.getColumnComment();
+            String prop = tableColumn.getColumnName();
+            jsonObject.set("label", label);
+            jsonObject.set("prop", prop);
+        }
+        map.put("props", array.toString());
+        String format = StrUtil.format(FileUtil.readUtf8String(BaseFilePath + "/utils/generator/template/vue.template"), map);
+        FileUtil.writeString(format, System.getProperty("user.dir") + "/src/main/resources/static/page/end/" + lowerEntityName + ".html", "UTF-8");
+        System.out.println(lowerEntityName + ".html生成成功！");
     }
 
     /**

@@ -51,11 +51,11 @@ public class MybatisCodeGenerator {
             String entityName = getEntityName(table);
 
             // 创建entity
-//            createEntity(table[0], entityName);
-//            createMapper(entityName);
-//            createService(entityName);
-//            createController(entityName);
-//            createXml(entityName);
+            createEntity(table[0], entityName);
+            createMapper(entityName);
+            createService(entityName);
+            createController(entityName);
+            createXml(entityName);
             // html
             createVueHtml(entityName, table[0]);
         }
