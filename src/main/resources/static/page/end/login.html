@@ -5,26 +5,24 @@
     <title>登录</title>
     <link rel="stylesheet" href="../../css/base.css">
     <link rel="stylesheet" href="../../css/element.css">
-    <style>
-        #picyzm {
-            width: 100px;
-            height: 40px;
-            display: inline-block;
-            margin: 0 30px;
-        }
-    </style>
 </head>
 <body>
     <div id="wrapper">
         <div style="width: 500px; margin: 150px auto; border: 1px solid #ccc">
             <div style="width: 100%; height: 100px; color: steelblue; font-size: 30px;line-height: 100px; text-align: center">欢迎登陆后台管理系统</div>
-            <div style="margin-top: 25px; width: 100%; height: 270px; text-align: center">
-                <input v-model="user.username" type="text" style="border: 1px solid #ccc; height: 40px; padding: 10px; width: 60%" placeholder="请输入账号">
-                <input v-model="user.password" type="password" style="border: 1px solid #ccc; height: 40px; padding: 10px; width: 60%; margin-top: 25px" placeholder="请输入密码">
-                <input v-model="user.code" type="text" style="border: 1px solid #ccc; height: 40px; padding: 10px; width: 60%; margin-top: 25px" placeholder="请输入验证码">
-                <p id="picyzm"></p>
-                <button @click="login" style="height: 40px; padding: 10px; width: 60%; margin-top: 25px; background-color: steelblue; color: white">登陆</button>
-                <a style="width: 60%; text-align: right; display: inline-block; margin-top: 25px; color: steelblue" href="register.html">还没账号？去注册</a>
+            <div style="margin-top: 25px; width: 100%; height: 300px;">
+                <div style="width: 60%; margin: 0 auto">
+                    <input v-model="user.username" type="text" style="border: 1px solid #ccc; height: 40px; padding: 10px; width: 100%" placeholder="请输入账号">
+                    <input v-model="user.password" type="password" style="border: 1px solid #ccc; height: 40px; padding: 10px; width: 100%; margin-top: 25px" placeholder="请输入密码">
+                    <div style="margin-top: 25px; line-height: 40px">
+                        <input v-model="user.code" type="text" style="border: 1px solid #ccc; padding: 10px; width: 40%; " placeholder="请输入验证码">
+                        <div id="picyzm" style="display: inline-block; height: 35px; vertical-align: middle;"></div>
+                    </div>
+
+                    <button @click="login" style="height: 40px; padding: 10px; width: 60%; margin-top: 25px; background-color: steelblue; color: white">登陆</button>
+                    <a style="width: 60%; text-align: right; display: inline-block; margin-top: 25px; color: steelblue" href="register.html">还没账号？去注册</a>
+                </div>
+
             </div>
         </div>
     </div>
@@ -36,7 +34,7 @@
 
     <script>
         //初始化验证码
-        let verifyCode;
+        let  verifyCode;
 
         new Vue({
             el: "#wrapper",
@@ -55,17 +53,31 @@
                         this.$message({
                             message: "请输入用户名",
                             type: "error"
-                        })
+                        });
                         return;
                     }
                     if (!this.user.password) {
                         this.$message({
                             message: "请输入密码",
                             type: "error"
-                        })
+                        });
                         return;
                     }
-                    let res = verifyCode.validate(code.value);
+                    if (!this.user.code) {
+                        this.$message({
+                            message: "请输入验证码",
+                            type: "error"
+                        });
+                        return;
+                    }
+                    let res = verifyCode.validate(this.user.code);
+                    if (!res) {
+                        this.$message({
+                            message: "验证码错误",
+                            type: "error"
+                        });
+                        return;
+                    }
                     $.ajax({
                         url: "/user/login",
                         type: "POST",

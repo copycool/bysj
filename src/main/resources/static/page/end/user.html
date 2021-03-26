@@ -16,7 +16,8 @@
                     <span name="fade" v-show="!isCollapse"><a href="/index.html">X-Admin</a></span>
                 </transition>
             </div>
-            <el-menu :default-openeds="['1']" style="border: none;" background-color="black" text-color="#fff" active-text-color="#ffd04b"
+            <el-menu :default-openeds="['1']" style="border: none;" background-color="black" text-color="#fff"
+                     active-text-color="#ffd04b"
                      default-active="user"
                      class="el-menu-vertical-demo" :collapse="isCollapse">
                 <a href="/page/end/index.html">
@@ -65,7 +66,8 @@
             <el-main>
                 <div style="color: black; font-size: 20px; margin: 10px 0">用户管理</div>
                 <div style="height: 1px; background-color: white"></div>
-                <el-input v-model="search" style="width: 20%;" suffix-icon="el-icon-search" placeholder="请输入名称按回车搜索" @keyup.enter.native="loadTable"></el-input>
+                <el-input v-model="search" style="width: 20%;" suffix-icon="el-icon-search" placeholder="请输入名称按回车搜索"
+                          @keyup.enter.native="loadTable"></el-input>
                 <el-button @click="add" type="primary" size="mini" style="margin: 10px 0">新增</el-button>
                 <el-button @click="exp" type="primary" size="mini" style="margin: 10px 0">导出</el-button>
                 <el-table
@@ -73,23 +75,10 @@
                         border
                         style="width: 100%">
                     <el-table-column
-                            prop="id"
-                            label="ID"
+                            :prop="item.prop"
+                            :label="item.label"
+                            v-for="item in props"
                     >
-                    </el-table-column>
-                    <el-table-column
-                            prop="username"
-                            label="用户名"
-                    >
-                    </el-table-column>
-                    <el-table-column
-                            prop="email"
-                            label="邮箱"
-                    >
-                    </el-table-column>
-                    <el-table-column
-                            prop="phone"
-                            label="电话">
                     </el-table-column>
                     <el-table-column
                             fixed="right"
@@ -163,7 +152,12 @@
             dialogFormVisible: false,
             entity: {},
             isCollapse: false,
-            search: ''
+            search: '',
+            props: [
+                {prop: "username", label: "用户名"},
+                {prop: "email", label: "邮箱"},
+                {prop: "phone", label: "电话"},
+            ]
         },
         created() {
             this.user = sessionStorage.getItem("user") ? JSON.parse(sessionStorage.getItem("user")) : {};
