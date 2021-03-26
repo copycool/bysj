@@ -4,21 +4,27 @@ import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.db.Db;
 import cn.hutool.db.Entity;
+import cn.hutool.json.JSONArray;
+import cn.hutool.json.JSONObject;
 import com.alibaba.druid.pool.DruidDataSource;
 import org.assertj.core.util.Lists;
 
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * mybatis代码生成器
+ *
  * @date 2021-3-10
  */
 public class MybatisCodeGenerator {
     private static final DruidDataSource ds = new DruidDataSource();
 
     private static final String schemaName = "test";   // 数据库名称，必填
-    private static final String[][] tables = {{"t_role", "Role"}};   // 必填
+    private static final String[][] tables = {{"t_permission", "Permission"}};   // 必填
+    private static final String modelName = "权限";
 
     static {
         // 必填
@@ -45,11 +51,13 @@ public class MybatisCodeGenerator {
             String entityName = getEntityName(table);
 
             // 创建entity
-            createEntity(table[0], entityName);
-            createMapper(entityName);
-            createService(entityName);
-            createController(entityName);
-            createXml(entityName);
+//            createEntity(table[0], entityName);
+//            createMapper(entityName);
+//            createService(entityName);
+//            createController(entityName);
+//            createXml(entityName);
+            // html
+            createVueHtml(entityName, table[0]);
         }
 
     }
@@ -242,6 +250,30 @@ public class MybatisCodeGenerator {
                 "</mapper>";
         FileUtil.writeString(str, System.getProperty("user.dir") + "/src/main/resources/mapper/" + entityName + ".xml", "UTF-8");
         System.out.println(entityName + ".xml生成成功！");
+    }
+
+    /**
+     * 生成页面
+     */
+    static void createVueHtml(String entityName, String tableName) throws SQLException {
+        String lowerEntityName = entityName.substring(0, 1).toLowerCase() + entityName.substring(1);
+        Map<String, String> map = new HashMap<>();
+        map.put("modelName", modelName);
+        map.put("entityName", lowerEntityName);
+        List<TableColumn> tableColumns = getTableColumns(tableName);
+        JSONArray array = new JSONArray();
+        for (TableColumn tableColumn : tableColumns) {
+            JSONObject jsonObject = new JSONObject();
+            array.add(jsonObject);
+            String label = tableColumn.getColumnComment();
+            String prop = tableColumn.getColumnName();
+            jsonObject.set("label", label);
+            jsonObject.set("prop", prop);
+        }
+        map.put("props", array.toString());
+        String format = StrUtil.format(FileUtil.readUtf8String(BaseFilePath + "/utils/generator/template/vue.template"), map);
+        FileUtil.writeString(format, System.getProperty("user.dir") + "/src/main/resources/static/page/end/" + lowerEntityName + ".html", "UTF-8");
+        System.out.println(lowerEntityName + ".html生成成功！");
     }
 
     /**
