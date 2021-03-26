@@ -5,6 +5,14 @@
     <title>登录</title>
     <link rel="stylesheet" href="../../css/base.css">
     <link rel="stylesheet" href="../../css/element.css">
+    <style>
+        #picyzm {
+            width: 100px;
+            height: 40px;
+            display: inline-block;
+            margin: 0 30px;
+        }
+    </style>
 </head>
 <body>
     <div id="wrapper">
@@ -13,6 +21,8 @@
             <div style="margin-top: 25px; width: 100%; height: 270px; text-align: center">
                 <input v-model="user.username" type="text" style="border: 1px solid #ccc; height: 40px; padding: 10px; width: 60%" placeholder="请输入账号">
                 <input v-model="user.password" type="password" style="border: 1px solid #ccc; height: 40px; padding: 10px; width: 60%; margin-top: 25px" placeholder="请输入密码">
+                <input v-model="user.code" type="text" style="border: 1px solid #ccc; height: 40px; padding: 10px; width: 60%; margin-top: 25px" placeholder="请输入验证码">
+                <p id="picyzm"></p>
                 <button @click="login" style="height: 40px; padding: 10px; width: 60%; margin-top: 25px; background-color: steelblue; color: white">登陆</button>
                 <a style="width: 60%; text-align: right; display: inline-block; margin-top: 25px; color: steelblue" href="register.html">还没账号？去注册</a>
             </div>
@@ -22,12 +32,22 @@
     <script src="../../js/jquery.min.js"></script>
     <script src="../../js/vue.min.js"></script>
     <script src="../../js/element.js"></script>
+    <script src="../../js/gVerify.js"></script>
 
     <script>
+        //初始化验证码
+        let verifyCode;
+
         new Vue({
             el: "#wrapper",
             data: {
                 user: {}
+            },
+            mounted() {
+                verifyCode = new GVerify({
+                    id: "picyzm",
+                    type: "blend"
+                });
             },
             methods: {
                 login() {
@@ -45,6 +65,7 @@
                         })
                         return;
                     }
+                    let res = verifyCode.validate(code.value);
                     $.ajax({
                         url: "/user/login",
                         type: "POST",
@@ -70,6 +91,7 @@
                 }
             }
         })
+
     </script>
 </body>
 </html>
