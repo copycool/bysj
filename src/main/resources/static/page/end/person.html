@@ -132,6 +132,7 @@
         },
         created() {
             this.user = sessionStorage.getItem("user") ? JSON.parse(sessionStorage.getItem("user")) : {};
+            this.load();
         },
         methods: {
             logout() {
@@ -146,7 +147,7 @@
                 this.dialogFormVisible = true;
             },
             load() {
-                $.get("/user/" + this.user.id).then(res => {
+                $.get("/user/detail/" + this.user.username).then(res => {
                     this.user = res.data;
                 })
             },

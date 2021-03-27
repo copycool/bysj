@@ -34,7 +34,7 @@ public class UserController {
 
 
     /**
-     * 登陆
+     * 登录
      *
      * @param user
      * @param request

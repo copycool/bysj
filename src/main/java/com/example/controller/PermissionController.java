@@ -30,7 +30,7 @@ public class PermissionController {
 
     @DeleteMapping("/{id}")
     public Result<?> delete(@PathVariable Long id) {
-        permissionService.removeById(id);
+        permissionService.delete(id);
         return Result.success();
     }
 

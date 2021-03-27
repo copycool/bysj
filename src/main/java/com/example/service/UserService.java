@@ -59,6 +59,8 @@ public class UserService extends ServiceImpl<UserMapper, User> {
     }
 
     public User getbyUsername(String username) {
-        return getOne((Wrappers.<User>lambdaQuery().eq(User::getUsername, username)));
+        User one = getOne((Wrappers.<User>lambdaQuery().eq(User::getUsername, username)));
+        setPermission(one);
+        return one;
     }
 }
