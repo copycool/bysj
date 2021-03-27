@@ -270,7 +270,7 @@ public class JpaCodeGenerator {
             JSONObject jsonObject = new JSONObject();
             array.add(jsonObject);
             String label = tableColumn.getColumnComment();
-            String prop = tableColumn.getColumnName();
+            String prop = StrUtil.toCamelCase(tableColumn.getColumnName());
             jsonObject.set("label", label);
             jsonObject.set("prop", prop);
         }

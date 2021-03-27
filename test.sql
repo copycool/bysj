@@ -1,19 +1,6 @@
-/*
-Navicat MySQL Data Transfer
-
-Source Server         : localhost_3306
-Source Server Version : 50732
-Source Host           : localhost:3306
-Source Database       : test
-
-Target Server Type    : MYSQL
-Target Server Version : 50732
-File Encoding         : 65001
-
-Date: 2021-03-26 23:26:51
-*/
-
-SET FOREIGN_KEY_CHECKS=0;
+drop database if exists `test`;
+create database `test`;
+use `test`;
 
 -- ----------------------------
 -- Table structure for t_permission
@@ -26,16 +13,16 @@ CREATE TABLE `t_permission` (
   `path` varchar(255) DEFAULT NULL COMMENT '菜单路径',
   `flag` varchar(10) DEFAULT NULL COMMENT '唯一标识',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='权限菜单表';
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='权限菜单表';
 
 -- ----------------------------
 -- Records of t_permission
 -- ----------------------------
 INSERT INTO `t_permission` VALUES ('1', '用户管理', '用户管理', '/page/end/user', 'user');
-INSERT INTO `t_permission` VALUES ('2', '员工管理', '角色管理', '/page/end/role.html', 'role');
-INSERT INTO `t_permission` VALUES ('3', '职位管理', '权限管理', '/page/end/permission.html', 'permission');
+INSERT INTO `t_permission` VALUES ('2', '角色管理', '角色管理', '/page/end/role.html', 'role');
+INSERT INTO `t_permission` VALUES ('3', '权限管理', '权限管理', '/page/end/permission.html', 'permission');
 INSERT INTO `t_permission` VALUES ('4', '插件管理', '插件管理', '/page/end/plugins.html', 'plugins');
-INSERT INTO `t_permission` VALUES ('5', '聊天室', '聊天室', '/page/end/im.html', 'im');
+INSERT INTO `t_permission` VALUES ('18', '聊天室', '聊天室', '/page/end/im.html', 'im');
 
 -- ----------------------------
 -- Table structure for t_role
@@ -52,8 +39,8 @@ CREATE TABLE `t_role` (
 -- ----------------------------
 -- Records of t_role
 -- ----------------------------
-INSERT INTO `t_role` VALUES ('1', '超级管理员', '所有权限', '[{\"id\":1,\"name\":\"用户管理\",\"path\":\"/page/end/user.html\",\"description\":null, \"flag\": \"user\"},{\"id\":2,\"name\":\"角色管理\",\"path\":\"/page/end/role.html\",\"description\":null, \"flag\": \"role\"},{\"id\":3,\"name\":\"权限管理\",\"path\":\"/page/end/permission.html\",\"description\":null, \"flag\": \"permission\"},{\"id\":4,\"name\":\"插件管理\",\"path\":\"/page/end/plugins.html\",\"description\":\"插件管理\", \"flag\": \"plugins\"},{\"id\":5,\"name\":\"聊天室\",\"path\":\"/page/end/im.html\",\"description\":\"聊天室\", \"flag\": \"im\"}]');
-INSERT INTO `t_role` VALUES ('2', '普通用户', '部分权限', '[{\"id\":4,\"name\":\"插件管理\",\"path\":\"/page/end/plugins.html\",\"description\":\"插件管理\", \"flag\": \"plugins\"},{\"id\":5,\"name\":\"聊天室\",\"path\":\"/page/end/im.html\",\"description\":\"聊天室\", \"flag\": \"im\"}]');
+INSERT INTO `t_role` VALUES ('1', '超级管理员', '所有权限', '[{\"id\":1,\"name\":\"用户管理\",\"path\":\"/page/end/user.html\",\"description\":null,\"flag\":\"user\"},{\"id\":2,\"name\":\"角色管理\",\"path\":\"/page/end/role.html\",\"description\":null,\"flag\":\"role\"},{\"id\":3,\"name\":\"权限管理\",\"path\":\"/page/end/permission.html\",\"description\":null,\"flag\":\"permission\"},{\"id\":4,\"name\":\"插件管理\",\"path\":\"/page/end/plugins.html\",\"description\":\"插件管理\",\"flag\":\"plugins\"},{\"id\":5,\"name\":\"聊天室\",\"path\":\"/page/end/im.html\",\"description\":\"聊天室\",\"flag\":\"im\"}]');
+INSERT INTO `t_role` VALUES ('2', '普通用户', '部分权限', '[{\"id\":4,\"name\":\"插件管理\",\"path\":\"/page/end/plugins.html\",\"description\":\"插件管理\",\"flag\":\"plugins\"},{\"id\":18,\"name\":\"聊天室\",\"path\":\"/page/end/im.html\",\"description\":\"聊天室\",\"flag\":\"im\"}]');
 
 -- ----------------------------
 -- Table structure for t_user
@@ -71,14 +58,14 @@ CREATE TABLE `t_user` (
   `position` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '职位',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE KEY `uni` (`username`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='用户表';
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='用户表';
 
 -- ----------------------------
 -- Records of t_user
 -- ----------------------------
-INSERT INTO `t_user` VALUES ('1', 'admin', 'admin', null, '13978786565', '1616271662008', '[{\"id\":1,\"name\":\"超级管理员\",\"description\":null,\"permission\":null}]', null, null);
+INSERT INTO `t_user` VALUES ('1', 'admin', 'admin', '111124444', '13978786565', '1616817714347', '[{\"id\":1,\"name\":\"超级管理员\",\"description\":null,\"permission\":null}]', null, null);
 INSERT INTO `t_user` VALUES ('11', 'tom', '123456', 'tom@qq.com', '13685249632', '1616271650817', '[{\"id\":2,\"name\":\"普通用户\",\"description\":\"部分权限\",\"permission\":[{\"id\":4,\"name\":\"插件管理\",\"path\":\"/page/end/plugins.html\",\"description\":\"插件管理\",\"flag\":\"plugins\"},{\"id\":5,\"name\":\"聊天室\",\"path\":\"/page/end/im.html\",\"description\":\"聊天室\",\"flag\":\"im\"}]}]', null, null);
 INSERT INTO `t_user` VALUES ('16', 'jack', '123456', null, null, '1616271628207', '[{\"id\":2,\"name\":\"仓库管理员\",\"description\":null,\"permission\":[{\"id\":2,\"name\":\"仓库管理\",\"path\":\"/page/end/cangku.html\",\"description\":\"仓库管理\"}]}]', null, null);
 INSERT INTO `t_user` VALUES ('20', 'jerry', '123456', 'jerry@qq.com', '13698597854', '1616284768677', '[{\"id\":2,\"name\":\"仓库管理员\",\"description\":null,\"permission\":[{\"id\":4,\"name\":\"部门管理\",\"path\":\"/page/end/department.html\",\"description\":\"部门管理\"},{\"id\":8,\"name\":\"聊天室\",\"path\":\"/page/end/im.html\",\"description\":\"聊天室\"}]}]', null, null);
 INSERT INTO `t_user` VALUES ('21', 'hello', '123456', 'hello@qq.com', '13695285412', '1615969390812', '[{\"id\":2,\"name\":\"普通用户\",\"description\":\"部分权限\",\"permission\":[{\"id\":4,\"name\":\"插件管理\",\"path\":\"/page/end/plugins.html\",\"description\":\"插件管理\",\"flag\":\"plugins\"},{\"id\":5,\"name\":\"聊天室\",\"path\":\"/page/end/im.html\",\"description\":\"聊天室\",\"flag\":\"im\"}]}]', null, null);
-INSERT INTO `t_user` VALUES ('22', 'yes', '123456', null, null, '1616284768677', '[{\"id\":2,\"name\":\"普通用户\",\"description\":\"部分权限\",\"permission\":[{\"id\":4,\"name\":\"插件管理\",\"path\":\"/page/end/plugins.html\",\"description\":\"插件管理\",\"flag\":\"plugins\"},{\"id\":5,\"name\":\"聊天室\",\"path\":\"/page/end/im.html\",\"description\":\"聊天室\",\"flag\":\"im\"}]}]', null, null);
+INSERT INTO `t_user` VALUES ('23', 'yes', '123456', null, null, null, null, null, null);
