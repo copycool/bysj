@@ -193,7 +193,7 @@
                         // 更新用户信息
                         $.ajax({
                             url: '/user',
-                            type: 'POST',
+                            type: 'PUT',
                             contentType: "application/json",
                             data: JSON.stringify(this.user)
                         });
