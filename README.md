@@ -10,7 +10,7 @@ Java后台：SpringBoot 2.1.0 + SpringData Jpa + hutool工具包 + Apache poi
 
 数据库：Mysql
 
-** 注意：JDK选择`1.8`版本，Mysql选择`5.7`版本 **
+**注意：JDK选择`1.8`版本，Mysql选择`5.7`版本**
 
 前后端分离，页面可单独部署，默认放在项目的static文件夹，随后端工程一起访问。
 
