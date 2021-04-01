@@ -160,12 +160,12 @@
                 this.isCollapse = !this.isCollapse;
             },
             logout() {
-                fetch("/user/logout");
+                $.get("/user/logout");
                 sessionStorage.removeItem("user");
                 location.href = "/page/end/login.html";
             },
             loadTable() {
-                fetch(urlBase + "/page?pageNum=" + this.pageNum + "&pageSize=" + this.pageSize + "&name=" + this.search).then(res => {
+                $.get(urlBase + "/page?pageNum=" + this.pageNum + "&pageSize=" + this.pageSize + "&name=" + this.search).then(res => {
                     this.tableData = res.data.records;
                     this.total = res.data.total;
                 })
