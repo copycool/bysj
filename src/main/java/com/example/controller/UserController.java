@@ -43,7 +43,7 @@ public class UserController {
     @PostMapping("/login")
     public Result<User> login(@RequestBody User user, HttpServletRequest request) {
         User res = userService.login(user);
-        request.getSession().setAttribute("user", user);
+        request.getSession().setAttribute("user", res);
         MAP.put(res.getUsername(), res);
 
         return Result.success(res);
