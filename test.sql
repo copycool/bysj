@@ -56,8 +56,7 @@ CREATE TABLE `t_user` (
   `role` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '权限',
   `department` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '部门',
   `position` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '职位',
-  PRIMARY KEY (`id`) USING BTREE,
-  UNIQUE KEY `uni` (`username`) USING BTREE
+  PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='用户表';
 
 -- ----------------------------
