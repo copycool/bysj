@@ -181,7 +181,7 @@
         },
         methods: {
             chat(username) {
-                $.get("/user/detail/" + username).then(res => {
+                $.get("/api/user/detail/" + username).then(res => {
                     this.chatUser = res.data;
                 })
             },
@@ -189,7 +189,7 @@
                 this.isCollapse = !this.isCollapse;
             },
             logout() {
-                $.get("/user/logout");
+                $.get("/api/user/logout");
                 sessionStorage.removeItem("user");
                 location.href = "/page/end/login.html";
             },

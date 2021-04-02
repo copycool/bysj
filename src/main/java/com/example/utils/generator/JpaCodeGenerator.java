@@ -91,6 +91,7 @@ public class JpaCodeGenerator {
         List<TableColumn> columnList = getTableColumns(tableName);
         StringBuilder entityHeadBuild = StrUtil.builder()
                 .append("package ").append(basePackageName).append(".entity;\n\n")
+                .append("import java.math.BigDecimal;\n")
                 .append("import javax.persistence.*;\n");
 
         StringBuilder entityBodyBuild = StrUtil.builder()

@@ -160,7 +160,7 @@
                 this.isCollapse = !this.isCollapse;
             },
             logout() {
-                $.get("/user/logout");
+                $.get("/api/user/logout");
                 sessionStorage.removeItem("user");
                 location.href = "/page/end/login.html";
             },

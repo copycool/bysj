@@ -93,6 +93,7 @@ public class MybatisCodeGenerator {
         List<TableColumn> columnList = getTableColumns(tableName);
         StringBuilder entityHeadBuild = StrUtil.builder()
                 .append("package ").append(basePackageName).append(".entity;\n\n")
+                .append("import java.math.BigDecimal;\n")
                 .append("import com.baomidou.mybatisplus.annotation.TableName;\n")
                 .append("import com.baomidou.mybatisplus.annotation.IdType;\n")
                 .append("import com.baomidou.mybatisplus.extension.activerecord.Model;\n")
