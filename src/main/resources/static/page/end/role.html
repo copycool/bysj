@@ -184,7 +184,7 @@
                     this.total = res.data.total;
                 });
 
-                $.get("/permission").then(res => {
+                $.get("/api/permission").then(res => {
                     this.options = res.data;
                 })
             },
@@ -226,7 +226,7 @@
                     this.dialogFormVisible = false;
 
                     // 重新请求用户基础数据
-                    $.get("/user/detail/" + this.user.username).then(res => {
+                    $.get("/api/user/detail/" + this.user.username).then(res => {
                         this.user = res.data;
                         sessionStorage.setItem("user", JSON.stringify(this.user));
                     })

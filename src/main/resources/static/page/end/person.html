@@ -147,7 +147,7 @@
                 this.dialogFormVisible = true;
             },
             load() {
-                $.get("/user/detail/" + this.user.username).then(res => {
+                $.get("/api/user/detail/" + this.user.username).then(res => {
                     this.user = res.data;
                 })
             },
@@ -192,7 +192,7 @@
                         sessionStorage.setItem("user", JSON.stringify(this.user))
                         // 更新用户信息
                         $.ajax({
-                            url: '/user',
+                            url: '/api/user',
                             type: 'PUT',
                             contentType: "application/json",
                             data: JSON.stringify(this.user)
