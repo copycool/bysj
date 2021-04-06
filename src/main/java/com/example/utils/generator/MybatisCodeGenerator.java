@@ -23,8 +23,8 @@ public class MybatisCodeGenerator {
     private static final DruidDataSource ds = new DruidDataSource();
 
     private static final String schemaName = "test";   // 数据库名称，必填
-    private static final String[][] tables = {{"t_category", "Category"}};   // 必填
-    private static final String modelName = "分类";   // 必填
+    private static final String[][] tables = {{"t_prodcut", "Prodcut"}};   // 必填
+    private static final String modelName = "商品";   // 必填
 
     static {
         // 必填
@@ -203,7 +203,7 @@ public class MybatisCodeGenerator {
                 .append("import javax.annotation.Resource;\n")
                 .append("import java.util.List;\n\n")
                 .append("@RestController\n")
-                .append("@RequestMapping(\"/").append(lowerEntityName).append("\")\n")
+                .append("@RequestMapping(\"/api/").append(lowerEntityName).append("\")\n")
                 .append("public class ").append(entityName).append("Controller {\n")
                 .append(space4).append("@Resource\n")
                 .append(space4).append(" private ").append(serviceUpperName).append(" ").append(serviceLowerName).append(";\n\n")
