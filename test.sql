@@ -18,7 +18,7 @@ CREATE TABLE `t_permission` (
 -- ----------------------------
 -- Records of t_permission
 -- ----------------------------
-INSERT INTO `t_permission` VALUES ('1', '用户管理', '用户管理', '/page/end/user', 'user');
+INSERT INTO `t_permission` VALUES ('1', '用户管理', '用户管理', '/page/end/user.hml', 'user');
 INSERT INTO `t_permission` VALUES ('2', '角色管理', '角色管理', '/page/end/role.html', 'role');
 INSERT INTO `t_permission` VALUES ('3', '权限管理', '权限管理', '/page/end/permission.html', 'permission');
 INSERT INTO `t_permission` VALUES ('4', '插件管理', '插件管理', '/page/end/plugins.html', 'plugins');
