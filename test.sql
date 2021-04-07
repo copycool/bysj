@@ -2,6 +2,12 @@ drop database if exists `test`;
 create database `test`;
 use `test`;
 
+set global innodb_large_prefix=on;
+
+set global innodb_file_per_table=on;
+
+set global innodb_file_format=BARRACUDA;
+
 -- ----------------------------
 -- Table structure for t_permission
 -- ----------------------------
