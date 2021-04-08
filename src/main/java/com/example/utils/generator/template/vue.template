@@ -134,7 +134,7 @@
 
 <script>
 
-    let urlBase = "/{entityName}/";
+    let urlBase = "/api/{entityName}/";
     new Vue({
         el: "#wrapper",
         data: {
