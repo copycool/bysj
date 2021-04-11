@@ -65,11 +65,16 @@
             <!-- 主体区域 -->
             <el-main>
 
-                <div class="upload-box">
-                    上传<input style="cursor: pointer" type="file" @change="upload" id="file">
-                </div>
                 <div style="margin: 10px 0">
-                    <img :src=`/files/${uploadFile}` style="width: 100px" alt="">
+                    <el-upload
+                            class="upload-demo"
+                            action="/files/upload"
+                            :file-list="fileList"
+                            list-type="picture"
+                            :on-success="successUpload">
+                        <el-button size="small" type="primary">点击上传</el-button>
+<!--                        <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>-->
+                    </el-upload>
                 </div>
 
                 <el-card style="margin-top: 20px">
@@ -149,7 +154,8 @@
         data: {
             user: {},
             isCollapse: false,
-            uploadFile: ''
+            uploadFile: '',
+            fileList: []
         },
         created() {
             this.user = sessionStorage.getItem("user") ? JSON.parse(sessionStorage.getItem("user")) : {};
@@ -175,6 +181,12 @@
             })
         },
         methods: {
+            successUpload(res) {   // 文件上传成功的回调
+                // res.data = "1618101566204" 就是文件的地址，访问文件请使用  http://localhost:9999/files/1618101566204
+                this.fileList.push({name: res.data, url: "/files/" + res.data})
+
+
+            },
             print() {
                 console.log(tinymce.activeEditor.getContent())
             },
