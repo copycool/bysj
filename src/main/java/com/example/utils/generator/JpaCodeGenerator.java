@@ -7,10 +7,10 @@ import cn.hutool.db.Entity;
 import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
 import com.alibaba.druid.pool.DruidDataSource;
-import org.assertj.core.util.Lists;
 
 import java.math.BigDecimal;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -70,7 +70,7 @@ public class JpaCodeGenerator {
     static List<TableColumn> getTableColumns(String tableName) throws SQLException {
         String sql = "SELECT table_name,column_name,data_type, column_comment FROM information_schema.COLUMNS WHERE table_schema = ? and table_name = ?";
         List<Entity> user = Db.use(ds).query(sql, schemaName, tableName);
-        List<TableColumn> columnList = Lists.newArrayList();
+        List<TableColumn> columnList = new ArrayList<>();
         for (Entity entity : user) {
             TableColumn tableColumn = new TableColumn();
             tableColumn.setTableName(entity.getStr("table_name"));

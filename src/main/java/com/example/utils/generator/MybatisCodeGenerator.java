@@ -7,7 +7,7 @@ import cn.hutool.db.Entity;
 import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
 import com.alibaba.druid.pool.DruidDataSource;
-import org.assertj.core.util.Lists;
+import org.apache.commons.compress.utils.Lists;
 
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -23,8 +23,8 @@ public class MybatisCodeGenerator {
     private static final DruidDataSource ds = new DruidDataSource();
 
     private static final String schemaName = "test";   // 数据库名称，必填
-    private static final String[][] tables = {{"t_prodcut", "Prodcut"}};   // 必填
-    private static final String modelName = "商品";   // 必填
+    private static final String[][] tables = {{"t_store", "Store"}};   // 必填
+    private static final String modelName = "库存";   // 必填
 
     static {
         // 必填
@@ -92,14 +92,15 @@ public class MybatisCodeGenerator {
     static void createEntity(String tableName, String entityName) throws SQLException {
         List<TableColumn> columnList = getTableColumns(tableName);
         StringBuilder entityHeadBuild = StrUtil.builder()
-                .append("package ").append(basePackageName).append(".entity;\n\n")
-                .append("import java.math.BigDecimal;\n")
+                .append("package com.example.entity;\n\n")
+                .append("import lombok.Data;\n")
                 .append("import com.baomidou.mybatisplus.annotation.TableName;\n")
                 .append("import com.baomidou.mybatisplus.annotation.IdType;\n")
                 .append("import com.baomidou.mybatisplus.extension.activerecord.Model;\n")
                 .append("import com.baomidou.mybatisplus.annotation.TableId;\n\n");
 
         StringBuilder entityBodyBuild = StrUtil.builder()
+                .append("@Data\n")
                 .append("@TableName(\"").append(tableName).append("\")\n")
                 .append("public class ").append(entityName).append(" extends Model<").append(entityName).append("> {\n")
                 .append(space4).append("/**\n")
@@ -129,20 +130,12 @@ public class MybatisCodeGenerator {
         if (dateExists) {
             entityHeadBuild.append("import java.util.Date;\n");
         }
+        boolean decimalExists = columnList.stream().anyMatch(tableColumn -> tableColumn.getDataType().equals("BigDecimal"));
+        if (decimalExists) {
+            entityHeadBuild.append("import java.math.BigDecimal;\n");
+        }
         entityHeadBuild.append("\n");
 
-        for (TableColumn tableColumn : columnList) {
-            String columnUpperName = toCamelFirstUpper(tableColumn.getColumnName());
-            String columnName = StrUtil.toCamelCase(tableColumn.getColumnName());
-            String dataType = tableColumn.getDataType();
-            entityBodyBuild.append(space4).append("public ").append(dataType).append(" get").append(columnUpperName).append("() {\n")
-                    .append(space4).append(space4).append("return ").append(columnName).append(";\n")
-                    .append(space4).append("}\n\n")
-                    .append(space4).append("public void set").append(columnUpperName).append("(").append(dataType).append(" ").append(columnName).append(") {\n")
-                    .append(space4).append(space4).append(" this.").append(columnName).append(" = ").append(columnName).append(";\n")
-                    .append(space4).append("}\n\n");
-
-        }
         entityBodyBuild.append("}");
         FileUtil.writeString(entityHeadBuild.append(entityBodyBuild).toString(), BaseFilePath + "/entity/" + entityName + ".java", "UTF-8");
         System.out.println(entityName + "Entity生成成功！");
@@ -152,12 +145,10 @@ public class MybatisCodeGenerator {
      * 生成mapper
      */
     static void createMapper(String entityName) {
-        StringBuilder build = StrUtil.builder().append("package com.example.mapper;\n\n")
-                .append("import com.example.entity.").append(entityName).append(";\n")
-                .append("import com.baomidou.mybatisplus.core.mapper.BaseMapper;\n\n")
-                .append("public interface ").append(entityName).append("Mapper extends BaseMapper<").append(entityName).append("> {\n\n")
-                .append("}");
-        FileUtil.writeString(build.toString(), BaseFilePath + "/mapper/" + entityName + "Mapper" + ".java", "UTF-8");
+        Map<String, Object> map = new HashMap<>();
+        map.put("entityName", entityName);
+        String format = StrUtil.format(FileUtil.readUtf8String(BaseFilePath + "/utils/generator/template/mapper.template"), map);
+        FileUtil.writeString(format, BaseFilePath + "/mapper/" + entityName + "Mapper" + ".java", "UTF-8");
         System.out.println(entityName + "Mapper生成成功！");
     }
 
@@ -166,20 +157,12 @@ public class MybatisCodeGenerator {
      */
     static void createService(String entityName) {
         String lowerName = entityName.substring(0, 1).toLowerCase() + entityName.substring(1);
-        String mapperUpperName = entityName + "Mapper";
-        String mapperLowerName = lowerName + "Mapper";
-        StringBuilder build = StrUtil.builder().append("package com.example.service;\n\n")
-                .append("import com.example.entity.").append(entityName).append(";\n")
-                .append("import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;\n")
-                .append("import com.example.mapper.").append(entityName).append("Mapper;\n")
-                .append("import org.springframework.stereotype.Service;\n\n")
-                .append("import javax.annotation.Resource;\n\n")
-                .append("@Service\n")
-                .append("public class ").append(entityName).append("Service extends ServiceImpl<").append(mapperUpperName).append(", ").append(entityName).append("> {\n\n")
-                .append(space4).append("@Resource\n")
-                .append(space4).append("private ").append(mapperUpperName).append(" ").append(mapperLowerName).append(";\n\n")
-                .append("}");
-        FileUtil.writeString(build.toString(), BaseFilePath + "/service/" + entityName + "Service" + ".java", "UTF-8");
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("entityName", entityName);
+        map.put("lowerName", lowerName);
+        String format = StrUtil.format(FileUtil.readUtf8String(BaseFilePath + "/utils/generator/template/service.template"), map);
+        FileUtil.writeString(format, BaseFilePath + "/service/" + entityName + "Service" + ".java", "UTF-8");
         System.out.println(entityName + "Service生成成功！");
     }
 
@@ -190,54 +173,12 @@ public class MybatisCodeGenerator {
      */
     static void createController(String entityName) {
         String lowerEntityName = entityName.substring(0, 1).toLowerCase() + entityName.substring(1);
-        String serviceUpperName = entityName + "Service";
-        String serviceLowerName = lowerEntityName + "Service";
-        StringBuilder build = StrUtil.builder().append("package com.example.controller;\n\n")
-                .append("import com.example.common.Result;\n")
-                .append("import com.example.entity.").append(entityName).append(";\n")
-                .append("import com.example.service.").append(serviceUpperName).append(";\n")
-                .append("import com.baomidou.mybatisplus.core.metadata.IPage;\n")
-                .append("import com.baomidou.mybatisplus.core.toolkit.Wrappers;\n")
-                .append("import com.baomidou.mybatisplus.extension.plugins.pagination.Page;\n")
-                .append("import org.springframework.web.bind.annotation.*;\n\n")
-                .append("import javax.annotation.Resource;\n")
-                .append("import java.util.List;\n\n")
-                .append("@RestController\n")
-                .append("@RequestMapping(\"/api/").append(lowerEntityName).append("\")\n")
-                .append("public class ").append(entityName).append("Controller {\n")
-                .append(space4).append("@Resource\n")
-                .append(space4).append(" private ").append(serviceUpperName).append(" ").append(serviceLowerName).append(";\n\n")
-                .append(space4).append("@PostMapping\n")
-                .append(space4).append("public Result<?> save(@RequestBody ").append(entityName).append(" ").append(lowerEntityName).append(") {\n")
-                .append(space4).append(space4).append("return Result.success(").append(serviceLowerName).append(".save(").append(lowerEntityName).append("));\n")
-                .append(space4).append("}\n\n")
-                .append(space4).append("@PutMapping\n")
-                .append(space4).append("public Result<?> update(@RequestBody ").append(entityName).append(" ").append(lowerEntityName).append(") {\n")
-                .append(space4).append(space4).append("return Result.success(").append(serviceLowerName).append(".updateById(").append(lowerEntityName).append("));\n")
-                .append(space4).append("}\n\n")
-                .append(space4).append("@DeleteMapping(\"/{id}\")\n")
-                .append(space4).append("public Result<?> delete(@PathVariable Long id) {\n")
-                .append(space4).append(space4).append(serviceLowerName).append(".removeById(id);\n")
-                .append(space4).append(space4).append("return Result.success();\n")
-                .append(space4).append("}\n\n")
-                .append(space4).append("@GetMapping(\"/{id}\")\n")
-                .append(space4).append("public Result<").append(entityName).append("> findById(@PathVariable Long id) {\n")
-                .append(space4).append(space4).append("return Result.success(").append(serviceLowerName).append(".getById(id));\n")
-                .append(space4).append("}\n\n")
-                .append(space4).append("@GetMapping\n")
-                .append(space4).append("public Result<List<").append(entityName).append(">> findAll() {\n")
-                .append(space4).append(space4).append("return Result.success(").append(serviceLowerName).append(".list());\n")
-                .append(space4).append("}\n\n")
-                .append(space4).append("@GetMapping(\"/page\")\n")
-                .append(space4).append("public Result<IPage<").append(entityName).append(">> findPage(@RequestParam(required = false, defaultValue = \"\") String name,\n")
-                .append("                                           ").append("@RequestParam(required = false, defaultValue = \"1\") Integer pageNum,\n")
-                .append("                                           ").append("@RequestParam(required = false, defaultValue = \"10\") Integer pageSize) {\n")
-                .append(space4).append(space4).append("return Result.success(").append(serviceLowerName).append(".page(new Page<>(pageNum, pageSize), Wrappers.<")
-                .append(entityName).append(">lambdaQuery().like(").append(entityName).append("::getName, ").append("name)));\n")
-                .append(space4).append("}\n\n")
-                .append("}");
 
-        FileUtil.writeString(build.toString(), BaseFilePath + "/controller/" + entityName + "Controller" + ".java", "UTF-8");
+        Map<String, Object> map = new HashMap<>();
+        map.put("entityName", entityName);
+        map.put("lowerName", lowerEntityName);
+        String format = StrUtil.format(FileUtil.readUtf8String(BaseFilePath + "/utils/generator/template/controller.template"), map);
+        FileUtil.writeString(format, BaseFilePath + "/controller/" + entityName + "Controller" + ".java", "UTF-8");
         System.out.println(entityName + "Controller生成成功！");
     }
 
@@ -245,11 +186,10 @@ public class MybatisCodeGenerator {
      * 生成XML
      */
     static void createXml(String entityName) {
-        String str = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
-                "<!DOCTYPE mapper PUBLIC \"-//mybatis.org//DTD Mapper 3.0//EN\" \"http://mybatis.org/dtd/mybatis-3-mapper.dtd\">\n" +
-                "<mapper namespace=\"com.example.mapper." + entityName + "Mapper\">\n\n" +
-                "</mapper>";
-        FileUtil.writeString(str, System.getProperty("user.dir") + "/src/main/resources/mapper/" + entityName + ".xml", "UTF-8");
+        Map<String, Object> map = new HashMap<>();
+        map.put("entityName", entityName);
+        String format = StrUtil.format(FileUtil.readUtf8String(BaseFilePath + "/utils/generator/template/mapper_xml.template"), map);
+        FileUtil.writeString(format, System.getProperty("user.dir") + "/src/main/resources/mapper/" + entityName + ".xml", "UTF-8");
         System.out.println(entityName + ".xml生成成功！");
     }
 
