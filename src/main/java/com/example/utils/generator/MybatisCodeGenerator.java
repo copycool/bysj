@@ -23,8 +23,8 @@ public class MybatisCodeGenerator {
     private static final DruidDataSource ds = new DruidDataSource();
 
     private static final String schemaName = "test";   // 数据库名称，必填
-    private static final String[][] tables = {{"t_store", "Store"}};   // 必填
-    private static final String modelName = "库存";   // 必填
+    private static final String[] table = {"t_category", "Category"};   // 必填
+    private static final String modelName = "分类";   // 必填
 
     static {
         // 必填
@@ -43,22 +43,21 @@ public class MybatisCodeGenerator {
 
     public static void main(String[] args) throws Exception {
 
-        for (String[] table : tables) {
-            if (table.length < 2 || StrUtil.isBlank(table[0])) {
-                System.err.println("请完善配置");
-                return;
-            }
-            String entityName = getEntityName(table);
-
-            // 创建entity
-            createEntity(table[0], entityName);
-            createMapper(entityName);
-            createService(entityName);
-            createController(entityName);
-            createXml(entityName);
-            // html
-            createVueHtml(entityName, table[0]);
+        if (StrUtil.isBlank(table[0])) {
+            System.err.println("请完善配置");
+            return;
         }
+        String entityName = getEntityName();
+
+
+        // 创建entity
+        createEntity(table[0], entityName);
+        createMapper(entityName);
+        createService(entityName);
+        createController(entityName);
+        createXml(entityName);
+        // html
+        createVueHtml(entityName, table[0]);
 
     }
 
@@ -215,16 +214,23 @@ public class MybatisCodeGenerator {
         String format = StrUtil.format(FileUtil.readUtf8String(BaseFilePath + "/utils/generator/template/vue.template"), map);
         FileUtil.writeString(format, System.getProperty("user.dir") + "/src/main/resources/static/page/end/" + lowerEntityName + ".html", "UTF-8");
         System.out.println(lowerEntityName + ".html生成成功！");
+
+        //生成菜单
+        String delSql = "DELETE from t_permission where flag = ?";
+        Db.use(ds).execute(delSql, lowerEntityName);
+        String createSql = "INSERT INTO `t_permission` (`name`, `description`, `path`, `flag`) VALUES ('" + modelName + "管理', " +
+                "'" + modelName + "管理', '/page/end/" + lowerEntityName + ".html', '" + lowerEntityName + "');";
+        Db.use(ds).execute(createSql);
+        System.out.println(lowerEntityName + "菜单生成成功！");
     }
 
     /**
      * 获取实体名称
      *
-     * @param table
      * @return
      */
-    static String getEntityName(String[] table) {
-        return StrUtil.isBlank(table[1]) ? toCamelFirstUpper(table[0]) : table[1];
+    static String getEntityName() {
+        return StrUtil.isBlank(MybatisCodeGenerator.table[1]) ? toCamelFirstUpper(MybatisCodeGenerator.table[0]) : MybatisCodeGenerator.table[1];
     }
 
     /**
