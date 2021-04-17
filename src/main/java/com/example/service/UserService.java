@@ -1,5 +1,6 @@
 package com.example.service;
 
+import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -12,7 +13,6 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
 
 @Service
@@ -23,6 +23,9 @@ public class UserService extends ServiceImpl<UserMapper, User> {
 
     @Resource
     private RoleService roleService;
+
+    @Resource
+    private PermissionService permissionService;
 
     public User login(User user) {
         LambdaQueryWrapper<User> queryWrapper = Wrappers.<User>lambdaQuery().eq(User::getUsername, user.getUsername()).eq(User::getPassword, user.getPassword());
@@ -47,13 +50,14 @@ public class UserService extends ServiceImpl<UserMapper, User> {
     }
 
     private User setPermission(User user) {
-        List<Role> role = user.getRole();
+        List<Long> role = user.getRole();
         if (role != null) {
             List<Permission> permissions = new ArrayList<>();
-            for (Object r : role) {
-                LinkedHashMap map = (LinkedHashMap) r;
-                Role realRole = roleService.getById((int) map.get("id"));
-                permissions.addAll(realRole.getPermission());
+            for (Object roleId : role) {
+                Role realRole = roleService.getById((int) roleId);
+                if (CollUtil.isNotEmpty(realRole.getPermission())) {
+                    permissions.addAll(permissionService.listByIds(realRole.getPermission()));
+                }
             }
             user.setPermission(permissions);
         }

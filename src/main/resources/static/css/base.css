@@ -93,6 +93,9 @@ input[type='file'] {
 .el-header {
     padding-left: 0;
 }
+.el-aside {
+    min-height: 100vh;
+}
 .el-aside,.el-menu {
     overflow-x: hidden;
 }

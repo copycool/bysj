@@ -23,8 +23,8 @@ public class MybatisCodeGenerator {
     private static final DruidDataSource ds = new DruidDataSource();
 
     private static final String schemaName = "test";   // 数据库名称，必填
-    private static final String[] table = {"t_category", "Category"};   // 必填
-    private static final String modelName = "分类";   // 必填
+    private static final String[] table = {"t_notice", "Notice"};   // 必填
+    private static final String modelName = "公告";   // 必填
 
     static {
         // 必填
@@ -203,6 +203,9 @@ public class MybatisCodeGenerator {
         List<TableColumn> tableColumns = getTableColumns(tableName);
         JSONArray array = new JSONArray();
         for (TableColumn tableColumn : tableColumns) {
+            if (tableColumn.getColumnName().equals("id")) {
+                continue;
+            }
             JSONObject jsonObject = new JSONObject();
             array.add(jsonObject);
             String label = tableColumn.getColumnComment();
