@@ -47,7 +47,7 @@ public class PermissionService extends ServiceImpl<PermissionMapper, Permission>
             List<Long> newP = new ArrayList<>();
             for (Object p : permission) {
                 if (!delPermission.getFlag().equals(p)) {
-                    newP.add((long) p);
+                    newP.add(Long.valueOf(p + ""));
                 }
             }
             role.setPermission(newP);

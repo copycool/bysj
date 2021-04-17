@@ -77,8 +77,8 @@
                                 <img src="../../file/home/home-01.png" style="width: 60px">
                             </div>
                             <div style="display: inline-block; padding-left: 40px; vertical-align: middle;">
-                                <div style="color: #455a64; font-size: 24px; padding-bottom: 5px">1988</div>
-                                <div style="color: #99abb4;">营销额</div>
+                                <div style="color: #455a64; font-size: 24px; padding-bottom: 5px">{{ users.length }}</div>
+                                <div style="color: #99abb4;">用户</div>
                             </div>
                         </el-card>
                     </el-col>
@@ -88,8 +88,8 @@
                                 <img src="../../file/home/home-02.png" style="width: 60px">
                             </div>
                             <div style="display: inline-block; padding-left: 40px; vertical-align: middle;">
-                                <div style="color: #455a64; font-size: 24px; padding-bottom: 5px">1988</div>
-                                <div style="color: #99abb4;">商品</div>
+                                <div style="color: #455a64; font-size: 24px; padding-bottom: 5px">{{ roles.length }}</div>
+                                <div style="color: #99abb4;">角色</div>
                             </div>
                         </el-card>
                     </el-col>
@@ -99,8 +99,8 @@
                                 <img src="../../file/home/home-03.png" style="width: 60px">
                             </div>
                             <div style="display: inline-block; padding-left: 40px; vertical-align: middle;">
-                                <div style="color: #455a64; font-size: 24px; padding-bottom: 5px">1988</div>
-                                <div style="color: #99abb4;">订单</div>
+                                <div style="color: #455a64; font-size: 24px; padding-bottom: 5px">{{ permissions.length }}</div>
+                                <div style="color: #99abb4;">权限</div>
                             </div>
                         </el-card>
                     </el-col>
@@ -110,20 +110,20 @@
                                 <img src="../../file/home/home-04.png" style="width: 60px">
                             </div>
                             <div style="display: inline-block; padding-left: 40px; vertical-align: middle;">
-                                <div style="color: #455a64; font-size: 24px; padding-bottom: 5px">1988</div>
-                                <div style="color: #99abb4;">用户</div>
+                                <div style="color: #455a64; font-size: 24px; padding-bottom: 5px">{{ notices.length }}</div>
+                                <div style="color: #99abb4;">公告</div>
                             </div>
                         </el-card>
                     </el-col>
                 </el-row>
 
                 <el-row :gutter="10">
-                    <el-col :span="12">
-                        <el-card>
-                            <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
-                            <div id="main" style="width: 600px;height:400px; margin: 0 auto"></div>
-                        </el-card>
-                    </el-col>
+<!--                    <el-col :span="12">-->
+<!--                        <el-card>-->
+<!--                            &lt;!&ndash; 为ECharts准备一个具备大小（宽高）的Dom &ndash;&gt;-->
+<!--                            <div id="main" style="width: 600px;height:400px; margin: 0 auto"></div>-->
+<!--                        </el-card>-->
+<!--                    </el-col>-->
 
                     <el-col :span="12">
                         <el-card>
@@ -174,10 +174,7 @@
             "y":"center",
             "orient":"vertical",
             "data":[
-                "服饰",
-                "电子产品",
-                "零食",
-                "体育用品"
+
             ]
         },
         "tooltip":{
@@ -191,69 +188,19 @@
                 "type":"pie",
                 "radius":"55%",
                 "data":[
-                    {
-                        "name":"服饰",
-                        "value":589
-                    },
-                    {
-                        "name":"电子产品",
-                        "value":1874
-                    },
-                    {
-                        "name":"零食",
-                        "value":995
-                    },
-                    {
-                        "name":"体育用品",
-                        "value":249
-                    }
+
                 ]
             }
         ]
     }
 
-    //指定折线图的配置项和数据
-    let polylineOption={
-        //标题
-        title:{
-            text:'生鲜销量统计'
-        },
-        //工具箱
-        //保存图片
-        toolbox:{
-            show:true,
-            feature:{
-                saveAsImage:{
-                    show:true
-                }
-            }
-        },
-        //图例-每一条数据的名字叫销量
-        legend:{
-            data:['苹果', "河虾"]
-        },
-        //x轴
-        xAxis:{
-            data:["一月","二月","三月","四月","五月","六月", "七月", "八月", "九月", "十月", "十一月", "十二月"]
-        },
-        //y轴没有显式设置，根据值自动生成y轴
-        yAxis:{},
-        //数据-data是最终要显示的数据
-        series:[{
-            name:'苹果',
-            type:'line',
-            data:[40,20,35,60,55,10,88,27,51,66,75,68]
-        },{
-            name:'河虾',
-            type:'line',
-            data:[85,74,29,59,68,99,95,68,77,88,75,70]
-        }]
-    };
-
     new Vue({
         el: "#wrapper",
         data: {
             active: 0,
+            users: [],
+            roles: [],
+            permissions: [],
             notices: [],
             user: {},
             tableData: [],
@@ -267,28 +214,28 @@
         created() {
             this.user = sessionStorage.getItem("user") ? JSON.parse(sessionStorage.getItem("user")) : {};
             this.$nextTick(() => {
-                this.loadEcharts();
-            })
-
-            $.get("/api/notice/").then(res => {
-                this.notices = res.data
+                this.load();
             })
         },
         methods: {
-            loadEcharts() {
+            load() {
                 // 基于准备好的dom，初始化echarts实例
-                let myChart = echarts.init(document.getElementById('main'));
+                // let myChart = echarts.init(document.getElementById('main'));
                 // 使用刚指定的配置项和数据显示图表。
-                myChart.setOption(pieOption);
+                // myChart.setOption(pieOption);
 
-                // 基于准备好的dom，初始化echarts实例
-                // let mapChart = echarts.init(document.getElementById('map'));
-                // // 使用刚指定的配置项和数据显示图表。
-                // mapChart.setOption(mapOption);
-                //
-                // let polylineChart = echarts.init(document.getElementById('polyline'));
-                // // 使用刚指定的配置项和数据显示图表。
-                // polylineChart.setOption(polylineOption);
+                $.get("/api/notice/").then((res) => {
+                    this.notices = res.data;
+                })
+                $.get("/api/user/").then((res) => {
+                    this.users = res.data;
+                })
+                $.get("/api/role/").then((res) => {
+                    this.roles = res.data;
+                })
+                $.get("/api/permission/").then((res) => {
+                    this.permissions = res.data;
+                })
             },
             handleCollapse() {
                 this.isCollapse = !this.isCollapse;
