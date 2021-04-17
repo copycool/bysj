@@ -49,6 +49,11 @@ public class UserService extends ServiceImpl<UserMapper, User> {
         return getOne((Wrappers.<User>lambdaQuery().eq(User::getUsername, user.getUsername())));
     }
 
+    /**
+     * 设置权限
+     * @param user
+     * @return
+     */
     private User setPermission(User user) {
         List<Long> role = user.getRole();
         if (role != null) {
@@ -56,7 +61,12 @@ public class UserService extends ServiceImpl<UserMapper, User> {
             for (Object roleId : role) {
                 Role realRole = roleService.getById((int) roleId);
                 if (CollUtil.isNotEmpty(realRole.getPermission())) {
-                    permissions.addAll(permissionService.listByIds(realRole.getPermission()));
+                    for (Object permissionId : realRole.getPermission()) {
+                        Permission permission = permissionService.getById((int) permissionId);
+                        if (permissions.stream().noneMatch(p -> p.getFlag().equals(permission.getFlag()))) {
+                            permissions.add(permission);
+                        }
+                    }
                 }
             }
             user.setPermission(permissions);
