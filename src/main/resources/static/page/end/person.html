@@ -108,6 +108,9 @@
             <el-form-item label="电话" label-width="100px">
                 <el-input v-model="user.phone" autocomplete="off" style="width: 80%"></el-input>
             </el-form-item>
+            <el-form-item label="密码" label-width="100px">
+                <el-input show-password v-model="user.password" autocomplete="off" style="width: 80%"></el-input>
+            </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
             <el-button @click="dialogFormVisible = false">取 消</el-button>
