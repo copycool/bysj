@@ -1,5 +1,6 @@
 package com.example.controller;
 
+import cn.hutool.core.date.DateUtil;
 import com.example.common.Result;
 import com.example.entity.Notice;
 import com.example.service.NoticeService;
@@ -9,6 +10,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -19,6 +21,7 @@ public class NoticeController {
 
     @PostMapping
     public Result<?> save(@RequestBody Notice notice) {
+        notice.setTime(DateUtil.formatDateTime(new Date()));
         return Result.success(noticeService.save(notice));
     }
 
