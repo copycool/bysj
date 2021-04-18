@@ -2,8 +2,10 @@ package com.example.common;
 
 import com.example.entity.Permission;
 import com.example.entity.User;
+import com.example.service.UserService;
 import org.springframework.web.servlet.HandlerInterceptor;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -14,6 +16,9 @@ import java.util.List;
  */
 public class AuthInterceptor implements HandlerInterceptor {
 
+    @Resource
+    private UserService userService;
+
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws IOException {
         String servletPath = request.getServletPath();
@@ -22,11 +27,11 @@ public class AuthInterceptor implements HandlerInterceptor {
             response.sendRedirect("/page/end/login.html");
             return false;
         }
-//        List<Permission> permission = user.getPermission();
-//        if (permission.stream().noneMatch(p -> servletPath.contains(p.getFlag())) && !servletPath.contains("index")) {
-//            response.sendRedirect("/page/end/auth.html");
-//            return false;
-//        }
+        List<Permission> permission = user.getPermission();
+        if (permission.stream().noneMatch(p -> servletPath.contains(p.getFlag())) && !servletPath.contains("index")) {
+            response.sendRedirect("/page/end/auth.html");
+            return false;
+        }
         return true;
     }
 

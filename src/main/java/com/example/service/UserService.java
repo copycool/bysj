@@ -33,7 +33,7 @@ public class UserService extends ServiceImpl<UserMapper, User> {
         if (one == null) {
             throw new CustomException("-1", "账号或密码错误");
         }
-        setPermission(one);
+        one.setPermission(getPermissions(one.getId()));
         return one;
     }
 
@@ -51,13 +51,14 @@ public class UserService extends ServiceImpl<UserMapper, User> {
 
     /**
      * 设置权限
-     * @param user
+     * @param userId
      * @return
      */
-    private User setPermission(User user) {
+    private List<Permission> getPermissions(Long userId) {
+        User user = getById(userId);
+        List<Permission> permissions = new ArrayList<>();
         List<Long> role = user.getRole();
         if (role != null) {
-            List<Permission> permissions = new ArrayList<>();
             for (Object roleId : role) {
                 Role realRole = roleService.getById((int) roleId);
                 if (CollUtil.isNotEmpty(realRole.getPermission())) {
@@ -71,12 +72,12 @@ public class UserService extends ServiceImpl<UserMapper, User> {
             }
             user.setPermission(permissions);
         }
-        return user;
+        return permissions;
     }
 
     public User getbyUsername(String username) {
         User one = getOne((Wrappers.<User>lambdaQuery().eq(User::getUsername, username)));
-        setPermission(one);
+        one.setPermission(getPermissions(one.getId()));
         return one;
     }
 }
