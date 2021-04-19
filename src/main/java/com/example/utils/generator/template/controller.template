@@ -53,10 +53,10 @@ public class {entityName}Controller {
     }
 
     @GetMapping("/page")
-    public Result<IPage<{entityName}>> findPage(@RequestParam(required = false, defaultValue = "") String name,
+    public Result<IPage<>> findPage(@RequestParam(required = false, defaultValue = "") String name,
                                                 @RequestParam(required = false, defaultValue = "1") Integer pageNum,
                                                 @RequestParam(required = false, defaultValue = "10") Integer pageSize) {
-        LambdaQueryWrapper<entityName> query = Wrappers.<{entityName}>lambdaQuery().like({entityName}::getName, name);
+        LambdaQueryWrapper<{entityName}> query = Wrappers.<{entityName}>lambdaQuery().like({entityName}::getName, name);
         return Result.success({lowerName}Service.page(new Page<>(pageNum, pageSize), query));
     }
 
