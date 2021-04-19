@@ -54,7 +54,7 @@ public class UserService extends ServiceImpl<UserMapper, User> {
      * @param userId
      * @return
      */
-    private List<Permission> getPermissions(Long userId) {
+    public List<Permission> getPermissions(Long userId) {
         User user = getById(userId);
         List<Permission> permissions = new ArrayList<>();
         List<Long> role = user.getRole();
