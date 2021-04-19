@@ -16,6 +16,12 @@ import java.util.List;
 public class {entityName}Controller {
     @Resource
     private {entityName}Service {lowerName}Service;
+    @Resource
+    private HttpServletRequest request;
+
+    public User getUser() {
+        return (User) request.getSession().getAttribute("user");
+    }
 
     @PostMapping
     public Result<?> save(@RequestBody {entityName} {lowerName}) {
