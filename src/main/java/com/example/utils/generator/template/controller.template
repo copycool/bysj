@@ -23,7 +23,11 @@ public class {entityName}Controller {
     private HttpServletRequest request;
 
     public User getUser() {
-        return (User) request.getSession().getAttribute("user");
+        User user = (User) request.getSession().getAttribute("user");
+        if (user == null) {
+            throw new CustomException("-1", "请登录");
+        }
+        return user;
     }
 
     @PostMapping
