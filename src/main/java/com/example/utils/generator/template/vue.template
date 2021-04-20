@@ -160,6 +160,11 @@
 
         },
         methods: {
+            changeState(obj, state) {
+                this.entity = obj;
+                this.entity.state = state;
+                this.save();
+            },
             handleCollapse() {
                 this.isCollapse = !this.isCollapse;
             },
