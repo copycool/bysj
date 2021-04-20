@@ -23,8 +23,10 @@ public class MybatisCodeGenerator {
     private static final DruidDataSource ds = new DruidDataSource();
 
     private static final String schemaName = "test";   // 数据库名称，必填
-    private static final String[] table = {"t_notice", "Notice"};   // 必填
+    private static final String[] table = {"t_notice", "Notice"};   // 必填，第一个是表名，第二个是实体类的名字
     private static final String modelName = "公告";   // 必填
+
+    //=========================================以上内容必填===================================================//
 
     static {
         // 必填
