@@ -207,13 +207,13 @@
                             message: "保存成功",
                             type: "success"
                         });
-                        this.loadTable();
                     } else {
                         this.$message({
                             message: res.msg,
                             type: "error"
                         })
                     }
+                    this.loadTable();
                     this.dialogFormVisible = false;
                 })
             },
