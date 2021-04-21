@@ -60,7 +60,7 @@ public class {entityName}Controller {
     public Result<?> findPage(@RequestParam(required = false, defaultValue = "") String name,
                                                 @RequestParam(required = false, defaultValue = "1") Integer pageNum,
                                                 @RequestParam(required = false, defaultValue = "10") Integer pageSize) {
-        LambdaQueryWrapper<{entityName}> query = Wrappers.<{entityName}>lambdaQuery().like({entityName}::getName, name);
+        LambdaQueryWrapper<{entityName}> query = Wrappers.<{entityName}>lambdaQuery().like({entityName}::getName, name).orderByDesc({entityName}::getId);;
         return Result.success({lowerName}Service.page(new Page<>(pageNum, pageSize), query));
     }
 
