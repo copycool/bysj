@@ -164,7 +164,7 @@
         },
         methods: {
             successUpload(value) {
-                $.get("/api/standard/upload/" + value.data).then(res => {
+                $.get("/api/{entityName}/upload/" + value.data).then(res => {
                     if (res.code === '0') {
                         this.$message({
                             message: "导入成功",
