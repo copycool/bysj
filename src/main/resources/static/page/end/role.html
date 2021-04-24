@@ -136,6 +136,7 @@
                         <el-form-item v-if="item.prop !== 'id'" :label="item.label" label-width="100px" v-for="item in props">
                             <el-input v-model="entity[item.prop]" autocomplete="off" style="width: 80%"></el-input>
                         </el-form-item>
+
                     </el-form>
                     <div slot="footer" class="dialog-footer">
                         <el-button @click="dialogFormVisible = false">取 消</el-button>
