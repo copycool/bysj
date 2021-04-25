@@ -1,4 +1,4 @@
-# 🚀 毕设脚手架
+# 🚀 毕设脚手架 x-admin
 
 #### 🛫 介绍
 毕设脚手架工程，拿来即用，简单便捷，专为新手小白/毕设困难户打造，货真价实，童叟无欺
@@ -19,7 +19,7 @@ Java后台：SpringBoot 2.1.0 + SpringData Jpa + hutool工具包 + Apache poi
 
 1. 使用git下载本项目
 
-    `git clone https://gitee.com/xqnode/graduation-scaffold.git`
+    `https://gitee.com/xqnode/x-admin.git`
 
     或者直接下载zip解压
 
