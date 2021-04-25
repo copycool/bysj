@@ -3,6 +3,26 @@ drop database if exists `test`;
 create database `test`;
 use `test`;
 
+-- ----------------------------
+-- Table structure for t_message
+-- ----------------------------
+DROP TABLE IF EXISTS `t_message`;
+CREATE TABLE `t_message`  (
+                              `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+                              `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '内容',
+                              `username` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '评论人',
+                              `time` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '评论时间',
+                              `parent_id` bigint(20) NULL DEFAULT NULL COMMENT '父ID',
+                              `foreign_id` bigint(20) NULL DEFAULT 0 COMMENT '关联id',
+                              PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 20 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '留言表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of t_message
+-- ----------------------------
+INSERT INTO `t_message` VALUES (16, '我来了', 'admin', '2021-04-23 23:15:57', NULL, 0);
+INSERT INTO `t_message` VALUES (17, '来了老弟', 'admin', '2021-04-23 23:17:46', 16, 0);
+INSERT INTO `t_message` VALUES (19, '今天直播', 'admin', '2021-04-24 11:08:41', 17, 0);
 
 -- ----------------------------
 -- Table structure for t_notice
@@ -33,7 +53,7 @@ CREATE TABLE `t_permission`  (
                                  `path` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '菜单路径',
                                  `flag` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '唯一标识',
                                  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 22 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '权限菜单表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 23 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '权限菜单表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of t_permission
@@ -44,6 +64,7 @@ INSERT INTO `t_permission` VALUES (3, '权限管理', '权限管理', '/page/end
 INSERT INTO `t_permission` VALUES (19, '公告管理', '公告管理', '/page/end/notice.html', 'notice');
 INSERT INTO `t_permission` VALUES (20, '插件管理', '插件管理', '/page/end/plugins.html', 'plugins');
 INSERT INTO `t_permission` VALUES (21, '聊天室', '聊天室', '/page/end/im.html', 'im');
+INSERT INTO `t_permission` VALUES (22, '在线留言', '在线留言', '/page/end/message.html', 'message');
 
 -- ----------------------------
 -- Table structure for t_role
@@ -60,8 +81,8 @@ CREATE TABLE `t_role`  (
 -- ----------------------------
 -- Records of t_role
 -- ----------------------------
-INSERT INTO `t_role` VALUES (1, '超级管理员', '所有权限', '[1,2,3,19,20,21]');
-INSERT INTO `t_role` VALUES (2, '普通用户', '部分权限', '[20,21]');
+INSERT INTO `t_role` VALUES (1, '超级管理员', '所有权限', '[1,2,3,19,20,21,22]');
+INSERT INTO `t_role` VALUES (2, '普通用户', '部分权限', '[20,21,22]');
 
 -- ----------------------------
 -- Table structure for t_user
