@@ -4,7 +4,7 @@
 毕设脚手架工程，拿来即用，简单便捷，专为新手小白/毕设困难户打造，货真价实，童叟无欺
 
 #### 🚂 软件架构
-Java后台：SpringBoot 2.1.0 + SpringData Jpa + hutool工具包 + Apache poi
+Java后台：SpringBoot 2.1.0 + Mybatis-plus+ hutool工具包 + Apache poi
 
 前台页面：Vue2.0 + ElementUI + Jquery + tinymce（富文本插件）
 
