@@ -45,6 +45,7 @@ public class UserService extends ServiceImpl<UserMapper, User> {
         if (user.getPassword() == null) {
             user.setPassword("123456");
         }
+        user.setRole(CollUtil.newArrayList(2L));  // 默认普通用户角色
         save(user);
         return getOne((Wrappers.<User>lambdaQuery().eq(User::getUsername, user.getUsername())));
     }
