@@ -200,22 +200,24 @@ public class MybatisCodeGenerator {
     static void createVueHtml(String entityName, String tableName) throws SQLException {
         String lowerEntityName = entityName.substring(0, 1).toLowerCase() + entityName.substring(1);
         Map<String, String> map = new HashMap<>();
+        map.put("entityName", entityName);
+        map.put("lowerEntityName", lowerEntityName);
         map.put("modelName", modelName);
-        map.put("entityName", lowerEntityName);
         List<TableColumn> tableColumns = getTableColumns(tableName);
-        JSONArray array = new JSONArray();
+        StringBuilder tableColumnBuilder = new StringBuilder();
+        StringBuilder formItemBuilder = new StringBuilder();
         for (TableColumn tableColumn : tableColumns) {
             if (tableColumn.getColumnName().equals("id")) {
                 continue;
             }
-            JSONObject jsonObject = new JSONObject();
-            array.add(jsonObject);
-            String label = tableColumn.getColumnComment();
-            String prop = StrUtil.toCamelCase(tableColumn.getColumnName());
-            jsonObject.set("label", label);
-            jsonObject.set("prop", prop);
+            // 生成表格
+            tableColumnBuilder.append(space6 + space12 + "<el-table-column prop=\"" + tableColumn.getColumnName() + "\" label=\"" + tableColumn.getColumnComment() + "\"> </el-table-column>\n");
+            formItemBuilder.append(space12 + space12 + "<el-form-item label=\"" + tableColumn.getColumnComment() + "\" label-width=\"100px\">\n")
+                    .append(space12 + space12 + space4 + "<el-input v-model=\"entity." + tableColumn.getColumnName() + "\" autocomplete=\"off\" style=\"width: 80%\"></el-input>\n")
+                    .append(space12 + space12 + "</el-form-item>\n");
         }
-        map.put("props", array.toString());
+        map.put("tableColumn", tableColumnBuilder.toString());
+        map.put("formItem", formItemBuilder.toString());
         String format = StrUtil.format(FileUtil.readUtf8String(BaseFilePath + "/utils/generator/template/vue.template"), map);
         FileUtil.writeString(format, System.getProperty("user.dir") + "/src/main/resources/static/page/end/" + lowerEntityName + ".html", "UTF-8");
         System.out.println(lowerEntityName + ".html生成成功！");
