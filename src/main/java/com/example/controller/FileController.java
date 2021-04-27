@@ -25,6 +25,7 @@ public class FileController {
 
     /**
      * 单文件上传
+     *
      * @param file
      * @return
      */
@@ -45,6 +46,7 @@ public class FileController {
 
     /**
      * 多文件上传
+     *
      * @param request
      * @return
      */
@@ -77,6 +79,7 @@ public class FileController {
 
     /**
      * 获取文件
+     *
      * @param flag
      * @param response
      */
@@ -99,6 +102,20 @@ public class FileController {
         } catch (Exception e) {
             System.out.println("文件下载失败");
         }
+    }
+
+    /**
+     * 删除文件
+     *
+     * @param flag
+     */
+    @DeleteMapping("/{flag}")
+    public void delFile(@PathVariable String flag) {
+        String basePath = System.getProperty("user.dir") + "/src/main/resources/static/file/";
+        List<String> fileNames = FileUtil.listFileNames(basePath);
+        String filename = fileNames.stream().filter(name -> name.contains(flag)).findAny().orElse("");
+        FileUtil.del(basePath + filename);
+        System.out.println("删除文件" + filename + "成功");
     }
 
 }
