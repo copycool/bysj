@@ -1,7 +1,7 @@
 -- x-admin
-drop database if exists `test`;
-create database `test`;
-use `test`;
+drop database if exists `x-admin`;
+create database `x-admin`;
+use `x-admin`;
 
 -- ----------------------------
 -- Table structure for t_message
