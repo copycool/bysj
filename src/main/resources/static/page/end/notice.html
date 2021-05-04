@@ -222,7 +222,7 @@
                 })
             },
             edit(obj) {
-                this.entity = obj;
+                this.entity = JSON.parse(JSON.stringify(obj));
                 this.dialogFormVisible = true;
             },
             del(id) {

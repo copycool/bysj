@@ -164,7 +164,7 @@
                 })
             },
             changeState(obj, state) {  // 审核
-                this.entity = obj;
+                this.entity = JSON.parse(JSON.stringify(obj));
                 this.entity.state = state;
                 this.save();
             },
