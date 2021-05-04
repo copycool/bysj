@@ -212,7 +212,7 @@ public class MybatisCodeGenerator {
             }
             // 生成表格
             tableColumnBuilder.append(space6 + space12 + "<el-table-column prop=\"" + StrUtil.toCamelCase(tableColumn.getColumnName()) + "\" label=\"" + tableColumn.getColumnComment() + "\"> </el-table-column>\n");
-            formItemBuilder.append(space12 + space12 + "<el-form-item label=\"" + tableColumn.getColumnComment() + "\" label-width=\"100px\">\n")
+            formItemBuilder.append(space12 + space12 + "<el-form-item label=\"" + tableColumn.getColumnComment() + "\" label-width=\"150px\">\n")
                     .append(space12 + space12 + space4 + "<el-input v-model=\"entity." + StrUtil.toCamelCase(tableColumn.getColumnName()) + "\" autocomplete=\"off\" style=\"width: 80%\"></el-input>\n")
                     .append(space12 + space12 + "</el-form-item>\n");
         }
