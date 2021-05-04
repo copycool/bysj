@@ -5,7 +5,7 @@
     <meta HTTP-EQUIV="pragma" CONTENT="no-cache">
     <meta HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate">
     <meta HTTP-EQUIV="expires" CONTENT="0">
-    <title>{modelName}管理</title>
+    <title>后台管理</title>
     <link rel="stylesheet" href="../../css/element.css">
     <link rel="stylesheet" href="../../css/base.css">
 </head>
@@ -67,8 +67,7 @@
             </el-header>
             <!-- 主体区域 -->
             <el-main>
-                <div style="color: black; font-size: 20px; margin: 10px 0">{modelName}管理</div>
-                <div style="height: 1px; background-color: white"></div>
+
                 <el-input v-model="search" style="width: 20%;" suffix-icon="el-icon-search" placeholder="请输入名称按回车搜索"
                           @keyup.enter.native="loadTable"></el-input>
                 <el-button @click="add" type="primary" size="mini" style="margin: 10px 0">新增</el-button>
@@ -107,7 +106,7 @@
                     </el-pagination>
                 </div>
 
-                <el-dialog title="{modelName}信息" :visible.sync="dialogFormVisible" width="30%"
+                <el-dialog title="信息填写" :visible.sync="dialogFormVisible" width="30%"
                            :close-on-click-modal="false">
                     <el-form :model="entity">
 {formItem}
