@@ -1,12 +1,14 @@
 package com.example.controller;
 
 import cn.hutool.core.date.DateUtil;
-import com.example.common.Result;
-import com.example.entity.Notice;
-import com.example.service.NoticeService;
+import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.example.common.Result;
+import com.example.entity.Notice;
+import com.example.service.NoticeService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -48,9 +50,13 @@ public class NoticeController {
 
     @GetMapping("/page")
     public Result<IPage<Notice>> findPage(@RequestParam(required = false, defaultValue = "") String name,
-                                                @RequestParam(required = false, defaultValue = "1") Integer pageNum,
-                                                @RequestParam(required = false, defaultValue = "10") Integer pageSize) {
-        return Result.success(noticeService.page(new Page<>(pageNum, pageSize), Wrappers.<Notice>lambdaQuery().like(Notice::getTitle, name)));
+                                          @RequestParam(required = false, defaultValue = "1") Integer pageNum,
+                                          @RequestParam(required = false, defaultValue = "10") Integer pageSize) {
+        LambdaQueryWrapper<Notice> queryWrapper = Wrappers.<Notice>lambdaQuery().like(Notice::getTitle, name);
+        if (StrUtil.isNotBlank(name)) {
+            queryWrapper.like(Notice::getTitle, name);
+        }
+        return Result.success(noticeService.page(new Page<>(pageNum, pageSize), queryWrapper));
     }
 
 }
