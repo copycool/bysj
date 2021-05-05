@@ -64,7 +64,7 @@ public class {entityName}Controller {
                                                 @RequestParam(required = false, defaultValue = "10") Integer pageSize) {
         LambdaQueryWrapper<{entityName}> query = Wrappers.<{entityName}>lambdaQuery().orderByDesc({entityName}::getId);
         if (StrUtil.isNotBlank(name)) {
-            query.like({entityName}::getName, name)
+            query.like({entityName}::getName, name);
         }
         return Result.success({lowerName}Service.page(new Page<>(pageNum, pageSize), query));
     }
