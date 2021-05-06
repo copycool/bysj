@@ -257,8 +257,9 @@ public class MybatisCodeGenerator {
             case "double":
                 return "Double";
             case "int":
-            case "tinyint":
                 return "Integer";
+            case "tinyint":
+                return "Boolean";
             case "bigint":
                 return "Long";
             case "datetime":
