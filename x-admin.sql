@@ -107,3 +107,16 @@ CREATE TABLE `t_user`  (
 INSERT INTO `t_user` VALUES (1, 'admin', 'admin', '111124444', '13978786565', '1616271650817', '[1]', NULL, NULL);
 INSERT INTO `t_user` VALUES (11, 'tom', '123456', 'tom@qq.com', '13685249632', '1616271650817', '[2]', NULL, NULL);
 INSERT INTO `t_user` VALUES (21, 'hello', '123456', 'hello@qq.com', '13695285412', '1615969390812', '[2]', NULL, NULL);
+
+-- ----------------------------
+-- Table structure for t_log
+-- ----------------------------
+DROP TABLE IF EXISTS `t_log`;
+CREATE TABLE `t_log` (
+                         `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '序号',
+                         `content` varchar(1000) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '操作内容',
+                         `time` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '操作时间',
+                         `user` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '操作人',
+                         `ip` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'ip',
+                         PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
