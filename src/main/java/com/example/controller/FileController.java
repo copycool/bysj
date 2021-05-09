@@ -3,13 +3,9 @@ package com.example.controller;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.StrUtil;
 import com.example.common.Result;
-import com.example.dto.FileVO;
-import org.apache.commons.compress.utils.Lists;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.OutputStream;
 import java.net.URLEncoder;
@@ -44,38 +40,6 @@ public class FileController {
         return Result.success(flag);
     }
 
-    /**
-     * 多文件上传
-     *
-     * @param request
-     * @return
-     */
-    @PostMapping("/upload/multiple")
-    public Result<List<FileVO>> multipleUpload(HttpServletRequest request) {
-        List<MultipartFile> files = ((MultipartHttpServletRequest) request).getFiles("files");
-        String filePath = System.getProperty("user.dir") + "/src/main/resources/static/file/";
-        List<FileVO> fileVOS = Lists.newArrayList();
-        for (MultipartFile file : files) {
-            if (file.isEmpty()) {
-                continue;
-            }
-            String flag = System.currentTimeMillis() + "";
-            String fileName = file.getOriginalFilename();
-            FileVO fileVO = new FileVO();
-            fileVO.setFlag(flag);
-            fileVO.setFileName(file.getOriginalFilename());
-            fileVOS.add(fileVO);
-            try {
-                FileUtil.writeBytes(file.getBytes(), filePath + flag + "-" + fileName);
-                System.out.println(fileName + "--上传成功");
-                Thread.sleep(1L);
-            } catch (Exception e) {
-                System.err.println(fileName + "--文件上传失败");
-            }
-
-        }
-        return Result.success(fileVOS);
-    }
 
     /**
      * 获取文件
