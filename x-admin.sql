@@ -81,8 +81,8 @@ CREATE TABLE `t_role`  (
 -- ----------------------------
 -- Records of t_role
 -- ----------------------------
-INSERT INTO `t_role` VALUES (1, '超级管理员', '所有权限', '[1,2,3,19,20,21,22]');
-INSERT INTO `t_role` VALUES (2, '普通用户', '部分权限', '[20,21,22]');
+INSERT INTO `t_role` VALUES (1, '超级管理员', '所有权限', '[1,2,3]');
+INSERT INTO `t_role` VALUES (2, '普通用户', '部分权限', '[]');
 
 -- ----------------------------
 -- Table structure for t_user
