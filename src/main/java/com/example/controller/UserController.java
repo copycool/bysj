@@ -2,6 +2,7 @@ package com.example.controller;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.io.IoUtil;
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.poi.excel.ExcelUtil;
 import cn.hutool.poi.excel.ExcelWriter;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -9,6 +10,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.common.Result;
 import com.example.entity.User;
+import com.example.service.LogService;
 import com.example.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,6 +34,9 @@ public class UserController {
     @Resource
     private UserService userService;
 
+    @Resource
+    private LogService logService;
+
 
     /**
      * 登录
@@ -46,6 +51,7 @@ public class UserController {
         request.getSession().setAttribute("user", res);
         MAP.put(res.getUsername(), res);
 
+        logService.log(StrUtil.format("用户 {} 登录系统", user.getUsername()));
         return Result.success(res);
     }
 
@@ -63,6 +69,8 @@ public class UserController {
         }
         User dbUser = userService.register(user);
         request.getSession().setAttribute("user", user);
+
+        logService.log(StrUtil.format("用户 {} 注册账号成功", user.getUsername()));
         return Result.success(dbUser);
     }
 
@@ -70,6 +78,7 @@ public class UserController {
     public Result<?> logout(HttpServletRequest request) {
         User user = (User) request.getSession().getAttribute("user");
         if (user != null) {
+            logService.log(StrUtil.format("用户 {} 退出系统", user.getUsername()));
             request.getSession().removeAttribute("user");
             MAP.remove(user.getUsername());
         }
@@ -86,16 +95,21 @@ public class UserController {
         if (user.getPassword() == null) {
             user.setPassword("123456");
         }
+        logService.log(StrUtil.format("新增用户：{} ", user.getUsername()));
         return Result.success(userService.save(user));
     }
 
     @PutMapping
     public Result<?> update(@RequestBody User user) {
+        logService.log(StrUtil.format("更新用户：{} ", user.getUsername()));
         return Result.success(userService.updateById(user));
     }
 
     @DeleteMapping("/{id}")
     public Result<?> delete(@PathVariable Long id) {
+        User user = userService.getById(id);
+        logService.log(StrUtil.format("删除用户 {} ", user.getUsername()));
+
         userService.removeById(id);
         return Result.success();
     }
