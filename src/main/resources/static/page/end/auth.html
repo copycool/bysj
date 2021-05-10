@@ -34,18 +34,12 @@
                         <span slot="title">首页</span>
                     </el-menu-item>
                 </a>
-                <el-submenu index="1" v-if="user.permission && user.permission.length > 0">
-                    <template slot="title">
-                        <i class="el-icon-menu"></i>
-                        <span slot="title">信息管理</span>
-                    </template>
-                    <a :href=`${item.path}` v-for="item in user.permission" :key="item.id">
+                 <a :href=`${item.path}` v-for="item in user.permission" :key="item.id">
                         <el-menu-item :index="item.flag">
                             <i class="el-icon-s-data"></i>
                             <span slot="title">{{item.name}}</span>
                         </el-menu-item>
                     </a>
-                </el-submenu>
             </el-menu>
         </el-aside>
         <el-container>
