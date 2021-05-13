@@ -59,58 +59,22 @@
     new Vue({
         el: "#wrapper",
         data: {
-            src: 'message.html',
-            search: '',
-            entity: {},
-            tableData: [],
-            pageNum: 1,
-            pageSize: 10,
-            total: 0,
             user: {},
-            imgList: [
-                'https://img.zcool.cn/community/01e1605ef84d6ca80120662165f99a.png@1280w_1l_2o_100sh.png',
-                'https://img.zcool.cn/community/014f335ef84d6ba801215aa0e5572e.png@1280w_1l_2o_100sh.png',
-                'https://img.zcool.cn/community/014c235ef84d6ca801215aa030eb99.png@1280w_1l_2o_100sh.png'
-            ]
         },
         created() {
             $.ajax({url: '/api/user/session', method: "GET", async: false, success: (res) => {this.user = res.data || {}}})
             this.loadTable()
         },
         methods: {
-            sign(obj) {
-                if (!this.user.id) {
-                    this.$message({
-                        message: "请登录",
-                        type: "warning"
-                    })
-                    return
-                }
-                this.entity = JSON.parse(JSON.stringify(obj));
-                this.entity.user = this.user.username;
-                this.save()
-            },
-            handleSelect(key) {
-                location.href = key + '.html'
-            },
             logout() {
                 $.get("/api/user/logout");
                 sessionStorage.removeItem("user");
                 location.href = "/page/end/login.html";
             },
             loadTable() {
-                $.get("/api/activity/page?pageNum=" + this.pageNum + "&pageSize=" + this.pageSize + "&name=" + this.search).then(res => {
-                    this.tableData = res.data.records;
-                    this.total = res.data.total;
+                $.get("/api/user/" + this.user.id).then(res => {
+                    this.user = res.data
                 })
-            },
-            handleSizeChange(pageSize) {
-                this.pageSize = pageSize;
-                this.loadTable();
-            },
-            handleCurrentChange(pageNum) {
-                this.pageNum = pageNum;
-                this.loadTable();
             },
             save() {
                 $.ajax({
@@ -131,7 +95,6 @@
                             type: "error"
                         })
                     }
-                    this.dialogFormVisible = false;
                 })
             },
         }

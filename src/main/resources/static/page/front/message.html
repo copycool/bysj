@@ -97,9 +97,6 @@
 
         },
         methods: {
-            handleCollapse() {
-                this.isCollapse = !this.isCollapse;
-            },
             logout() {
                 $.get("/api/user/logout");
                 sessionStorage.removeItem("user");

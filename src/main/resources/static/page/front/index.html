@@ -75,9 +75,6 @@
             sign(obj) {
 
             },
-            handleSelect(key) {
-                location.href = key + '.html'
-            },
             logout() {
                 $.get("/api/user/logout");
                 sessionStorage.removeItem("user");
