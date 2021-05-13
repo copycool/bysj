@@ -211,7 +211,12 @@ public class MybatisCodeGenerator {
                 continue;
             }
             // 生成表格
-            tableColumnBuilder.append(space6 + space12 + "<el-table-column prop=\"" + StrUtil.toCamelCase(tableColumn.getColumnName()) + "\" label=\"" + tableColumn.getColumnComment() + "\"></el-table-column>\n");
+            if (tableColumn.getColumnName().contains("file")) {
+                tableColumnBuilder.append(space6 + space12 + "<el-table-column label=\"图片\"><template slot-scope=\"scope\"><el-image style=\"width: 100px; height: 100px\" :src=\"scope.row.file\" :preview-src-list=\"[scope.row.file]\"></el-image></template></el-table-column>\n");
+            } else {
+                tableColumnBuilder.append(space6 + space12 + "<el-table-column prop=\"" + StrUtil.toCamelCase(tableColumn.getColumnName()) + "\" label=\"" + tableColumn.getColumnComment() + "\"></el-table-column>\n");
+            }
+
             StringBuilder formBuilder = formItemBuilder.append(space12 + space12 + "<el-form-item label=\"" + tableColumn.getColumnComment() + "\" label-width=\"150px\">\n");
             if (tableColumn.getColumnName().contains("time")) {
                 // 日期时间

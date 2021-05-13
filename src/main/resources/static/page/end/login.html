@@ -94,9 +94,10 @@
                             });
                             sessionStorage.setItem("user", JSON.stringify(res.data));
                             setTimeout(() => {
-                                if (JSON.stringify(res.data.role).includes('1')) {
-                                    location.href= "/page/end/index.html"
-                                }
+                                location.href= "/page/end/index.html"
+                                // if (JSON.stringify(res.data.role).includes('1')) {
+                                //     location.href= "/page/end/index.html"
+                                // }
                                 // else {
                                 //     location.href= "/page/front/frame.html"
                                 // }

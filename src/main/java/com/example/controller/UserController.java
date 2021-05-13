@@ -10,6 +10,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.common.Result;
 import com.example.entity.User;
+import com.example.exception.CustomException;
 import com.example.service.LogService;
 import com.example.service.UserService;
 import org.springframework.web.bind.annotation.*;
@@ -36,6 +37,16 @@ public class UserController {
 
     @Resource
     private LogService logService;
+    @Resource
+    private HttpServletRequest request;
+
+    public User getUser() {
+        User user = (User) request.getSession().getAttribute("user");
+        if (user == null) {
+            throw new CustomException("-1", "请登录");
+        }
+        return user;
+    }
 
 
     /**
@@ -88,6 +99,11 @@ public class UserController {
     @GetMapping("/online")
     public Result<Collection<User>> online(HttpServletRequest request) {
         return Result.success(MAP.values());
+    }
+
+    @GetMapping("/session")
+    public Result<User> session() {
+        return Result.success(getUser());
     }
 
     @PostMapping
