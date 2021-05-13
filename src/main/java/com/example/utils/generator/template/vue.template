@@ -129,6 +129,7 @@
     new Vue({
         el: "#wrapper",
         data: {
+            options: [],
             fileList: [],
             user: {},
             tableData: [],
@@ -181,6 +182,10 @@
                     this.tableData = res.data.records;
                     this.total = res.data.total;
                 })
+
+                 // $.get("/api/").then(res => {
+                    // this.options = res.data;
+                 // })
             },
             exp() {   // excel 导出
                 window.open(urlBase + "/export");
