@@ -129,6 +129,7 @@
     new Vue({
         el: "#wrapper",
         data: {
+            fileList: [],
             user: {},
             tableData: [],
             pageNum: 1,
@@ -146,6 +147,11 @@
 
         },
         methods: {
+            fileSuccessUpload(res) {
+                this.entity.file = "http://localhost:9999/files/" + res.data;
+                this.fileList = [res.data]
+                console.log(res)
+            },
             successUpload(value) {
                 $.get("/api/{lowerEntityName}/upload/" + value.data).then(res => {
                     if (res.code === '0') {
@@ -189,6 +195,7 @@
             },
             add() {
                 this.entity = {};
+                this.fileList = [];
                 this.dialogFormVisible = true;
             },
             save() {
@@ -216,6 +223,7 @@
             },
             edit(obj) {
                 this.entity = JSON.parse(JSON.stringify(obj));
+                this.fileList = [];
                 this.dialogFormVisible = true;
             },
             del(id) {
