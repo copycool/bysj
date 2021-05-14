@@ -176,7 +176,7 @@
         },
         methods: {
             changeRole(row) {
-                this.entity = row;
+                this.entity = JSON.parse(JSON.stringify(row));
                 this.save();
             },
             handleCollapse() {

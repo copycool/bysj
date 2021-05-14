@@ -6,6 +6,7 @@ import com.example.entity.Permission;
 import com.example.entity.Role;
 import com.example.mapper.PermissionMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -36,17 +37,17 @@ public class PermissionService extends ServiceImpl<PermissionMapper, Permission>
         return permissions;
     }
 
+    @Transactional
     public void delete(Long id) {
-        Permission delPermission = getById(id);
         removeById(id);
         // 删除角色分配的菜单
         List<Role> list = roleService.list();
         for (Role role : list) {
-            List<Long> permission = role.getPermission();
             // 重新分配权限
             List<Long> newP = new ArrayList<>();
-            for (Object p : permission) {
-                if (!delPermission.getFlag().equals(p)) {
+            for (Object p : role.getPermission()) {
+                Long pl = Long.valueOf(p + "");
+                if (!id.equals(pl)) {
                     newP.add(Long.valueOf(p + ""));
                 }
             }
