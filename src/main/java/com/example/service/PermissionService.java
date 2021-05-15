@@ -28,7 +28,7 @@ public class PermissionService extends ServiceImpl<PermissionMapper, Permission>
             if (CollUtil.isNotEmpty(r.getPermission())) {
                 for (Object permissionId : r.getPermission()) {
                     Permission permission = getById((int) permissionId);
-                    if (permissions.stream().noneMatch(p -> p.getFlag().equals(permission.getFlag()))) {
+                    if (permissions.stream().noneMatch(p -> p.getPath().equals(permission.getPath()))) {
                         permissions.add(permission);
                     }
                 }

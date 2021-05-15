@@ -65,7 +65,7 @@ public class UserService extends ServiceImpl<UserMapper, User> {
                 if (CollUtil.isNotEmpty(realRole.getPermission())) {
                     for (Object permissionId : realRole.getPermission()) {
                         Permission permission = permissionService.getById((int) permissionId);
-                        if (permission != null && permissions.stream().noneMatch(p -> p.getFlag().equals(permission.getFlag()))) {
+                        if (permission != null && permissions.stream().noneMatch(p -> p.getPath().equals(permission.getPath()))) {
                             permissions.add(permission);
                         }
                     }
