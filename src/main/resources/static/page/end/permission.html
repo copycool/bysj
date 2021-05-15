@@ -205,6 +205,12 @@
                         })
                     }
                     this.loadTable();
+                    // 重新请求用户基础数据
+                    $.get("/api/user/detail/" + this.user.username).then(res => {
+                        this.user = res.data;
+                        sessionStorage.setItem("user", JSON.stringify(this.user));
+                        parent.call()
+                    })
                 })
             }
         }
