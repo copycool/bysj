@@ -23,6 +23,8 @@ public class User extends Model<User> {
 
     private String password;
 
+    private String nickName;
+
     private String email;
 
     private String phone;

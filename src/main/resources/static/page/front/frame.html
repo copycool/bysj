@@ -103,6 +103,7 @@
         methods: {
             handleSelect(key) {
                 this.src = key + '.html'
+                window.setInterval("reinitIframe()", 50);
             },
             logout() {
                 $.get("/api/user/logout");

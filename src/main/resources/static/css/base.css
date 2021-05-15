@@ -100,3 +100,6 @@ button {
     height: 30px;
     line-height: 30px;
 }
+.el-breadcrumb__inner {
+    cursor: pointer;
+}
