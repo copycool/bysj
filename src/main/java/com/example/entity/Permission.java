@@ -21,8 +21,6 @@ public class Permission extends Model<Permission> {
 
     private String description;
 
-    private String flag;
-
     private String icon;
 
 }

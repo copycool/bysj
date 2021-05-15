@@ -32,7 +32,6 @@
         <el-table-column prop="name" label="名称"></el-table-column>
         <el-table-column prop="description" label="描述"></el-table-column>
         <el-table-column prop="path" label="菜单路径"></el-table-column>
-        <el-table-column prop="flag" label="唯一标识"></el-table-column>
         <el-table-column prop="icon" label="图标"></el-table-column>
         <el-table-column
                 fixed="right"
@@ -73,9 +72,6 @@
             </el-form-item>
             <el-form-item label="菜单路径" label-width="150px">
                 <el-input v-model="entity.path" autocomplete="off" style="width: 80%"></el-input>
-            </el-form-item>
-            <el-form-item label="唯一标识" label-width="150px">
-                <el-input v-model="entity.flag" autocomplete="off" style="width: 80%"></el-input>
             </el-form-item>
             <el-form-item label="图标" label-width="150px">
                 <el-input v-model="entity.icon" autocomplete="off" style="width: 80%"></el-input>

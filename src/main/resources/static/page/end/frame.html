@@ -30,7 +30,7 @@
                     <i class="el-icon-data-line"></i>
                     <span slot="title">首页</span>
                 </el-menu-item>
-                <el-menu-item :index="item.flag" v-for="item in user.permission">
+                <el-menu-item :index="item.path" v-for="item in user.permission">
                     <i :class=`el-icon-${item.icon}`></i>
                     <span slot="title">{{item.name}}</span>
                 </el-menu-item>
