@@ -27,17 +27,19 @@ public class FileController {
      */
     @PostMapping("/upload")
     public Result<String> upload(MultipartFile file) {
-        String filePath = System.getProperty("user.dir") + "/src/main/resources/static/file/";
-        String flag = System.currentTimeMillis() + "";
-        String fileName = file.getOriginalFilename();
-        try {
-            FileUtil.writeBytes(file.getBytes(), filePath + flag + "-" + fileName);
-            System.out.println(fileName + "--上传成功");
-            Thread.sleep(1L);
-        } catch (Exception e) {
-            System.err.println(fileName + "--文件上传失败");
+        synchronized (FileController.class) {
+            String filePath = System.getProperty("user.dir") + "/src/main/resources/static/file/";
+            String flag = System.currentTimeMillis() + "";
+            String fileName = file.getOriginalFilename();
+            try {
+                FileUtil.writeBytes(file.getBytes(), filePath + flag + "-" + fileName);
+                System.out.println(fileName + "--上传成功");
+                Thread.sleep(1L);
+            } catch (Exception e) {
+                System.err.println(fileName + "--文件上传失败");
+            }
+            return Result.success(flag);
         }
-        return Result.success(flag);
     }
 
 
