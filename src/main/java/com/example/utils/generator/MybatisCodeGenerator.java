@@ -212,41 +212,41 @@ public class MybatisCodeGenerator {
             }
             // 生成表格
             if (tableColumn.getColumnName().contains("file")) {
-                tableColumnBuilder.append(space6 + space12 + "<el-table-column label=\"图片\"><template slot-scope=\"scope\"><el-image style=\"width: 100px; height: 100px\" :src=\"scope.row.file\" :preview-src-list=\"[scope.row.file]\"></el-image></template></el-table-column>\n");
+                tableColumnBuilder.append(space6  + "<el-table-column label=\"图片\"><template slot-scope=\"scope\"><el-image style=\"width: 100px; height: 100px\" :src=\"scope.row.file\" :preview-src-list=\"[scope.row.file]\"></el-image></template></el-table-column>\n");
             } else {
-                tableColumnBuilder.append(space6 + space12 + "<el-table-column prop=\"" + StrUtil.toCamelCase(tableColumn.getColumnName()) + "\" label=\"" + tableColumn.getColumnComment() + "\"></el-table-column>\n");
+                tableColumnBuilder.append(space6  + "<el-table-column prop=\"" + StrUtil.toCamelCase(tableColumn.getColumnName()) + "\" label=\"" + tableColumn.getColumnComment() + "\"></el-table-column>\n");
             }
 
             StringBuilder formBuilder = formItemBuilder.append(space12 + space12 + "<el-form-item label=\"" + tableColumn.getColumnComment() + "\" label-width=\"150px\">\n");
             if (tableColumn.getColumnName().contains("time")) {
                 // 日期时间
-                formBuilder.append(space12 + space12 + space4 + "<el-date-picker style=\"width: 80%\" v-model=\"entity." + StrUtil.toCamelCase(tableColumn.getColumnName()) + "\" type=\"datetime\" value-format=\"yyyy-MM-dd HH:mm:ss\" placeholder=\"选择日期时间\"></el-date-picker>\n");
+                formBuilder.append(space12  + space4 + "<el-date-picker style=\"width: 80%\" v-model=\"entity." + StrUtil.toCamelCase(tableColumn.getColumnName()) + "\" type=\"datetime\" value-format=\"yyyy-MM-dd HH:mm:ss\" placeholder=\"选择日期时间\"></el-date-picker>\n");
             } else if (tableColumn.getColumnName().contains("date")) {
                 // 日期
-                formBuilder.append(space12 + space12 + space4 + "<el-date-picker style=\"width: 80%\" v-model=\"entity." + StrUtil.toCamelCase(tableColumn.getColumnName()) + "\" type=\"date\" value-format=\"yyyy-MM-dd\" placeholder=\"选择日期\"></el-date-picker>\n");
+                formBuilder.append(space12  + space4 + "<el-date-picker style=\"width: 80%\" v-model=\"entity." + StrUtil.toCamelCase(tableColumn.getColumnName()) + "\" type=\"date\" value-format=\"yyyy-MM-dd\" placeholder=\"选择日期\"></el-date-picker>\n");
             } else if (tableColumn.getColumnName().contains("_radio")) {
                 // 单选
                 String columnComment = tableColumn.getColumnComment();
                 String[] split = columnComment.split(",");
                 for (String s : split) {
-                    formBuilder.append(space12 + space12 + space4 + "<el-radio v-model=\"entity." + StrUtil.toCamelCase(tableColumn.getColumnName()) + "\" label=\"" + s + "\">" + s + "</el-radio>\n");
+                    formBuilder.append(space12  + space4 + "<el-radio v-model=\"entity." + StrUtil.toCamelCase(tableColumn.getColumnName()) + "\" label=\"" + s + "\">" + s + "</el-radio>\n");
                 }
             } else if (tableColumn.getColumnName().contains("_rel")) {
                 //下拉框，还需要自己写查询
                 String[] s1 = tableColumn.getColumnName().split("_");
                 String relTableName = s1[0];
-                formBuilder.append(space12 + space12 + space4 + "<el-select v-model=\"entity." + StrUtil.toCamelCase(tableColumn.getColumnName()) + "\" placeholder=\"请选择\" style=\"width: 80%\">\n");
-                formBuilder.append(space12 + space12 + space4 + space4 + "<el-option v-for=\"item in options\" :key=\"item.id\" :label=\"item.name\" :value=\"item.name\"></el-option>\n");
-                formBuilder.append(space12 + space12 + space4 + "</el-select>\n");
+                formBuilder.append(space12  + space4 + "<el-select v-model=\"entity." + StrUtil.toCamelCase(tableColumn.getColumnName()) + "\" placeholder=\"请选择\" style=\"width: 80%\">\n");
+                formBuilder.append(space12  + space4 + space4 + "<el-option v-for=\"item in options\" :key=\"item.id\" :label=\"item.name\" :value=\"item.name\"></el-option>\n");
+                formBuilder.append(space12  + space4 + "</el-select>\n");
             } else if (tableColumn.getColumnName().contains("file")) {
                 // 文件上传
-                formBuilder.append(space12 + space12 + space4 + "<el-upload action=\"http://localhost:9999/files/upload\" :on-success=\"fileSuccessUpload\" :file-list=\"fileList\">\n");
-                formBuilder.append(space12 + space12 + space4 + space4 + "<el-button size=\"small\" type=\"primary\">点击上传</el-button>\n");
-                formBuilder.append(space12 + space12 + space4 + "</el-upload>\n");
+                formBuilder.append(space12  + space4 + "<el-upload action=\"http://localhost:9999/files/upload\" :on-success=\"fileSuccessUpload\" :file-list=\"fileList\">\n");
+                formBuilder.append(space12  + space4 + space4 + "<el-button size=\"small\" type=\"primary\">点击上传</el-button>\n");
+                formBuilder.append(space12  + space4 + "</el-upload>\n");
             } else {
-                formBuilder.append(space12 + space12 + space4 + "<el-input v-model=\"entity." + StrUtil.toCamelCase(tableColumn.getColumnName()) + "\" autocomplete=\"off\" style=\"width: 80%\"></el-input>\n");
+                formBuilder.append(space12  + space4 + "<el-input v-model=\"entity." + StrUtil.toCamelCase(tableColumn.getColumnName()) + "\" autocomplete=\"off\" style=\"width: 80%\"></el-input>\n");
             }
-            formBuilder.append(space12 + space12 + "</el-form-item>\n");
+            formBuilder.append(space12  + "</el-form-item>\n");
         }
         map.put("tableColumn", tableColumnBuilder.toString());
         map.put("formItem", formItemBuilder.toString());
@@ -255,7 +255,7 @@ public class MybatisCodeGenerator {
         System.out.println(lowerEntityName + ".html生成成功！");
 
         //生成菜单
-        String delSql = "DELETE from t_permission where flag = ?";
+        String delSql = "DELETE from t_permission where path = ?";
         Db.use(ds).execute(delSql, lowerEntityName);
         String createSql = "INSERT INTO `t_permission` (`name`, `description`, `path`) VALUES ('" + modelName + "管理', " +
                 "'" + modelName + "管理', '" + lowerEntityName + "');";
