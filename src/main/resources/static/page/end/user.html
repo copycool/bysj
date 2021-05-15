@@ -29,6 +29,7 @@
             style="width: 100%">
         <el-table-column prop="id" label="ID" width="50"></el-table-column>
         <el-table-column prop="username" label="用户名"></el-table-column>
+        <el-table-column prop="nickName" label="昵称"></el-table-column>
         <el-table-column prop="email" label="邮箱"></el-table-column>
         <el-table-column prop="phone" label="电话"></el-table-column>
         <el-table-column
@@ -78,11 +79,17 @@
             <el-form-item label="用户名" label-width="100px">
                 <el-input v-model="entity.username" autocomplete="off" style="width: 80%"></el-input>
             </el-form-item>
+            <el-form-item label="昵称" label-width="100px">
+                <el-input v-model="entity.nickName" autocomplete="off" style="width: 80%"></el-input>
+            </el-form-item>
             <el-form-item label="邮箱" label-width="100px">
                 <el-input v-model="entity.email" autocomplete="off" style="width: 80%"></el-input>
             </el-form-item>
             <el-form-item label="电话" label-width="100px">
                 <el-input v-model="entity.phone" autocomplete="off" style="width: 80%"></el-input>
+            </el-form-item>
+            <el-form-item label="密码" label-width="100px">
+                <el-input v-model="entity.password" show-password autocomplete="off" style="width: 80%"></el-input>
             </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
