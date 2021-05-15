@@ -27,9 +27,9 @@
     </el-upload>
     <!-- <el-button @click="exp" type="primary" size="mini" style="margin: 10px 0">导出</el-button> -->
     <el-table :data="tableData" border stripe style="width: 100%">
-      <el-table-column prop="id" label="ID" width="100"> </el-table-column>
+        <el-table-column prop="id" label="ID" width="100"> </el-table-column>
 {tableColumn}
-      <el-table-column
+        <el-table-column
           fixed="right"
           label="操作"
           width="200">
@@ -42,7 +42,7 @@
             <el-button size='mini' type="danger" icon="el-icon-delete" circle slot="reference" style="margin-left: 10px"></el-button>
           </el-popconfirm>
         </template>
-      </el-table-column>
+        </el-table-column>
     </el-table>
     <!-- 分页 -->
     <div style="background-color: white">
