@@ -257,8 +257,8 @@ public class MybatisCodeGenerator {
         //生成菜单
         String delSql = "DELETE from t_permission where flag = ?";
         Db.use(ds).execute(delSql, lowerEntityName);
-        String createSql = "INSERT INTO `t_permission` (`name`, `description`, `path`, `flag`) VALUES ('" + modelName + "管理', " +
-                "'" + modelName + "管理', '/page/end/" + lowerEntityName + ".html', '" + lowerEntityName + "');";
+        String createSql = "INSERT INTO `t_permission` (`name`, `description`, `path`) VALUES ('" + modelName + "管理', " +
+                "'" + modelName + "管理', '" + lowerEntityName + "');";
         Db.use(ds).execute(createSql);
         System.out.println(lowerEntityName + "菜单生成成功！");
     }
