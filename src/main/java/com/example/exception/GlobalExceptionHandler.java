@@ -35,7 +35,7 @@ public class GlobalExceptionHandler {
 
         if (result.hasErrors()) {
             List<FieldError> fieldErrors = result.getFieldErrors();
-            errorMsg.append(fieldErrors.get(0).getDefaultMessage()).append("!");
+            errorMsg.append(fieldErrors.get(fieldErrors.size() - 1).getDefaultMessage()).append("!");
 //            fieldErrors.forEach(error -> {
 //                System.out.println("field" + error.getField() + ", msg:" + error.getDefaultMessage());
 //                errorMsg.append(error.getDefaultMessage()).append("!");
