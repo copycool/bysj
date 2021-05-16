@@ -3,11 +3,15 @@ package com.example.exception;
 import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;
 import com.example.common.Result;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @ControllerAdvice(basePackages="com.example.controller")
 public class GlobalExceptionHandler {
@@ -21,6 +25,24 @@ public class GlobalExceptionHandler {
     public Result<?> error(HttpServletRequest request, Exception e){
         log.error("异常信息：",e);
         return Result.error("-1", "系统异常");
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ResponseBody//返回json串
+    public Result<?> notValidExceptionError(MethodArgumentNotValidException e){
+        BindingResult result = e.getBindingResult();
+        StringBuilder errorMsg = new StringBuilder() ;
+
+        if (result.hasErrors()) {
+            List<FieldError> fieldErrors = result.getFieldErrors();
+            errorMsg.append(fieldErrors.get(0).getDefaultMessage()).append("!");
+//            fieldErrors.forEach(error -> {
+//                System.out.println("field" + error.getField() + ", msg:" + error.getDefaultMessage());
+//                errorMsg.append(error.getDefaultMessage()).append("!");
+//            });
+        }
+
+        return Result.error("-1", errorMsg.toString());
     }
 
     @ExceptionHandler(CustomException.class)
