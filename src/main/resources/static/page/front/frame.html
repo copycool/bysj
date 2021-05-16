@@ -20,7 +20,7 @@
                     <div style="color: dodgerblue; font-size: 24px; padding-left: 100px">开放平台</div>
                 </el-col>
                 <el-col :span="12">
-                    <el-menu default-active="index" mode="horizontal" @select="handleSelect">
+                    <el-menu :default-active="src" mode="horizontal" @select="handleSelect">
                         <el-menu-item index="index">首页</el-menu-item>
                         <el-menu-item index="message">在线留言</el-menu-item>
                         <el-menu-item index="person">个人信息</el-menu-item>
@@ -47,7 +47,7 @@
 
     <!-- main -->
     <div id="main" style="margin-bottom: 50px">
-        <iframe id="myiframe" :src="src + '?new=' + Math.random()" frameborder="0" scrolling="no"
+        <iframe id="myiframe" :src="src + '.html?new=' + Math.random()" frameborder="0" scrolling="no"
                 style="width: 100%"></iframe>
     </div>
 
@@ -56,9 +56,9 @@
 
     <div style="text-align: center; position: fixed; bottom: 0; width: 100%">
         <el-card>
-            京ICP备14042574号-1 ©2021 剧团系统
+            程序员青戈 ©2021 开发平台
             <p>
-                联系电话: 010-87675654
+                <span>联系电话: 010-87675654</span>
                 <span style="margin-left: 50px">地址：北京市朝阳区十里堡</span>
             </p>
 
@@ -81,9 +81,7 @@
         try {
             const bHeight = iframe.contentWindow.document.body.scrollHeight;
             const dHeight = iframe.contentWindow.document.documentElement.scrollHeight;
-            const height = Math.max(bHeight, dHeight);
-            iframe.height = height;
-            console.log(height);
+            iframe.height = Math.max(bHeight, dHeight, (window.innerHeight - 115));
         } catch (ex) {
         }
     }
@@ -95,14 +93,20 @@
         el: "#wrapper",
         data: {
             user: {},
-            src: 'index.html',
+            src: 'index',
         },
         created() {
             $.ajax({url: '/api/user/session', method: "GET", async: false, success: (res) => {this.user = res.data || {}}})
+
+            if (location.search) {
+                this.src = getUrlParamValue('target')
+            }
         },
         methods: {
             handleSelect(key) {
-                this.src = key + '.html'
+                this.src = key
+                console.log(key)
+                location.search = "target=" + this.src
                 window.setInterval("reinitIframe()", 50);
             },
             logout() {
@@ -112,6 +116,28 @@
             },
         }
     })
+
+    /**
+     * 获取url参数
+     * @param name
+     * @returns {string|null}
+     */
+    function getUrlParamValue(name) {
+        if (name == null || name === 'undefined') {
+            return '';
+        }
+        let searchStr = decodeURI(location.search);
+        let infoIndex = searchStr.indexOf(name + "=");
+        if (infoIndex === -1) {
+            return null;
+        }
+        let searchInfo = searchStr.substring(infoIndex + name.length + 1);
+        let tagIndex = searchInfo.indexOf("&");
+        if (tagIndex !== -1) {
+            searchInfo = searchInfo.substring(0, tagIndex);
+        }
+        return searchInfo;
+    }
 </script>
 </body>
 </html>
