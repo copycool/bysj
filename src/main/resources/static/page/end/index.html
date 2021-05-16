@@ -66,12 +66,12 @@
     <!--                </el-row>-->
 
     <el-row :gutter="10">
-        <!--                    <el-col :span="12">-->
-        <!--                        <el-card>-->
-        <!--                            &lt;!&ndash; 为ECharts准备一个具备大小（宽高）的Dom &ndash;&gt;-->
-        <!--                            <div id="main" style="width: 600px;height:400px; margin: 0 auto"></div>-->
-        <!--                        </el-card>-->
-        <!--                    </el-col>-->
+        <el-col :span="12">
+            <el-card>
+                <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+                <div id="main" style="width: 100%;height:400px; margin: 0 auto"></div>
+            </el-card>
+        </el-col>
 
         <el-col :span="12">
             <el-card>
@@ -91,14 +91,23 @@
         </el-col>
     </el-row>
 
-    <!--                <el-row style="padding: 5px 0">-->
-    <!--                    <el-col :span="24">-->
-    <!--                        <el-card>-->
-    <!--                            &lt;!&ndash; 为ECharts准备一个具备大小（宽高）的Dom &ndash;&gt;-->
-    <!--                            <div id="polyline" style="width: 100%;height:400px; margin: 0 auto"></div>-->
-    <!--                        </el-card>-->
-    <!--                    </el-col>-->
-    <!--                </el-row>-->
+    <el-row style="padding: 5px 0">
+        <el-col :span="24">
+            <el-card>
+                <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+                <div id="polyline" style="width: 100%;height:400px; margin: 0 auto"></div>
+            </el-card>
+        </el-col>
+    </el-row>
+
+    <el-row style="padding: 5px 0">
+        <el-col :span="24">
+            <el-card>
+                <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+                <div id="bar" style="width: 100%;height:400px; margin: 0 auto"></div>
+            </el-card>
+        </el-col>
+    </el-row>
 </div>
 
 <script src="../../js/echarts.min.js"></script>
@@ -109,30 +118,113 @@
 
 
 <script>
-    let pieOption = {
-        "title": {
-            "text": "商品销量统计"
-        },
-        "legend": {
-            "x": "left",
-            "y": "center",
-            "orient": "vertical",
-            "data": []
-        },
-        "tooltip": {
-            "show": true
-        },
-        "xAxis": null,
-        "yAxis": null,
-        "series": [
+    const pieOption = {
+        title: {text: '饼图比例统计'},
+        tooltip: {trigger: 'item'},
+        legend: {top: '0', left: 'right'},
+        series: [
             {
-                "name": "用户比例",
-                "type": "pie",
-                "radius": "55%",
-                "data": []
+                name: '访问来源',
+                type: 'pie',
+                radius: ['40%', '70%'],
+                itemStyle: {
+                    borderRadius: 10,
+                    borderColor: '#fff',
+                    borderWidth: 2
+                },
+                data: [
+                    {value: 1048, name: '搜索引擎'},
+                    {value: 735, name: '直接访问'},
+                    {value: 580, name: '邮件营销'},
+                    {value: 484, name: '联盟广告'},
+                    {value: 300, name: '视频广告'}
+                ]
             }
         ]
-    }
+    };
+
+    const lineOption = {
+        title: {text: '折线图堆叠'},
+        tooltip: {trigger: 'axis'},
+        legend: {data: ['邮件营销', '联盟广告', '视频广告', '直接访问', '搜索引擎']},
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+        },
+        xAxis: {
+            type: 'category',
+            boundaryGap: false,
+            data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
+        },
+        yAxis: {type: 'value'},
+        series: [
+            {
+                name: '邮件营销',
+                type: 'line',
+                data: [120, 132, 101, 134, 90, 230, 210]
+            },
+            {
+                name: '联盟广告',
+                type: 'line',
+                data: [220, 182, 191, 234, 290, 330, 310]
+            },
+            {
+                name: '视频广告',
+                type: 'line',
+                data: [150, 232, 201, 154, 190, 330, 410]
+            },
+            {
+                name: '直接访问',
+                type: 'line',
+                data: [320, 332, 301, 334, 390, 330, 320]
+            },
+            {
+                name: '搜索引擎',
+                type: 'line',
+                data: [820, 932, 901, 934, 1290, 1330, 1320]
+            }
+        ]
+    };
+
+    const barOption = {
+        title: {text: '柱状图'},
+        tooltip: {trigger: 'axis'},
+        legend: {data: ['邮件营销', '联盟广告', '视频广告', '直接访问', '搜索引擎']},
+        xAxis: {
+            type: 'category',
+            data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
+        },
+        yAxis: {type: 'value'},
+        series: [
+            {
+                name: '邮件营销',
+                type: 'bar',
+                data: [120, 132, 101, 134, 90, 230, 210]
+            },
+            {
+                name: '联盟广告',
+                type: 'bar',
+                data: [220, 182, 191, 234, 290, 330, 310]
+            },
+            {
+                name: '视频广告',
+                type: 'bar',
+                data: [150, 232, 201, 154, 190, 330, 410]
+            },
+            {
+                name: '直接访问',
+                type: 'bar',
+                data: [320, 332, 301, 334, 390, 330, 320]
+            },
+            {
+                name: '搜索引擎',
+                type: 'bar',
+                data: [820, 932, 901, 934, 1290, 1330, 1320]
+            }
+        ]
+    };
 
     new Vue({
         el: "#wrapper",
@@ -151,31 +243,31 @@
             entity: {},
             isCollapse: false
         },
-        created() {
+        mounted() {
             this.user = sessionStorage.getItem("user") ? JSON.parse(sessionStorage.getItem("user")) : {};
-            this.$nextTick(() => {
-                this.load();
-            })
+            this.load();
         },
         methods: {
             load() {
                 // 基于准备好的dom，初始化echarts实例
-                // let myChart = echarts.init(document.getElementById('main'));
+                let myChart = echarts.init(document.getElementById('main'));
                 // 使用刚指定的配置项和数据显示图表。
-                // myChart.setOption(pieOption);
+                myChart.setOption(pieOption);
+
+                // 基于准备好的dom，初始化echarts实例
+                let lineChart = echarts.init(document.getElementById('polyline'));
+                // 使用刚指定的配置项和数据显示图表。
+                lineChart.setOption(lineOption);
+
+                // 基于准备好的dom，初始化echarts实例
+                let barChart = echarts.init(document.getElementById('bar'));
+                // 使用刚指定的配置项和数据显示图表。
+                barChart.setOption(barOption);
 
                 $.get("/api/notice/").then((res) => {
                     this.notices = res.data;
                 })
-                $.get("/api/user/").then((res) => {
-                    this.users = res.data;
-                })
-                $.get("/api/role/").then((res) => {
-                    this.roles = res.data;
-                })
-                $.get("/api/permission/").then((res) => {
-                    this.permissions = res.data;
-                })
+
             },
             handleCollapse() {
                 this.isCollapse = !this.isCollapse;
