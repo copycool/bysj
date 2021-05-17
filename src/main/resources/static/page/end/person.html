@@ -36,6 +36,14 @@
                 <el-col :span="12" style="text-align: right">电话：</el-col>
                 <el-col :span="12">{{user.phone}}</el-col>
             </el-row>
+            <el-row style="padding: 10px 0">
+                <el-col :span="12" style="text-align: right">年龄：</el-col>
+                <el-col :span="12">{{user.age}}</el-col>
+            </el-row>
+            <el-row style="padding: 10px 0">
+                <el-col :span="12" style="text-align: right">地址：</el-col>
+                <el-col :span="12">{{user.address}}</el-col>
+            </el-row>
 
         </div>
     </el-card>
@@ -51,6 +59,12 @@
             </el-form-item>
             <el-form-item label="电话" label-width="100px">
                 <el-input v-model="user.phone" autocomplete="off" style="width: 80%"></el-input>
+            </el-form-item>
+            <el-form-item label="年龄" label-width="100px">
+                <el-input v-model="entity.age" autocomplete="off" style="width: 80%"></el-input>
+            </el-form-item>
+            <el-form-item label="地址" label-width="100px">
+                <el-input v-model="entity.address" autocomplete="off" style="width: 80%"></el-input>
             </el-form-item>
             <el-form-item label="密码" label-width="100px">
                 <el-input show-password v-model="user.password" autocomplete="off" style="width: 80%"></el-input>

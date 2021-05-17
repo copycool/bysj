@@ -5,6 +5,7 @@ import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.poi.excel.ExcelUtil;
 import cn.hutool.poi.excel.ExcelWriter;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -142,14 +143,15 @@ public class UserController {
 
     @GetMapping
     public Result<List<User>> findAll() {
-        return Result.success(userService.list());
+        return Result.success(userService.list( Wrappers.<User>lambdaQuery().ne(User::getUsername, "admin")));
     }
 
     @GetMapping("/page")
     public Result<IPage<User>> findPage(@RequestParam(required = false, defaultValue = "") String name,
                                         @RequestParam(required = false, defaultValue = "1") Integer pageNum,
                                         @RequestParam(required = false, defaultValue = "10") Integer pageSize) {
-        return Result.success(userService.page(new Page<>(pageNum, pageSize), Wrappers.<User>lambdaQuery().like(User::getUsername, name).orderByDesc(User::getId)));
+        LambdaQueryWrapper<User> wrapper = Wrappers.<User>lambdaQuery().ne(User::getUsername, "admin").like(User::getUsername, name).orderByDesc(User::getId);
+        return Result.success(userService.page(new Page<>(pageNum, pageSize), wrapper));
     }
 
     @GetMapping("/export")

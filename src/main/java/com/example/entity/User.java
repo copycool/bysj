@@ -30,6 +30,8 @@ public class User extends Model<User> {
     private String phone;
 
     private String avatar;
+    private String address;
+    private Integer age;
 
     /**
      * 权限
