@@ -11,7 +11,7 @@
  Target Server Version : 50728
  File Encoding         : 65001
 
- Date: 15/05/2021 19:16:35
+ Date: 17/05/2021 16:16:22
 */
 
 SET NAMES utf8mb4;
@@ -28,7 +28,7 @@ CREATE TABLE `t_log`  (
   `user` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '操作人',
   `ip` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT 'ip',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 62 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 74 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_log
@@ -89,6 +89,18 @@ INSERT INTO `t_log` VALUES (58, '更新用户：tom ', '2021-05-15 17:26:24', 'a
 INSERT INTO `t_log` VALUES (59, '更新用户：admin ', '2021-05-15 17:26:32', 'admin', '0:0:0:0:0:0:0:1');
 INSERT INTO `t_log` VALUES (60, '用户 admin 退出系统', '2021-05-15 17:26:50', 'admin', '0:0:0:0:0:0:0:1');
 INSERT INTO `t_log` VALUES (61, '用户 admin 登录系统', '2021-05-15 17:26:52', 'admin', '0:0:0:0:0:0:0:1');
+INSERT INTO `t_log` VALUES (62, '用户 admin 登录系统', '2021-05-15 19:18:32', 'admin', '0:0:0:0:0:0:0:1');
+INSERT INTO `t_log` VALUES (63, '用户 admin 登录系统', '2021-05-16 09:31:17', 'admin', '0:0:0:0:0:0:0:1');
+INSERT INTO `t_log` VALUES (64, '用户 admin 登录系统', '2021-05-16 22:18:59', 'admin', '0:0:0:0:0:0:0:1');
+INSERT INTO `t_log` VALUES (65, '用户 admin 退出系统', '2021-05-16 22:19:04', 'admin', '0:0:0:0:0:0:0:1');
+INSERT INTO `t_log` VALUES (66, '用户 admin 登录系统', '2021-05-16 22:19:05', 'admin', '0:0:0:0:0:0:0:1');
+INSERT INTO `t_log` VALUES (67, '用户 admin 登录系统', '2021-05-17 15:27:47', 'admin', '0:0:0:0:0:0:0:1');
+INSERT INTO `t_log` VALUES (68, '更新用户：hello ', '2021-05-17 15:31:57', 'admin', '0:0:0:0:0:0:0:1');
+INSERT INTO `t_log` VALUES (69, '更新用户：tom ', '2021-05-17 15:32:05', 'admin', '0:0:0:0:0:0:0:1');
+INSERT INTO `t_log` VALUES (70, '更新用户：hello ', '2021-05-17 15:32:11', 'admin', '0:0:0:0:0:0:0:1');
+INSERT INTO `t_log` VALUES (71, '新增用户：jack ', '2021-05-17 15:32:35', 'admin', '0:0:0:0:0:0:0:1');
+INSERT INTO `t_log` VALUES (72, '新增用户：jerry ', '2021-05-17 15:33:02', 'admin', '0:0:0:0:0:0:0:1');
+INSERT INTO `t_log` VALUES (73, '用户 admin 登录系统', '2021-05-17 15:39:09', 'admin', '0:0:0:0:0:0:0:1');
 
 -- ----------------------------
 -- Table structure for t_message
@@ -121,13 +133,17 @@ CREATE TABLE `t_notice`  (
   `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL COMMENT '内容',
   `time` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '发布时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of t_notice
 -- ----------------------------
 INSERT INTO `t_notice` VALUES (1, '公众号【Java学习指南】', '微信关注公众号【Java学习指南】，回复关键字【666】即可获取项目下载链接。', '2021-04-16 17:10:44');
 INSERT INTO `t_notice` VALUES (2, '【直播】B站关注程序员青戈，三连走起', '直播间地址：https://live.bilibili.com/21889562', '2021-04-16 17:54:10');
+INSERT INTO `t_notice` VALUES (4, '学习', '别问！问就是3连！', '2021-05-17 15:29:29');
+INSERT INTO `t_notice` VALUES (5, '快乐是什么？', '快乐就是一杯咖啡，一个键盘，从早到晚', '2021-05-17 15:30:08');
+INSERT INTO `t_notice` VALUES (6, 'Java是什么', 'Java是世界上最好的语言', '2021-05-17 15:30:42');
+INSERT INTO `t_notice` VALUES (7, '我累了', '快去找个富婆吧！', '2021-05-17 15:30:58');
 
 -- ----------------------------
 -- Table structure for t_permission
@@ -182,14 +198,18 @@ CREATE TABLE `t_user`  (
   `phone` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '手机号',
   `avatar` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '头像',
   `role` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '角色',
+  `address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '地址',
+  `age` int(11) NULL DEFAULT NULL COMMENT '年龄',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 22 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '用户表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 24 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '用户表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of t_user
 -- ----------------------------
-INSERT INTO `t_user` VALUES (1, 'admin', 'admin', '管理员', '111124444', '13978786565', '1616271650817', '[1]');
-INSERT INTO `t_user` VALUES (11, 'tom', '123456', '汤姆', 'tom@qq.com', '13685249632', '1616271650817', '[2]');
-INSERT INTO `t_user` VALUES (21, 'hello', '123456', '哈喽', 'hello@qq.com', '13695285413', '1615969390812', '[2]');
+INSERT INTO `t_user` VALUES (1, 'admin', 'admin', '管理员', '111124444', '13978786565', '1616271650817', '[1]', NULL, NULL);
+INSERT INTO `t_user` VALUES (11, 'tom', '123456', '汤姆', 'tom@qq.com', '13685249632', '1616271650817', '[2]', '上海', 20);
+INSERT INTO `t_user` VALUES (21, 'hello', 'admin', '哈喽', 'hello@qq.com', '13695285413', '1615969390812', '[2]', '北京', 25);
+INSERT INTO `t_user` VALUES (22, 'jack', 'admin', '杰克', 'jack@qq.com', '13878549623', NULL, NULL, '合肥', 30);
+INSERT INTO `t_user` VALUES (23, 'jerry', '123456', '杰瑞', 'jerry@163.com', '13696965656', NULL, NULL, '北京', 21);
 
 SET FOREIGN_KEY_CHECKS = 1;
