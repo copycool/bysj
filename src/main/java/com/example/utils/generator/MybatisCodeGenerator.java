@@ -211,34 +211,34 @@ public class MybatisCodeGenerator {
                 continue;
             }
             // 生成表格
-            if (tableColumn.getColumnName().contains("file")) {
+            if (tableColumn.getColumnName().endsWith("file")) {
                 tableColumnBuilder.append(space8  + "<el-table-column label=\"图片\"><template slot-scope=\"scope\"><el-image style=\"width: 100px; height: 100px\" :src=\"scope.row.file\" :preview-src-list=\"[scope.row.file]\"></el-image></template></el-table-column>\n");
             } else {
                 tableColumnBuilder.append(space8  + "<el-table-column prop=\"" + StrUtil.toCamelCase(tableColumn.getColumnName()) + "\" label=\"" + tableColumn.getColumnComment() + "\"></el-table-column>\n");
             }
 
             StringBuilder formBuilder = formItemBuilder.append(space12  + "<el-form-item label=\"" + tableColumn.getColumnComment() + "\" label-width=\"150px\">\n");
-            if (tableColumn.getColumnName().contains("time")) {
+            if (tableColumn.getColumnName().endsWith("time")) {
                 // 日期时间
                 formBuilder.append(space12  + space4 + "<el-date-picker style=\"width: 80%\" v-model=\"entity." + StrUtil.toCamelCase(tableColumn.getColumnName()) + "\" type=\"datetime\" value-format=\"yyyy-MM-dd HH:mm:ss\" placeholder=\"选择日期时间\"></el-date-picker>\n");
-            } else if (tableColumn.getColumnName().contains("date")) {
+            } else if (tableColumn.getColumnName().endsWith("date")) {
                 // 日期
                 formBuilder.append(space12  + space4 + "<el-date-picker style=\"width: 80%\" v-model=\"entity." + StrUtil.toCamelCase(tableColumn.getColumnName()) + "\" type=\"date\" value-format=\"yyyy-MM-dd\" placeholder=\"选择日期\"></el-date-picker>\n");
-            } else if (tableColumn.getColumnName().contains("_radio")) {
+            } else if (tableColumn.getColumnName().endsWith("_radio")) {
                 // 单选
                 String columnComment = tableColumn.getColumnComment();
                 String[] split = columnComment.split(",");
                 for (String s : split) {
                     formBuilder.append(space12  + space4 + "<el-radio v-model=\"entity." + StrUtil.toCamelCase(tableColumn.getColumnName()) + "\" label=\"" + s + "\">" + s + "</el-radio>\n");
                 }
-            } else if (tableColumn.getColumnName().contains("_rel")) {
+            } else if (tableColumn.getColumnName().endsWith("_rel")) {
                 //下拉框，还需要自己写查询
                 String[] s1 = tableColumn.getColumnName().split("_");
                 String relTableName = s1[0];
                 formBuilder.append(space12  + space4 + "<el-select v-model=\"entity." + StrUtil.toCamelCase(tableColumn.getColumnName()) + "\" placeholder=\"请选择\" style=\"width: 80%\">\n");
                 formBuilder.append(space12  + space4 + space4 + "<el-option v-for=\"item in options\" :key=\"item.id\" :label=\"item.name\" :value=\"item.name\"></el-option>\n");
                 formBuilder.append(space12  + space4 + "</el-select>\n");
-            } else if (tableColumn.getColumnName().contains("file")) {
+            } else if (tableColumn.getColumnName().endsWith("file")) {
                 // 文件上传
                 formBuilder.append(space12  + space4 + "<el-upload action=\"http://localhost:9999/files/upload\" :on-success=\"fileSuccessUpload\" :file-list=\"fileList\">\n");
                 formBuilder.append(space12  + space4 + space4 + "<el-button size=\"small\" type=\"primary\">点击上传</el-button>\n");
