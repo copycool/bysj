@@ -3,6 +3,12 @@
 #### 🛫 介绍
 毕设脚手架工程，拿来即用，简单便捷，专为新手小白/毕设困难户打造，货真价实，童叟无欺
 
+#### 👑 核心功能
+自动生成代码，可以根据数据库表自动生成后台增删改查接口和前台的html代码，不用写代码就能做出一个管理系统！
+
+目前系统可以根据后台数据库的特定字段自动生成 `文本框`、 `下拉框（带数据关联）`、`日期控件（日期和日期时间控件）`、`单选按钮`、`文件上传（表格可直接显示图片）`等，方便舒适。
+
+
 #### 🚂 软件架构
 Java后台：SpringBoot 2.1.0 + Mybatis-plus+ hutool工具包 + Apache poi
 
@@ -86,7 +92,7 @@ Java后台：SpringBoot 2.1.0 + Mybatis-plus+ hutool工具包 + Apache poi
 
 ![](https://www.hualigs.cn/image/60a467cfe30e7.jpg)
 
-在线留言
+在线留言（默认隐藏了）
 
 ![](https://www.hualigs.cn/image/60a46805c6ea1.jpg)
 
