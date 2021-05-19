@@ -28,14 +28,23 @@ Java后台：SpringBoot 2.1.0 + Mybatis-plus+ hutool工具包 + Apache poi
 2. 使用idea打开x-admin文件夹导入工程
 
 3. 配置maven，下载项目依赖
+   
    ![](https://www.hualigs.cn/image/60a463ef03442.jpg)
+   
 4. 新建数据库x-admin，执行x-admin.sql
+   
    ![](https://www.hualigs.cn/image/60a4645016b23.jpg)
+   
 5. 修改application.yml中的数据库密码
+   
    ![](https://www.hualigs.cn/image/60a4648a823b5.jpg)
+   
 6. 项目依赖下载完成后，直接运行 Application 启动SpringBoot即可
+   
    ![](https://www.hualigs.cn/image/60a4650b7d904.jpg)
+   
 7. 运行效果   
+   
    ![](https://www.hualigs.cn/image/60a464bbed518.jpg)
 
 #### 🛸 使用说明

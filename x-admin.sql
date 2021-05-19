@@ -11,7 +11,7 @@
  Target Server Version : 50728
  File Encoding         : 65001
 
- Date: 17/05/2021 16:16:22
+ Date: 19/05/2021 10:11:54
 */
 
 SET NAMES utf8mb4;
@@ -28,79 +28,11 @@ CREATE TABLE `t_log`  (
   `user` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '操作人',
   `ip` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT 'ip',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 74 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 80 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_log
 -- ----------------------------
-INSERT INTO `t_log` VALUES (6, '用户 hello 登录系统', '2021-05-13 23:39:25', 'hello', '0:0:0:0:0:0:0:1');
-INSERT INTO `t_log` VALUES (7, '用户 hello 登录系统', '2021-05-13 23:49:54', 'hello', '0:0:0:0:0:0:0:1');
-INSERT INTO `t_log` VALUES (8, '用户 hello 登录系统', '2021-05-13 23:50:01', 'hello', '0:0:0:0:0:0:0:1');
-INSERT INTO `t_log` VALUES (9, '用户 hello 登录系统', '2021-05-13 23:50:27', 'hello', '0:0:0:0:0:0:0:1');
-INSERT INTO `t_log` VALUES (10, '更新用户：hello ', '2021-05-14 00:00:41', 'hello', '0:0:0:0:0:0:0:1');
-INSERT INTO `t_log` VALUES (11, '用户 admin 登录系统', '2021-05-15 10:28:24', 'admin', '0:0:0:0:0:0:0:1');
-INSERT INTO `t_log` VALUES (12, '用户 admin 退出系统', '2021-05-15 11:13:09', 'admin', '0:0:0:0:0:0:0:1');
-INSERT INTO `t_log` VALUES (13, '用户 admin 登录系统', '2021-05-15 11:13:13', 'admin', '0:0:0:0:0:0:0:1');
-INSERT INTO `t_log` VALUES (14, '更新角色：超级管理员', '2021-05-15 12:20:52', 'admin', '0:0:0:0:0:0:0:1');
-INSERT INTO `t_log` VALUES (15, '更新角色：超级管理员', '2021-05-15 12:20:54', 'admin', '0:0:0:0:0:0:0:1');
-INSERT INTO `t_log` VALUES (16, '更新角色：超级管理员', '2021-05-15 12:21:03', 'admin', '0:0:0:0:0:0:0:1');
-INSERT INTO `t_log` VALUES (17, '更新角色：超级管理员', '2021-05-15 12:21:03', 'admin', '0:0:0:0:0:0:0:1');
-INSERT INTO `t_log` VALUES (18, '更新角色：超级管理员', '2021-05-15 12:21:03', 'admin', '0:0:0:0:0:0:0:1');
-INSERT INTO `t_log` VALUES (19, '更新角色：超级管理员', '2021-05-15 12:21:04', 'admin', '0:0:0:0:0:0:0:1');
-INSERT INTO `t_log` VALUES (20, '更新角色：超级管理员', '2021-05-15 12:21:04', 'admin', '0:0:0:0:0:0:0:1');
-INSERT INTO `t_log` VALUES (21, '更新角色：超级管理员', '2021-05-15 12:21:05', 'admin', '0:0:0:0:0:0:0:1');
-INSERT INTO `t_log` VALUES (22, '更新角色：超级管理员', '2021-05-15 12:21:06', 'admin', '0:0:0:0:0:0:0:1');
-INSERT INTO `t_log` VALUES (23, '更新角色：超级管理员', '2021-05-15 12:21:06', 'admin', '0:0:0:0:0:0:0:1');
-INSERT INTO `t_log` VALUES (24, '更新角色：超级管理员', '2021-05-15 12:21:07', 'admin', '0:0:0:0:0:0:0:1');
-INSERT INTO `t_log` VALUES (25, '更新角色：超级管理员', '2021-05-15 12:21:07', 'admin', '0:0:0:0:0:0:0:1');
-INSERT INTO `t_log` VALUES (26, '更新角色：超级管理员', '2021-05-15 12:21:09', 'admin', '0:0:0:0:0:0:0:1');
-INSERT INTO `t_log` VALUES (27, '更新角色：超级管理员', '2021-05-15 12:21:10', 'admin', '0:0:0:0:0:0:0:1');
-INSERT INTO `t_log` VALUES (28, '更新角色：超级管理员', '2021-05-15 12:21:16', 'admin', '0:0:0:0:0:0:0:1');
-INSERT INTO `t_log` VALUES (29, '更新角色：超级管理员', '2021-05-15 12:21:16', 'admin', '0:0:0:0:0:0:0:1');
-INSERT INTO `t_log` VALUES (30, '更新角色：超级管理员', '2021-05-15 12:31:51', 'admin', '0:0:0:0:0:0:0:1');
-INSERT INTO `t_log` VALUES (31, '用户 admin 登录系统', '2021-05-15 13:20:25', 'admin', '0:0:0:0:0:0:0:1');
-INSERT INTO `t_log` VALUES (32, '更新角色：超级管理员', '2021-05-15 13:21:10', 'admin', '0:0:0:0:0:0:0:1');
-INSERT INTO `t_log` VALUES (33, '更新角色：超级管理员', '2021-05-15 13:25:09', 'admin', '0:0:0:0:0:0:0:1');
-INSERT INTO `t_log` VALUES (34, '更新角色：超级管理员', '2021-05-15 13:25:16', 'admin', '0:0:0:0:0:0:0:1');
-INSERT INTO `t_log` VALUES (35, '更新角色：超级管理员', '2021-05-15 13:29:05', 'admin', '0:0:0:0:0:0:0:1');
-INSERT INTO `t_log` VALUES (36, '更新角色：超级管理员', '2021-05-15 13:29:11', 'admin', '0:0:0:0:0:0:0:1');
-INSERT INTO `t_log` VALUES (37, '用户 admin 登录系统', '2021-05-15 14:31:57', 'admin', '0:0:0:0:0:0:0:1');
-INSERT INTO `t_log` VALUES (38, '更新角色：超级管理员', '2021-05-15 15:36:39', 'admin', '0:0:0:0:0:0:0:1');
-INSERT INTO `t_log` VALUES (39, '更新角色：超级管理员', '2021-05-15 15:37:07', 'admin', '0:0:0:0:0:0:0:1');
-INSERT INTO `t_log` VALUES (40, '更新角色：超级管理员', '2021-05-15 15:38:19', 'admin', '0:0:0:0:0:0:0:1');
-INSERT INTO `t_log` VALUES (41, '更新角色：超级管理员', '2021-05-15 15:38:23', 'admin', '0:0:0:0:0:0:0:1');
-INSERT INTO `t_log` VALUES (42, '更新权限菜单：用户管理', '2021-05-15 16:31:43', 'admin', '0:0:0:0:0:0:0:1');
-INSERT INTO `t_log` VALUES (43, '用户 admin 登录系统', '2021-05-15 16:32:49', 'admin', '0:0:0:0:0:0:0:1');
-INSERT INTO `t_log` VALUES (44, '更新权限菜单：用户管理', '2021-05-15 16:32:55', 'admin', '0:0:0:0:0:0:0:1');
-INSERT INTO `t_log` VALUES (45, '更新权限菜单：角色管理', '2021-05-15 16:33:58', 'admin', '0:0:0:0:0:0:0:1');
-INSERT INTO `t_log` VALUES (46, '更新权限菜单：权限管理', '2021-05-15 16:34:45', 'admin', '0:0:0:0:0:0:0:1');
-INSERT INTO `t_log` VALUES (47, '更新权限菜单：公告管理', '2021-05-15 16:35:44', 'admin', '0:0:0:0:0:0:0:1');
-INSERT INTO `t_log` VALUES (48, '更新权限菜单：日志管理', '2021-05-15 16:36:04', 'admin', '0:0:0:0:0:0:0:1');
-INSERT INTO `t_log` VALUES (49, '用户 admin 登录系统', '2021-05-15 17:12:26', 'admin', '0:0:0:0:0:0:0:1');
-INSERT INTO `t_log` VALUES (50, '用户 admin 登录系统', '2021-05-15 17:19:40', 'admin', '0:0:0:0:0:0:0:1');
-INSERT INTO `t_log` VALUES (51, '更新角色：超级管理员', '2021-05-15 17:19:46', 'admin', '0:0:0:0:0:0:0:1');
-INSERT INTO `t_log` VALUES (52, '用户 admin 退出系统', '2021-05-15 17:21:28', 'admin', '0:0:0:0:0:0:0:1');
-INSERT INTO `t_log` VALUES (53, '用户 admin 登录系统', '2021-05-15 17:21:30', 'admin', '0:0:0:0:0:0:0:1');
-INSERT INTO `t_log` VALUES (54, '新增权限菜单：11', '2021-05-15 17:21:42', 'admin', '0:0:0:0:0:0:0:1');
-INSERT INTO `t_log` VALUES (55, '更新角色：超级管理员', '2021-05-15 17:21:49', 'admin', '0:0:0:0:0:0:0:1');
-INSERT INTO `t_log` VALUES (56, '删除权限菜单：11', '2021-05-15 17:21:58', 'admin', '0:0:0:0:0:0:0:1');
-INSERT INTO `t_log` VALUES (57, '更新用户：hello ', '2021-05-15 17:26:16', 'admin', '0:0:0:0:0:0:0:1');
-INSERT INTO `t_log` VALUES (58, '更新用户：tom ', '2021-05-15 17:26:24', 'admin', '0:0:0:0:0:0:0:1');
-INSERT INTO `t_log` VALUES (59, '更新用户：admin ', '2021-05-15 17:26:32', 'admin', '0:0:0:0:0:0:0:1');
-INSERT INTO `t_log` VALUES (60, '用户 admin 退出系统', '2021-05-15 17:26:50', 'admin', '0:0:0:0:0:0:0:1');
-INSERT INTO `t_log` VALUES (61, '用户 admin 登录系统', '2021-05-15 17:26:52', 'admin', '0:0:0:0:0:0:0:1');
-INSERT INTO `t_log` VALUES (62, '用户 admin 登录系统', '2021-05-15 19:18:32', 'admin', '0:0:0:0:0:0:0:1');
-INSERT INTO `t_log` VALUES (63, '用户 admin 登录系统', '2021-05-16 09:31:17', 'admin', '0:0:0:0:0:0:0:1');
-INSERT INTO `t_log` VALUES (64, '用户 admin 登录系统', '2021-05-16 22:18:59', 'admin', '0:0:0:0:0:0:0:1');
-INSERT INTO `t_log` VALUES (65, '用户 admin 退出系统', '2021-05-16 22:19:04', 'admin', '0:0:0:0:0:0:0:1');
-INSERT INTO `t_log` VALUES (66, '用户 admin 登录系统', '2021-05-16 22:19:05', 'admin', '0:0:0:0:0:0:0:1');
-INSERT INTO `t_log` VALUES (67, '用户 admin 登录系统', '2021-05-17 15:27:47', 'admin', '0:0:0:0:0:0:0:1');
-INSERT INTO `t_log` VALUES (68, '更新用户：hello ', '2021-05-17 15:31:57', 'admin', '0:0:0:0:0:0:0:1');
-INSERT INTO `t_log` VALUES (69, '更新用户：tom ', '2021-05-17 15:32:05', 'admin', '0:0:0:0:0:0:0:1');
-INSERT INTO `t_log` VALUES (70, '更新用户：hello ', '2021-05-17 15:32:11', 'admin', '0:0:0:0:0:0:0:1');
-INSERT INTO `t_log` VALUES (71, '新增用户：jack ', '2021-05-17 15:32:35', 'admin', '0:0:0:0:0:0:0:1');
-INSERT INTO `t_log` VALUES (72, '新增用户：jerry ', '2021-05-17 15:33:02', 'admin', '0:0:0:0:0:0:0:1');
-INSERT INTO `t_log` VALUES (73, '用户 admin 登录系统', '2021-05-17 15:39:09', 'admin', '0:0:0:0:0:0:0:1');
 
 -- ----------------------------
 -- Table structure for t_message
@@ -133,17 +65,15 @@ CREATE TABLE `t_notice`  (
   `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL COMMENT '内容',
   `time` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '发布时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of t_notice
 -- ----------------------------
-INSERT INTO `t_notice` VALUES (1, '公众号【Java学习指南】', '微信关注公众号【Java学习指南】，回复关键字【666】即可获取项目下载链接。', '2021-04-16 17:10:44');
-INSERT INTO `t_notice` VALUES (2, '【直播】B站关注程序员青戈，三连走起', '直播间地址：https://live.bilibili.com/21889562', '2021-04-16 17:54:10');
+INSERT INTO `t_notice` VALUES (2, 'QQ付费群 929481338', 'QQ付费群提供关于本项目的一切问题解答、技术指导，分享实战项目源码，带你做项目。', '2021-04-16 17:54:10');
 INSERT INTO `t_notice` VALUES (4, '学习', '别问！问就是3连！', '2021-05-17 15:29:29');
 INSERT INTO `t_notice` VALUES (5, '快乐是什么？', '快乐就是一杯咖啡，一个键盘，从早到晚', '2021-05-17 15:30:08');
 INSERT INTO `t_notice` VALUES (6, 'Java是什么', 'Java是世界上最好的语言', '2021-05-17 15:30:42');
-INSERT INTO `t_notice` VALUES (7, '我累了', '快去找个富婆吧！', '2021-05-17 15:30:58');
 
 -- ----------------------------
 -- Table structure for t_permission
@@ -156,7 +86,7 @@ CREATE TABLE `t_permission`  (
   `path` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '菜单路径',
   `icon` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT 's-data' COMMENT '图标',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 27 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '权限菜单表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 26 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '权限菜单表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of t_permission
@@ -166,6 +96,7 @@ INSERT INTO `t_permission` VALUES (2, '角色管理', '角色管理', 'role', 's
 INSERT INTO `t_permission` VALUES (3, '权限管理', '权限管理', 'permission', 'menu');
 INSERT INTO `t_permission` VALUES (19, '公告管理', '公告管理', 'notice', 'data-board');
 INSERT INTO `t_permission` VALUES (24, '日志管理', '日志管理', 'log', 'notebook-2');
+INSERT INTO `t_permission` VALUES (25, '在线留言', '在线留言', 'message', 'message');
 
 -- ----------------------------
 -- Table structure for t_role
@@ -206,7 +137,7 @@ CREATE TABLE `t_user`  (
 -- ----------------------------
 -- Records of t_user
 -- ----------------------------
-INSERT INTO `t_user` VALUES (1, 'admin', 'admin', '管理员', '111124444', '13978786565', '1616271650817', '[1]', NULL, NULL);
+INSERT INTO `t_user` VALUES (1, 'admin', 'admin', '管理员', '111124444', '13978786565', '1621389382252', '[1]', '北京', NULL);
 INSERT INTO `t_user` VALUES (11, 'tom', '123456', '汤姆', 'tom@qq.com', '13685249632', '1616271650817', '[2]', '上海', 20);
 INSERT INTO `t_user` VALUES (21, 'hello', 'admin', '哈喽', 'hello@qq.com', '13695285413', '1615969390812', '[2]', '北京', 25);
 INSERT INTO `t_user` VALUES (22, 'jack', 'admin', '杰克', 'jack@qq.com', '13878549623', NULL, NULL, '合肥', 30);
