@@ -8,7 +8,7 @@ Java后台：SpringBoot 2.1.0 + Mybatis-plus+ hutool工具包 + Apache poi
 
 前台页面：Vue2.0 + ElementUI + Jquery + tinymce（富文本插件）
 
-数据库：Mysql
+数据库：Mysql5.7+
 
 **注意：JDK选择`1.8`版本，Mysql选择`5.7`版本**
 
@@ -23,12 +23,20 @@ Java后台：SpringBoot 2.1.0 + Mybatis-plus+ hutool工具包 + Apache poi
 
     或者直接下载zip解压
 
-    ![下载zip](https://img-blog.csdnimg.cn/20210321072245227.png)
+    ![下载zip](https://www.hualigs.cn/image/60a46392bf2a1.jpg)
 
-2. 使用idea打开graduation-scaffold文件夹导入工程
-2. 配置maven，下载项目依赖
-3. 数据库执行test.sql
-4. 项目依赖下载完成后，直接运行 Application 启动SpringBoot即可
+2. 使用idea打开x-admin文件夹导入工程
+
+3. 配置maven，下载项目依赖
+   ![](https://www.hualigs.cn/image/60a463ef03442.jpg)
+4. 新建数据库x-admin，执行x-admin.sql
+   ![](https://www.hualigs.cn/image/60a4645016b23.jpg)
+5. 修改application.yml中的数据库密码
+   ![](https://www.hualigs.cn/image/60a4648a823b5.jpg)
+6. 项目依赖下载完成后，直接运行 Application 启动SpringBoot即可
+   ![](https://www.hualigs.cn/image/60a4650b7d904.jpg)
+7. 运行效果   
+   ![](https://www.hualigs.cn/image/60a464bbed518.jpg)
 
 #### 🛸 使用说明
 
@@ -39,35 +47,50 @@ Java后台：SpringBoot 2.1.0 + Mybatis-plus+ hutool工具包 + Apache poi
 
 登录
 
-![](https://img-blog.csdnimg.cn/20210321074415992.png)
+![](https://www.hualigs.cn/image/60a465c7e7d79.jpg)
 
 注册
 
-![在这里插入图片描述](https://img-blog.csdnimg.cn/20210321074541905.png)
+![](https://www.hualigs.cn/image/60a46643d0549.jpg)
 
 项目主页
 
-![](https://img-blog.csdnimg.cn/20210321074631857.png)
+![](https://www.hualigs.cn/image/60a46662b622e.jpg)
 
-信息管理页
+用户管理
 
-![在这里插入图片描述](https://img-blog.csdnimg.cn/20210321075759576.png)
+![](https://www.hualigs.cn/image/60a4675546135.jpg)
 
-各种前端插件
+角色管理
 
-![在这里插入图片描述](https://img-blog.csdnimg.cn/20210321080021789.png?)
+![](https://www.hualigs.cn/image/60a46755483e2.jpg)
 
-Websocket在线聊天室
+菜单管理
 
-![在这里插入图片描述](https://img-blog.csdnimg.cn/20210321080207619.png)
+![](https://www.hualigs.cn/image/60a4675548b33.jpg)
+
+公告管理
+
+![](https://www.hualigs.cn/image/60a467ab49e80.jpg)
+
+日志管理
+
+![](https://www.hualigs.cn/image/60a467cfe30e7.jpg)
+
+在线留言
+
+![](https://www.hualigs.cn/image/60a46805c6ea1.jpg)
 
 个人信息页
 
-![在这里插入图片描述](https://img-blog.csdnimg.cn/202103210803534.png)
+![](https://www.hualigs.cn/image/60a4714bcc446.jpg)
 
 
 #### 🏎 问题交流
-扫描下方二维码，加我微信
+付费QQ群：929481338  <br>
+提供x-admin项目问题解答、技术指导，分享实战项目，带大家做项目。<br>
+
+我的微信：
 
 ![](https://img-blog.csdnimg.cn/20201030174103759.jpg#pic_center)
 
