@@ -89,6 +89,7 @@ Java后台：SpringBoot 2.1.0 + Mybatis-plus+ hutool工具包 + Apache poi
 #### 🏎 问题交流
 付费QQ群：929481338  <br>
 提供x-admin项目问题解答、技术指导，分享实战项目，带大家做项目。<br>
+一次性收费99元，长期享受VIP待遇。
 
 我的微信：
 
