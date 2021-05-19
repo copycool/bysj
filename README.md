@@ -39,6 +39,7 @@ Java后台：SpringBoot 2.1.0 + Mybatis-plus+ hutool工具包 + Apache poi
    
 4. 新建数据库x-admin，执行x-admin.sql
    
+   ![](https://www.hualigs.cn/image/60a4dec4a0c66.jpg)
    ![](https://www.hualigs.cn/image/60a4645016b23.jpg)
    
 5. 修改application.yml中的数据库密码
