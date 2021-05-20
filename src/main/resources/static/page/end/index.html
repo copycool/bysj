@@ -247,6 +247,10 @@
         },
         methods: {
             load() {
+                $.get("/api/notice/").then((res) => {
+                    this.notices = res.data;
+                })
+
                 // 基于准备好的dom，初始化echarts实例
                 let myChart = echarts.init(document.getElementById('main'));
                 $.ajax({
@@ -273,10 +277,6 @@
                 let barChart = echarts.init(document.getElementById('bar'));
                 // 使用刚指定的配置项和数据显示图表。
                 barChart.setOption(barOption);
-
-                $.get("/api/notice/").then((res) => {
-                    this.notices = res.data;
-                })
 
             },
             handleCollapse() {
