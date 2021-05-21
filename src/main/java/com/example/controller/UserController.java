@@ -1,6 +1,7 @@
 package com.example.controller;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.poi.excel.ExcelUtil;
@@ -22,10 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.URLEncoder;
-import java.util.Collection;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 @RestController
@@ -180,6 +178,25 @@ public class UserController {
         writer.flush(out, true);
         writer.close();
         IoUtil.close(System.out);
+    }
+
+    @GetMapping("/upload/{fileId}")
+    public Result<?> upload(@PathVariable String fileId) {
+        String basePath = System.getProperty("user.dir") + "/src/main/resources/static/file/";
+        List<String> fileNames = FileUtil.listFileNames(basePath);
+        String file = fileNames.stream().filter(name -> name.contains(fileId)).findAny().orElse("");
+        List<List<Object>> lists = ExcelUtil.getReader(basePath + file).read(1);
+        List<User> saveList = new ArrayList<>();
+        for (List<Object> row : lists) {
+            User user = new User();
+            user.setUsername((String) row.get(0));
+            user.setNickName((String) row.get(1));
+            user.setEmail((String) row.get(2));
+            user.setPhone((String) row.get(3));
+            saveList.add(user);
+        }
+        userService.saveBatch(saveList);
+        return Result.success();
     }
 
 }
