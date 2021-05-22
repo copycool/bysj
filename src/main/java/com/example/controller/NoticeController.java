@@ -50,12 +50,11 @@ public class NoticeController {
 
     @GetMapping("/page")
     public Result<IPage<Notice>> findPage(@RequestParam(required = false, defaultValue = "") String name,
+                                          @RequestParam(required = false, defaultValue = "") String content,
                                           @RequestParam(required = false, defaultValue = "1") Integer pageNum,
                                           @RequestParam(required = false, defaultValue = "10") Integer pageSize) {
+        //相当于sql语句： select * from t_notice where name like %#{name}%
         LambdaQueryWrapper<Notice> queryWrapper = Wrappers.<Notice>lambdaQuery().like(Notice::getTitle, name);
-        if (StrUtil.isNotBlank(name)) {
-            queryWrapper.like(Notice::getTitle, name);
-        }
         return Result.success(noticeService.page(new Page<>(pageNum, pageSize), queryWrapper));
     }
 
