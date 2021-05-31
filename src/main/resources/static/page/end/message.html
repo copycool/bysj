@@ -48,7 +48,7 @@
         </div>
     </el-card>
 
-    <el-dialog title="回复信息" :visible.sync="dialogFormVisible" width="30%" :close-on-click-modal="false">
+    <el-dialog title="回复信息" :visible.sync="dialogFormVisible" width="40%" :close-on-click-modal="false">
         <el-form :model="entity">
             <el-form-item label="内容" label-width="100px">
                 <el-input v-model="entity.reply" autocomplete="off" type="textarea" :rows="3"></el-input>
