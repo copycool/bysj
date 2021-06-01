@@ -212,7 +212,9 @@ public class MybatisCodeGenerator {
             }
             // 生成表格
             if (tableColumn.getColumnName().endsWith("file")) {
-                tableColumnBuilder.append(space8  + "<el-table-column label=\"图片\"><template slot-scope=\"scope\"><el-image style=\"width: 100px; height: 100px\" :src=\"scope.row.file\" :preview-src-list=\"[scope.row.file]\"></el-image></template></el-table-column>\n");
+                tableColumnBuilder.append(space8  + "<el-table-column label=\"文件\"><template slot-scope=\"scope\"><el-image style=\"width: 100px; height: 100px\" :src=\"scope.row.file\" :preview-src-list=\"[scope.row.file]\"></el-image></template></el-table-column>\n");
+            } else if (tableColumn.getColumnName().endsWith("img")) {
+                tableColumnBuilder.append(space8  + "<el-table-column label=\"图片\"><template slot-scope=\"scope\"><el-image style=\"width: 100px; height: 100px\" :src=\"scope.row.img\" :preview-src-list=\"[scope.row.img]\"></el-image></template></el-table-column>\n");
             } else {
                 tableColumnBuilder.append(space8  + "<el-table-column prop=\"" + StrUtil.toCamelCase(tableColumn.getColumnName()) + "\" label=\"" + tableColumn.getColumnComment() + "\"></el-table-column>\n");
             }
@@ -238,7 +240,7 @@ public class MybatisCodeGenerator {
                 formBuilder.append(space12  + space4 + "<el-select v-model=\"entity." + StrUtil.toCamelCase(tableColumn.getColumnName()) + "\" placeholder=\"请选择\" style=\"width: 80%\">\n");
                 formBuilder.append(space12  + space4 + space4 + "<el-option v-for=\"item in options\" :key=\"item.id\" :label=\"item.name\" :value=\"item.name\"></el-option>\n");
                 formBuilder.append(space12  + space4 + "</el-select>\n");
-            } else if (tableColumn.getColumnName().endsWith("file")) {
+            } else if (tableColumn.getColumnName().endsWith("file") || tableColumn.getColumnName().endsWith("img")) {
                 // 文件上传
                 formBuilder.append(space12  + space4 + "<el-upload action=\"http://localhost:9999/files/upload\" :on-success=\"fileSuccessUpload\" :file-list=\"fileList\">\n");
                 formBuilder.append(space12  + space4 + space4 + "<el-button size=\"small\" type=\"primary\">点击上传</el-button>\n");
