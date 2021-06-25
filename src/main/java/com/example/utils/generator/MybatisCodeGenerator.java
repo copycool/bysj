@@ -219,7 +219,7 @@ public class MybatisCodeGenerator {
                 tableColumnBuilder.append(space8  + "<el-table-column prop=\"" + StrUtil.toCamelCase(tableColumn.getColumnName()) + "\" label=\"" + tableColumn.getColumnComment() + "\"></el-table-column>\n");
             }
 
-            StringBuilder formBuilder = formItemBuilder.append(space12  + "<el-form-item label=\"" + tableColumn.getColumnComment() + "\" label-width=\"150px\">\n");
+            StringBuilder formBuilder = formItemBuilder.append(space12  + "<el-form-item label=\"" + tableColumn.getColumnComment() + "\" label-width=\"120px\">\n");
             if (tableColumn.getColumnName().endsWith("time")) {
                 // 日期时间
                 formBuilder.append(space12  + space4 + "<el-date-picker style=\"width: 80%\" v-model=\"entity." + StrUtil.toCamelCase(tableColumn.getColumnName()) + "\" type=\"datetime\" value-format=\"yyyy-MM-dd HH:mm:ss\" placeholder=\"选择日期时间\"></el-date-picker>\n");

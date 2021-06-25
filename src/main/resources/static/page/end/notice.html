@@ -64,10 +64,10 @@
     <el-dialog title="公告信息" :visible.sync="dialogFormVisible" width="40%"
                :close-on-click-modal="false" >
         <el-form :model="entity">
-            <el-form-item label="标题" label-width="150px">
+            <el-form-item label="标题" label-width="120px">
                 <el-input v-model="entity.title" autocomplete="off" style="width: 80%"></el-input>
             </el-form-item>
-            <el-form-item label="内容" label-width="150px">
+            <el-form-item label="内容" label-width="120px">
                 <el-input type="textarea" v-model="entity.content" :rows="5" autocomplete="off" style="width: 80%"></el-input>
             </el-form-item>
         </el-form>
