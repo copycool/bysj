@@ -4,8 +4,6 @@ import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.db.Db;
 import cn.hutool.db.Entity;
-import cn.hutool.json.JSONArray;
-import cn.hutool.json.JSONObject;
 import com.alibaba.druid.pool.DruidDataSource;
 import org.apache.commons.compress.utils.Lists;
 
@@ -22,9 +20,9 @@ import java.util.Map;
 public class MybatisCodeGenerator {
     private static final DruidDataSource ds = new DruidDataSource();
 
-    private static final String schemaName = "";   // 数据库名称，必填
-    private static final String[] table = {"", ""};   // 必填，第一个是表名，第二个是实体类的名字
-    private static final String modelName = "";   // 必填
+    private static final String schemaName = "x-admin";   // 数据库名称，必填
+    private static final String[] table = {"book", ""};   // 必填，第一个是表名，第二个是实体类的名字
+    private static final String modelName = "图书";   // 必填
 
     //=========================================以上内容必填===================================================//
 
@@ -36,7 +34,6 @@ public class MybatisCodeGenerator {
     }
 
     private static final String BaseFilePath = System.getProperty("user.dir") + "/src/main/java/com/example/";
-    private static final String basePackageName = "com.example";
 
     private static final String space4 = "    ";
     private static final String space6 = space4 + "  ";
@@ -56,7 +53,7 @@ public class MybatisCodeGenerator {
         createEntity(table[0], entityName);
         createMapper(entityName);
         createService(entityName);
-        createController(entityName);
+        createController(entityName, table[0]);
         createXml(entityName);
         // html
         createVueHtml(entityName, table[0]);
@@ -172,12 +169,38 @@ public class MybatisCodeGenerator {
      *
      * @param entityName
      */
-    static void createController(String entityName) {
+    static void createController(String entityName, String tableName) throws SQLException {
         String lowerEntityName = entityName.substring(0, 1).toLowerCase() + entityName.substring(1);
+        StringBuilder exportCode = new StringBuilder();
+        StringBuilder importCode = new StringBuilder();
+        List<TableColumn> tableColumns = getTableColumns(tableName);
+        int count = 1;
+        for (TableColumn tableColumn : tableColumns) {
+            exportCode.append(space12 + "row.put(\"" + tableColumn.getColumnComment() + "\", obj.get" + toFirstUpper(tableColumn.getColumnName()) + "());\n");
+            if (tableColumn.getColumnName().equals("id")) {
+                continue;
+            }
+            String value;
+            if("Integer".equals(tableColumn.getDataType())) {
+                value = "Integer.valueOf((String) row.get(" + count++ + "))";
+            } else if("Double".equals(tableColumn.getDataType())) {
+                value = "Double.valueOf((String) row.get(" + count++ + "))";
+            } else if("Date".equals(tableColumn.getDataType())) {
+                value = "DateUtil.parseDateTime((String) row.get(" + count++ + "))";
+            } else if("BigDecimal".equals(tableColumn.getDataType())) {
+                value = "new BigDecimal((String) row.get(" + count++ + "))";
+            } else {
+                value = "(String) row.get(" + count++ + ")";
+            }
+            importCode.append(space12 + "obj.set" + toFirstUpper(tableColumn.getColumnName()) + "(" + value + ");\n");
+        }
 
         Map<String, Object> map = new HashMap<>();
         map.put("entityName", entityName);
         map.put("lowerName", lowerEntityName);
+        map.put("modelName", modelName);
+        map.put("exportCode", exportCode);
+        map.put("importCode", importCode);
         String format = StrUtil.format(FileUtil.readUtf8String(BaseFilePath + "/utils/generator/template/controller.template"), map);
         FileUtil.writeString(format, BaseFilePath + "/controller/" + entityName + "Controller" + ".java", "UTF-8");
         System.out.println(entityName + "Controller生成成功！");
@@ -212,43 +235,43 @@ public class MybatisCodeGenerator {
             }
             // 生成表格
             if (tableColumn.getColumnName().endsWith("file")) {
-                tableColumnBuilder.append(space8  + "<el-table-column label=\"文件\"><template slot-scope=\"scope\"><el-image style=\"width: 100px; height: 100px\" :src=\"scope.row.file\" :preview-src-list=\"[scope.row.file]\"></el-image></template></el-table-column>\n");
+                tableColumnBuilder.append(space8 + "<el-table-column label=\"文件\"><template slot-scope=\"scope\"><el-image style=\"width: 100px; height: 100px\" :src=\"scope.row.file\" :preview-src-list=\"[scope.row.file]\"></el-image></template></el-table-column>\n");
             } else if (tableColumn.getColumnName().endsWith("img")) {
-                tableColumnBuilder.append(space8  + "<el-table-column label=\"图片\"><template slot-scope=\"scope\"><el-image style=\"width: 100px; height: 100px\" :src=\"scope.row.img\" :preview-src-list=\"[scope.row.img]\"></el-image></template></el-table-column>\n");
+                tableColumnBuilder.append(space8 + "<el-table-column label=\"图片\"><template slot-scope=\"scope\"><el-image style=\"width: 100px; height: 100px\" :src=\"scope.row.img\" :preview-src-list=\"[scope.row.img]\"></el-image></template></el-table-column>\n");
             } else {
-                tableColumnBuilder.append(space8  + "<el-table-column prop=\"" + StrUtil.toCamelCase(tableColumn.getColumnName()) + "\" label=\"" + tableColumn.getColumnComment() + "\"></el-table-column>\n");
+                tableColumnBuilder.append(space8 + "<el-table-column prop=\"" + StrUtil.toCamelCase(tableColumn.getColumnName()) + "\" label=\"" + tableColumn.getColumnComment() + "\"></el-table-column>\n");
             }
 
-            StringBuilder formBuilder = formItemBuilder.append(space12  + "<el-form-item label=\"" + tableColumn.getColumnComment() + "\" label-width=\"120px\">\n");
+            StringBuilder formBuilder = formItemBuilder.append(space12 + "<el-form-item label=\"" + tableColumn.getColumnComment() + "\" label-width=\"120px\">\n");
             if (tableColumn.getColumnName().endsWith("time")) {
                 // 日期时间
-                formBuilder.append(space12  + space4 + "<el-date-picker style=\"width: 80%\" v-model=\"entity." + StrUtil.toCamelCase(tableColumn.getColumnName()) + "\" type=\"datetime\" value-format=\"yyyy-MM-dd HH:mm:ss\" placeholder=\"选择日期时间\"></el-date-picker>\n");
+                formBuilder.append(space12 + space4 + "<el-date-picker style=\"width: 80%\" v-model=\"entity." + StrUtil.toCamelCase(tableColumn.getColumnName()) + "\" type=\"datetime\" value-format=\"yyyy-MM-dd HH:mm:ss\" placeholder=\"选择日期时间\"></el-date-picker>\n");
             } else if (tableColumn.getColumnName().endsWith("date")) {
                 // 日期
-                formBuilder.append(space12  + space4 + "<el-date-picker style=\"width: 80%\" v-model=\"entity." + StrUtil.toCamelCase(tableColumn.getColumnName()) + "\" type=\"date\" value-format=\"yyyy-MM-dd\" placeholder=\"选择日期\"></el-date-picker>\n");
+                formBuilder.append(space12 + space4 + "<el-date-picker style=\"width: 80%\" v-model=\"entity." + StrUtil.toCamelCase(tableColumn.getColumnName()) + "\" type=\"date\" value-format=\"yyyy-MM-dd\" placeholder=\"选择日期\"></el-date-picker>\n");
             } else if (tableColumn.getColumnName().endsWith("_radio")) {
                 // 单选
                 String columnComment = tableColumn.getColumnComment();
                 String[] split = columnComment.split(",");
                 for (String s : split) {
-                    formBuilder.append(space12  + space4 + "<el-radio v-model=\"entity." + StrUtil.toCamelCase(tableColumn.getColumnName()) + "\" label=\"" + s + "\">" + s + "</el-radio>\n");
+                    formBuilder.append(space12 + space4 + "<el-radio v-model=\"entity." + StrUtil.toCamelCase(tableColumn.getColumnName()) + "\" label=\"" + s + "\">" + s + "</el-radio>\n");
                 }
             } else if (tableColumn.getColumnName().endsWith("_rel")) {
                 //下拉框，还需要自己写查询
                 String[] s1 = tableColumn.getColumnName().split("_");
                 String relTableName = s1[0];
-                formBuilder.append(space12  + space4 + "<el-select v-model=\"entity." + StrUtil.toCamelCase(tableColumn.getColumnName()) + "\" placeholder=\"请选择\" style=\"width: 80%\">\n");
-                formBuilder.append(space12  + space4 + space4 + "<el-option v-for=\"item in options\" :key=\"item.id\" :label=\"item.name\" :value=\"item.name\"></el-option>\n");
-                formBuilder.append(space12  + space4 + "</el-select>\n");
+                formBuilder.append(space12 + space4 + "<el-select v-model=\"entity." + StrUtil.toCamelCase(tableColumn.getColumnName()) + "\" placeholder=\"请选择\" style=\"width: 80%\">\n");
+                formBuilder.append(space12 + space4 + space4 + "<el-option v-for=\"item in options\" :key=\"item.id\" :label=\"item.name\" :value=\"item.name\"></el-option>\n");
+                formBuilder.append(space12 + space4 + "</el-select>\n");
             } else if (tableColumn.getColumnName().endsWith("file") || tableColumn.getColumnName().endsWith("img")) {
                 // 文件上传
-                formBuilder.append(space12  + space4 + "<el-upload action=\"http://localhost:9999/files/upload\" :on-success=\"fileSuccessUpload\" :file-list=\"fileList\">\n");
-                formBuilder.append(space12  + space4 + space4 + "<el-button size=\"small\" type=\"primary\">点击上传</el-button>\n");
-                formBuilder.append(space12  + space4 + "</el-upload>\n");
+                formBuilder.append(space12 + space4 + "<el-upload action=\"http://localhost:9999/files/upload\" :on-success=\"fileSuccessUpload\" :file-list=\"fileList\">\n");
+                formBuilder.append(space12 + space4 + space4 + "<el-button size=\"small\" type=\"primary\">点击上传</el-button>\n");
+                formBuilder.append(space12 + space4 + "</el-upload>\n");
             } else {
-                formBuilder.append(space12  + space4 + "<el-input v-model=\"entity." + StrUtil.toCamelCase(tableColumn.getColumnName()) + "\" autocomplete=\"off\" style=\"width: 80%\"></el-input>\n");
+                formBuilder.append(space12 + space4 + "<el-input v-model=\"entity." + StrUtil.toCamelCase(tableColumn.getColumnName()) + "\" autocomplete=\"off\" style=\"width: 80%\"></el-input>\n");
             }
-            formBuilder.append(space12  + "</el-form-item>\n");
+            formBuilder.append(space12 + "</el-form-item>\n");
         }
         map.put("tableColumn", tableColumnBuilder.toString());
         map.put("formItem", formItemBuilder.toString());
@@ -280,6 +303,13 @@ public class MybatisCodeGenerator {
     public static String toCamelFirstUpper(String str) {
         String s = StrUtil.toCamelCase(str);
         return s.substring(0, 1).toUpperCase() + s.substring(1);
+    }
+
+    /**
+     * 第一个字母大写
+     */
+    public static String toFirstUpper(String str) {
+        return str.substring(0, 1).toUpperCase() + str.substring(1);
     }
 
     public static String convertDataType(String sqlType) {

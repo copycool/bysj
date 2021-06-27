@@ -22,10 +22,10 @@
     <el-input v-model="search" style="width: 20%;" suffix-icon="el-icon-search" placeholder="请输入名称按回车搜索"
               @keyup.enter.native="loadTable"></el-input>
     <el-button @click="add" type="primary" size="mini" style="margin: 10px 0">新增</el-button>
-    <!-- <el-upload action="/files/upload" :on-success="successUpload" :show-file-list="false" style="display: inline-block">
-        <el-button size="mini" type="primary">导入</el-button> -->
-    </el-upload>
-    <!-- <el-button @click="exp" type="primary" size="mini" style="margin: 10px 0">导出</el-button> -->
+<!--    <el-upload action="/files/upload" :on-success="successUpload" :show-file-list="false" style="display: inline-block">-->
+<!--        <el-button size="mini" type="primary">导入</el-button>-->
+<!--    </el-upload>-->
+<!--    <el-button @click="exp" type="primary" size="mini" style="margin: 10px 0">导出</el-button>-->
     <el-table :data="tableData" border stripe style="width: 100%">
         <el-table-column prop="id" label="ID" width="100"> </el-table-column>
 {tableColumn}
