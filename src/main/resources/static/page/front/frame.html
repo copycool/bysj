@@ -30,14 +30,14 @@
                 <el-col :span="3">
                     <div v-if="user.id">
                         <span>hello, tom</span>
-                        <el-button size="mini" @click="logout">退出</el-button>
+                        <el-button  @click="logout">退出</el-button>
                     </div>
                     <div v-else>
                         <a href="/page/end/login.html">
-                            <el-button size="mini" type="primary">登录</el-button>
+                            <el-button  type="primary">登录</el-button>
                         </a>
                         <a href="/page/end/register.html">
-                            <el-button size="mini">注册</el-button>
+                            <el-button >注册</el-button>
                         </a>
                     </div>
                 </el-col>
