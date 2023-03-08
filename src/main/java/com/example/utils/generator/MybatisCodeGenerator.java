@@ -21,8 +21,8 @@ public class MybatisCodeGenerator {
     private static final DruidDataSource ds = new DruidDataSource();
 
     private static final String schemaName = "x-admin";   // 数据库名称，必填
-    private static final String[] table = {"book", ""};   // 必填，第一个是表名，第二个是实体类的名字
-    private static final String modelName = "图书";   // 必填
+    private static final String[] table = {"food", "Food"};   // 必填，第一个是表名，第二个是实体类的名字
+    private static final String modelName = "菜品";   // 必填
 
     //=========================================以上内容必填===================================================//
 
@@ -30,7 +30,7 @@ public class MybatisCodeGenerator {
         // 必填
         ds.setUrl("jdbc:mysql://localhost:3306/" + schemaName + "?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false&serverTimezone=GMT%2b8");
         ds.setUsername("root");
-        ds.setPassword("123456");
+        ds.setPassword("root");
     }
 
     private static final String BaseFilePath = System.getProperty("user.dir") + "/src/main/java/com/example/";
@@ -181,13 +181,13 @@ public class MybatisCodeGenerator {
                 continue;
             }
             String value;
-            if("Integer".equals(tableColumn.getDataType())) {
+            if ("Integer".equals(tableColumn.getDataType())) {
                 value = "Integer.valueOf((String) row.get(" + count++ + "))";
-            } else if("Double".equals(tableColumn.getDataType())) {
+            } else if ("Double".equals(tableColumn.getDataType())) {
                 value = "Double.valueOf((String) row.get(" + count++ + "))";
-            } else if("Date".equals(tableColumn.getDataType())) {
+            } else if ("Date".equals(tableColumn.getDataType())) {
                 value = "DateUtil.parseDateTime((String) row.get(" + count++ + "))";
-            } else if("BigDecimal".equals(tableColumn.getDataType())) {
+            } else if ("BigDecimal".equals(tableColumn.getDataType())) {
                 value = "new BigDecimal((String) row.get(" + count++ + "))";
             } else {
                 value = "(String) row.get(" + count++ + ")";
